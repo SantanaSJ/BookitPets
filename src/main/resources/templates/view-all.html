@@ -1,0 +1,47 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<body>
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+
+<main>
+    <section>
+        <div>
+            <p>View All Bookings</p>
+        </div>
+
+            <div class="card-header">
+                <table id="tableItems"
+                       class="table table-condensed table-hover table-responsive-sm width=80%">
+                    <thead class="thead-secondary">
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Hotel</th>
+                        <th>City</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-container"></tbody>
+
+                </table>
+            </div>
+    </section>
+</main>
+
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+<script src="js/view-all.js" ></script>
+</body>
+</html>

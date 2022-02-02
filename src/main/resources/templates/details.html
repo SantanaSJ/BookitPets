@@ -1,0 +1,164 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<body>
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+
+<div class="hotel py-2 px-2 pb-4">
+    <div class="card-header w-75">
+        Booking Summary
+    </div>
+    <div class="row" th:object="${bookingViewModel}">
+        <div class="col-4">
+            <div>
+                <img th:src="*{getHotelImage()}"
+                     height="250" width="250" alt="Hotel Image" class="hotel-img">
+            </div>
+            <span>hotel image</span>
+        </div>
+        <div class="col-4">
+
+            <div th:class="card-text"><span th:text="|First Name: *{getFirstName()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Last Name: *{getLastName()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Hotel Name: *{getHotelName()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Hotel Category: *{getCategory()}|"></span></div>
+            <div th:class="card-text"><span th:text="|City: *{getCity()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Address: *{getAddress()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Hotel Type: *{getType()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Check In: *{getCheckIn()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Check Out: *{getCheckOut()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Total nights: *{getTotalNights()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Total Price: *{getTotalPrice()}|"></span></div>
+            <div th:class="card-text"><span th:text="|Number of people: *{getNumberOfPeople()}|"></span></div>
+            <div>
+                <table>
+                    <tr>
+                        <th>Room Type:</th>
+                        <th>Price:</th>
+                    </tr>
+                    <tr th:each="e : *{getRoomTypesCostPerNight()}">
+                        <th th:text="${e.key}">key value</th>
+                        <th th:text="${e.value}">value</th>
+
+                    </tr>
+                </table>
+            </div>
+            <div th:class="card-text"><span th:text="|Pet name: *{getPetName()}|"></span></div>
+        </div>
+        <div class="ln_solid">
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <button type='submit' class="btn btn-primary">
+                        <a th:href="@{/bookings/update/{id}(id=*{bookingId})}">Update</a>
+                    </button>
+                    <!--                    <form th:action="@{bookings/delete/{id}(id=*{bookingId})}">-->
+                    <button type='submit' class="delete-btn" th:data-id="*{bookingId}" id="delete">Delete</button>
+                    <!--                    <button type="button" class="btn btn-primary" id="loadBookings" >View All Bookings</button>-->
+                </div>
+            </div>
+        </div>
+        <!--        with this returns http://localhost:8080/bookings/details/bookings/details/4-->
+        <!--        <div class="card-header">-->
+        <!--            <table id="tableItems"-->
+        <!--                   class="table table-condensed table-hover table-responsive-sm width=80%">-->
+        <!--                <thead class="thead-secondary">-->
+        <!--                <tr>-->
+        <!--                    <th>ID</th>-->
+        <!--                    <th>First Name</th>-->
+        <!--                    <th>Last Name</th>-->
+        <!--                    <th>Hotel</th>-->
+        <!--                    <th>City</th>-->
+        <!--                    <th>Check In</th>-->
+        <!--                    <th>Check Out</th>-->
+        <!--                    <th>Actions</th>-->
+        <!--                </tr>-->
+        <!--                </thead>-->
+        <!--                <tbody id="table-container"></tbody>-->
+        <!--                <script>-->
+        <!--                    $('#loadBookings').click(() => {-->
+        <!--                        reloadBookings()-->
+        <!--                    });-->
+
+        <!--                    function reloadBookings() {-->
+        <!--                        $("#table-container").empty();-->
+
+        <!--                        let counter = 1;-->
+        <!--                        fetch("http://localhost:8080/all-bookings")-->
+        <!--                            .then(response => response.json())-->
+        <!--                            .then(json => json.forEach(b => {-->
+        <!--                                console.log(json)-->
+        <!--                                let tableRow =-->
+        <!--                                    '<tr>' +-->
+        <!--                                    '<td>' + counter + '</td>' +-->
+        <!--                                    '<td>' + b.firstName + '</td>' +-->
+        <!--                                    '<td>' + b.lastName + '</td>' +-->
+        <!--                                    '<td>' + b.hotelName + '</td>' +-->
+        <!--                                    '<td>' + b.city + '</td>' +-->
+        <!--                                    '<td>' + b.checkIn + '</td>' +-->
+        <!--                                    '<td>' + b.checkOut + '</td>' +-->
+        <!--                                    // '<td>' + b.cancelBefore + '</td>' +-->
+        <!--                                    '<td>' +-->
+        <!--                                    '<button class="update-btn" data-booking-id="' + b.bookingId + '">Details</button>' +-->
+        <!--                                    '<button class="delete-btn" data-booking-id="' + b.bookingId + '">Cancel Booking</button>' +-->
+        <!--                                    '</td>' +-->
+        <!--                                    '</tr>'-->
+        <!--                                counter = counter + 1;-->
+        <!--                                $("#table-container").append(tableRow);-->
+        <!--                            }))-->
+        <!--                    }-->
+
+
+        <!--                    $('body').on('click', '.update-btn', function () {-->
+        <!--                        let bookingId = $(this).data('booking-id');-->
+        <!--                        // $.cookie('bookingId', bookingId);-->
+        <!--                        window.location.href = 'bookings/details/' + bookingId;-->
+
+        <!--                    })-->
+
+        <!--                    $('body').on('click', '.delete-btn', function () {-->
+        <!--                        if (confirm('Are you sure you want to delete the selected booking?')) {-->
+        <!--                            let bookingId = $(this).data('booking-id');-->
+        <!--                            console.log("Booking id to delete is " + bookingId);-->
+
+        <!--                            fetch('http://localhost:8080/delete/' + bookingId, {-->
+        <!--                                method: 'DELETE'-->
+        <!--                            }).then(_ => reloadBookings())-->
+        <!--                            console.log('deleted');-->
+        <!--                        } else {-->
+        <!--                            console.log('Thing was not deleted from the database.');-->
+        <!--                        }-->
+        <!--                    });-->
+        <!--                </script>-->
+
+        <!--            </table>-->
+        <!--        </div>-->
+    </div>
+</div>
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+<script>
+    $('#delete').click(function(){
+        if (confirm('Are you sure you want to delete the selected booking?')) {
+            let bookingId = $(this).data('id');
+            console.log("Booking id to delete is " + bookingId);
+
+            fetch('http://localhost:8080/delete/' + bookingId, {
+                method: 'DELETE'
+            })
+            console.log('deleted');
+            window.location.href = '/view-all';
+        }
+    })
+
+</script>
+
+
+</body>
+</html>

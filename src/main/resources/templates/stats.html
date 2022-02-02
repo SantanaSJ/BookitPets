@@ -1,0 +1,29 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<section>
+    <div class="container-fluid">
+        <h1 class="text-center text-black mt-3">Welcome to Stats!</h1>
+        <h3 class="text-center text-black mt-3">Total requests
+            <th:block th:text="${stats.getTotalRequests()}"></th:block>
+        </h3>
+        <h3 class="text-center text-black mt-3">Anonymous requests
+            <th:block th:text="${stats.getAnonymousRequests()}"></th:block>
+        </h3>
+        <h3 class="text-center text-black mt-3">Authorized requests
+            <th:block th:text="${stats.getAuthRequests()}"></th:block>
+        </h3>
+    </div>
+</section>
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+</body>
+
+</html>

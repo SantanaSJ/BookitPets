@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+
+<!--TODO: Add edit buttons + edit/OR add edit profile link below view profile / MODAL -> KINDSON / ADD upload image for pet photo-->
+<main id="main">
+
+    <section>
+        <div class="d-flex justify-content-center">
+            <div class="card shadow mb-4">
+                <!-- Card Header -->
+                <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Account Info</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+
+                    <div class="container justify-content-center">
+                        <div class="card p-4">
+                            <div th:object="${profileViewModel}"
+                                 class="card-info d-flex flex-column justify-content-center align-items-center">
+                                <span class="image">
+                                    <img src="https://i.imgur.com/wvxPV9S.png" height="100"
+                                         width="100"/>
+                                </span>
+                                <div th:class="card-text"><span th:text="|First Name:*{firstName}|"></span></div>
+                                <div th:class="card-text"><span th:text="|Last Name:*{lastName}|"></span></div>
+                                <div th:class="card-text"><span th:text="|Email:*{email}|"></span></div>
+                                <div th:class="card-text"><span th:text="|Pet Name:*{petName}|"></span></div>
+                                <div th:class="card-text"><span th:text="|Pet kilograms:*{petKilograms}|"></span></div>
+                                <div th:class="card-text"><span> <img class="dog-image rounded-circle"
+                                                                      th:src="*{getPetImageUrl() == null} ? '/images/1915.jpg' : *{getPetImageUrl()}"
+                                                                      height="100"
+                                                                      width="100"/></span></div>
+
+                                <div th:class="card-text"><span
+                                        th:text="|Joined: ${#temporals.format(profileViewModel.joined, 'dd-MM-yyyy HH:mm')}hrs|"></span>
+                                </div>
+                                <div class="col-md-6 offset-md-3">
+                                    <button type='submit' class="btn btn-primary">
+                                        <a th:href="@{/users/profile/update/{id}(id=${session.currentUserId})}">Update</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
+
+<!-- Vendor JS Files -->
+<script src="/assets/vendor/aos/aos.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="/assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+</body>
+
+</html>

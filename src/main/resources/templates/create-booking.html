@@ -1,0 +1,137 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<main>
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-7">
+                <div class="x_content">
+                    <div class="hotel py-2 px-2 pb-4 border-bottom">
+
+                        <!--    TODO: Add required on fields- -->
+                        <form class="" th:action="@{/create-booking}" th:method="POST"
+                              th:object="${bookingBindingModel}">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="title border-bottom h2" id="title">
+                                        <div class="card-header">
+                                            <p>Please provide the following details:</p>
+                                        </div>
+                                    </div>
+                                    <!--            <input th:value="${viewModel.getId()}" name="id" type="hidden"/>-->
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <input class="form-control" name="hotelId" id="hotelId" type="hidden" th:value="${bindingModel.hotelId}">
+
+                                            <input class="form-control" name="checkIn" id="checkIn" type="date" hidden="hidden " th:value="${bindingModel.checkIn}">
+                                            <input class="form-control" name="checkOut" id="checkOut" type="hidden" th:value="${bindingModel.checkOut}">
+                                            <input class="form-control" name="numberOfPeople" id="numberOfPeople" type="hidden" th:value="${bindingModel.numberOfPeople}">
+                                            <label class="label-align">First Name<span
+                                                    class="required">*</span></label>
+                                            <input th:field="*{firstName}" type="text" class="form-control" name="name"
+                                                   placeholder="ex. John ..."
+                                            />
+                                            <div class="col-auto">
+                                                <small th:if="${#fields.hasErrors('firstName')}"
+                                                       th:errors="*{firstName}"
+                                                       id="first-nameError"
+                                                       class="text-light form-text bg-danger rounded">xxx</small>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col">
+                                            <label class="label-align">Last Name<span
+                                                    class="required">*</span></label>
+                                            <input th:field="*{lastName}" class="form-control" name="name"
+                                                   placeholder="ex. Doe..."
+                                            />
+                                            <div class="col-auto">
+                                                <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                                       id="last-nameError"
+                                                       class="text-light form-text bg-danger rounded">xxx</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="label-align">Pet Name<span
+                                                    class="required">*</span></label>
+                                            <input th:field="*{petName}" class="form-control" name="name"
+                                                   placeholder="ex. Lassie ..."
+                                            />
+                                            <div class="col-auto">
+                                                <small th:if="${#fields.hasErrors('petName')}" th:errors="*{petName}"
+                                                       class="text-light form-text bg-danger rounded">xxx</small>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="label-align">Kilograms<span
+                                                    class="required">*</span></label>
+                                            <input th:field="*{petKilograms}" class="form-control" name="name"
+                                                   placeholder="ex. 45kg ..."
+                                            />
+                                            <div class="col-auto">
+                                                <small th:if="${#fields.hasErrors('petKilograms')}"
+                                                       th:errors="*{petKilograms}"
+                                                       class="text-light form-text bg-danger rounded">xxx</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="col">
+                                        <label class="label-align">email<span
+                                                class="required">*</span></label>
+                                        <input th:field="*{email}" class="form-control" type="email"
+                                        />
+                                        <div class="col-auto">
+                                            <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                                   id="email-Error"
+                                                   class="text-light form-text bg-danger rounded">xxx</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col">
+                                        <label class="label-align">Comments</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <textarea th:field="*{comments}" class="form-control" rows="4"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="ln_solid">
+                                        <div class="form-group">
+                                            <div class="col-md-6 offset-md-3">
+                                                <button type='submit' class="btn btn-primary">Book</button>
+                                                <button type='reset' class="btn btn-success">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+<!--End #main-->
+<script>
+    const input = $("input:reset");
+</script>
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+</body>
+</html>

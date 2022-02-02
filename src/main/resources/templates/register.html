@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<main>
+    <section class="vh-100 bg-image"
+             style="background-image: url('https://mdbootstrap.com/img/Photos/new-templates/search-box/img4.jpg');">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Register</div>
+                        <div class="card-body">
+                            <form id="my-form" name="form"
+                                  th:action="@{/users/register}"
+                                  th:method="POST"
+                                  th:object="${userModel}">
+                                <div class="form-group row">
+                                    <label for="first-name" class="col-md-4 col-form-label text-md-right">First
+                                        Name</label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text"
+                                               th:field="*{firstName}"
+                                               id="first-name"
+                                               class="form-control"
+                                               name="first-name"
+                                               placeholder="First Name"
+                                               >
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                               id="first-nameError"
+                                               class="text-light form-text bg-danger rounded">Username length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="last-name" class="col-md-4 col-form-label text-md-right">Last
+                                        Name</label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text"
+                                               th:field="*{lastName}"
+                                               id="last-name"
+                                               class="form-control"
+                                               name="last-name"
+                                               placeholder="Last Name"
+                                               >
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                               id="last-nameError"
+                                               class="text-light form-text bg-danger rounded">Username length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-md-4 col-form-label text-md-right">Phone
+                                        Number</label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="tel"
+                                               th:field="*{phoneNumber}"
+                                               id="phone"
+                                               class="form-control"
+                                               name="phone"
+                                               placeholder="Phone number"
+                                               >
+                                        <!--                                        pattern="[0-9 ]{10}"-->
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                                               id="phoneError"
+                                               class="text-light form-text bg-danger rounded">Username length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail
+                                        Address</label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text"
+                                               th:field="*{email}"
+                                               id="email_address"
+                                               class="form-control"
+                                               name="email-address"
+                                               placeholder="Email"
+                                               >
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                               id="email_addressError"
+                                               class="text-light form-text bg-danger rounded">Username length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="password"
+                                               th:field="*{password}"
+                                               id="password"
+                                               class="form-control"
+                                               name="password"
+                                               placeholder="Password"
+                                               >
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                               id="passwordError"
+                                               class="text-light form-text bg-danger rounded">Username length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="confirm-password" class="col-md-4 col-form-label text-md-right">Confirm
+                                        Password</label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="password"
+                                               th:field="*{confirmPassword}"
+                                               id="confirm-password"
+                                               class="form-control"
+                                               name="confirm-password"
+                                               placeholder="Confirm Password"
+                                               >
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('confirmPassword')}"
+                                               th:errors="*{confirmPassword}"
+                                               id="confirm-passwordError"
+                                               class="text-light form-text bg-danger rounded">Username length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary" id="submit">
+                                        Register
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+<!--<script src="/js/registration.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+</body>
+</html>

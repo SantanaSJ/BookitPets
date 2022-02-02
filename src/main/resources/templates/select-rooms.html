@@ -1,0 +1,106 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.16.1-lts/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<body>
+
+<main id="main">
+
+    <section>
+        <div class="row justify-content-center">
+
+            <div class="col-xl-8 col-lg-7">
+                <div class="x_content">
+
+                    <!--  RESERVATION -->
+                    <form class="" th:action="@{/save}" th:method="POST" th:object="${bindingModel}">
+                        <div class="title border-bottom h2" id="title">
+                            <div class="card-header">
+                                <p>Make your reservation</p>
+                            </div>
+                        </div>
+                        <!--                        TODO: Add required on fields-->
+                        <table>
+                            <thead>
+                            <tr>
+                                <th >Row</th>
+                                <th >Variety</th>
+                                <th >Seeds per cell</th>
+                                <th>
+                                    <button type="submit" name="addRow">Add row</button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="row,rowStat : *{rows}">
+                                <td th:text="${rowStat.count}">1</td>
+                                <td>
+                                    <select th:field="*{rows[__${rowStat.index}__].roomViewModel.type}">
+                                        <option th:each="room : ${viewModels.rooms}" th:value="${room.id}" th:text="${room.type}">Thymus Thymi</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{rows[__${rowStat.index}__].numberOfRooms}" th:errorclass="fieldError" />
+                                </td>
+                                <td>
+                                    <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove row</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col">
+                                <label class="label-align">Number of people <span
+                                        class="required">*</span></label>
+                                <label for="people"></label><input th:field="*{numberOfPeople}" type="number" min="1"
+                                                                   max="10" id="people"
+                                                                   class="form-control"/>
+                                <div class="col-auto">
+                                    <small th:if="${#fields.hasErrors('numberOfPeople')}"
+                                           th:errors="*{numberOfPeople}"
+                                           id="people-Error"
+                                           class="text-light form-text bg-danger rounded">xxx</small>
+                                </div>
+
+                            </div>
+
+                            <div class="ln_solid">
+                                <div class="form-group">
+                                    <div class="col-md-6 offset-md-3">
+                                        <button type='submit' class="btn btn-primary">Submit</button>
+                                        <button type='reset' class="btn btn-success">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
+
+<script>
+    const input = $("input:reset");
+</script>
+
+</body>
+
+</html>
+
+
