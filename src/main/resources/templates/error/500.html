@@ -1,0 +1,26 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+</style>
+<body>
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<section>
+
+    <div class="centered">
+        <h1>500 Server Error</h1>
+        <div>
+            <div><span class="errMsg">Well gosh! Seemingly from nowhere our code pooped out. Sad day.</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+</body>
+</html>

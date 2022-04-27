@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+
+<body class="not-found">
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<div class="mainbox">
+    <div class="err">4</div>
+    <i class='bx bx-help-circle bx-flashing' style="color: #0b84a2"></i>
+<!--    <i class="far fa-question-circle fa-spin"></i>-->
+    <div class="err2">4</div>
+    <div class="msg">
+        <p>Maybe this page moved?</p>
+        <p>Got deleted?</p>
+        <p>Is hiding out in quarantine?</p>
+        <p>Never existed in the first place?</p>
+        <p>Let's go <a href="#">home</a> and try from there.</p>
+    </div>
+</div>
+
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+</body>
+</html>

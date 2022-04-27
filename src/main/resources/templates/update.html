@@ -1,0 +1,348 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<main>
+
+    <section>
+        <div class="booking-container update">
+            <div class="row justify-content-center">
+                <div class="col-3 pt-5 p-0 alert-msg follow-scroll">
+                    <div th:if="${summaryBookingViewModel.paymentStatus == 'UNPAID'}"
+                         class="alert alert-danger alert-dismissible fade show"
+                         role="alert">
+                        <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span></strong>
+                        <span>Your booking is not guaranteed yet. In order to guarantee and confirm your booking please complete the payment.</span>
+                        <!--                        <form th:method="GET" th:href="@{/payment/{id}(id=*{bookingId})}">-->
+                        <!--                            <button type='submit' class="btn btn-light payment">Complete Payment</button>-->
+                        <!--                        </form>-->
+                        <a class="payment" th:href="@{/payment/{id}(id=${summaryBookingViewModel.bookingId})}">Complete
+                            Payment</a>
+
+                    </div>
+                    <div th:if="${summaryBookingViewModel.paymentStatus == 'PAID'}"
+                         class="alert alert-success alert-dismissible fade show"
+                         role="alert">
+                        <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span>
+                        </strong>
+                        <span>Your booking is paid and guaranteed.</span>
+
+                        <!--                            <a th:href="@{/payment/{id}(id=*{bookingId})}">Complete Payment</a>-->
+
+                    </div>
+                </div>
+                <div class="col-6">
+                    <form th:action="@{/bookings/update/{id}(id=*{bookingId})}"
+                          th:method="PATCH"
+                          th:object="${bookingUpdateBindingModel}">
+                        <div class="card-header">
+                            Update Booking Information
+                        </div>
+                        <div class="summary-body border p-3">
+                            <div class="row">
+                                <div class="col">
+                                    <div>
+                                        <label for="first-name" class="label-align fw-bold">First Name<span
+                                                class="required">*</span></label>
+                                        <input th:field="*{firstName}"
+                                               type="text"
+                                               class="form-control"
+                                               name="first-name"
+                                               id="first-name"
+                                               placeholder="ex. John ..."
+                                               required
+                                               minlength="3"
+                                               maxlength="20">
+                                        <div class="col-auto">
+                                            <small th:if="${#fields.hasErrors('firstName')}"
+                                                   th:errors="*{firstName}"
+                                                   id="first-nameError"
+                                                   class="text-light form-text bg-danger rounded">xxx</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <label for="lastName" class="label-align fw-bold">Last Name<span
+                                                class="required">*</span></label>
+                                        <input
+                                                th:field="*{lastName}"
+                                                type="text"
+                                                class="form-control"
+                                                name="name"
+                                                placeholder="ex. John ..."
+                                                id="lastName"
+                                                required
+                                                minlength="3"
+                                                maxlength="20"/>
+                                        <div class="col-auto">
+                                            <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                                   id="last-nameError"
+                                                   class="text-light form-text bg-danger rounded">xxx</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div>
+                                        <label for="petName" class="label-align fw-bold mt-3">Pet Name<span
+                                                class="required">*</span></label>
+                                        <input
+                                                th:field="*{petName}"
+                                                class="form-control"
+                                                name="name"
+                                                placeholder="ex. Lassie ..."
+                                                id="petName"
+                                                required
+                                                minlength="3"
+                                                maxlength="10"/>
+                                        <div class="col-auto">
+                                            <small th:if="${#fields.hasErrors('petName')}" th:errors="*{petName}"
+                                                   class="text-light form-text bg-danger rounded">xxx</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <label for="pet-kg" class="label-align fw-bold mt-3">Kilograms<span
+                                                class="required">*</span></label>
+                                        <input
+                                                th:field="*{petKilograms}"
+                                                class="form-control"
+                                                name="name"
+                                                placeholder="ex. 45kg ..."
+                                                id="pet-kg"
+                                                required
+                                                min="1"/>
+                                        <div class="col-auto">
+                                            <small th:if="${#fields.hasErrors('petKilograms')}"
+                                                   th:errors="*{petKilograms}"
+                                                   class="text-light form-text bg-danger rounded">xxx</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div>
+                                        <label for="email" class="label-align fw-bold mt-3">Email<span
+                                                class="required">*</span></label>
+                                        <input
+                                                th:field="*{email}"
+                                                class="form-control"
+                                                type="email"
+                                                id="email"
+                                                required/>
+                                        <div class="col-auto">
+                                            <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                                   id="email-Error"
+                                                   class="text-light form-text bg-danger rounded">xxx</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label for="comments" class="label-align fw-bold mt-3">Comments</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <textarea th:field="*{comments}" class="form-control" rows="1" id="comments"
+                                                  style="width: 16em"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="phoneNumber" class="label-align fw-bold mt-3">Phone number<span
+                                            class="required">*</span></label>
+                                    <input
+                                            th:field="*{phoneNumber}"
+                                            class="form-control"
+                                            type="text"
+                                            name="phoneNumber"
+                                            id="phoneNumber"
+                                            required/>
+                                    <div class="col-auto">
+                                        <small
+                                                th:if="${#fields.hasErrors('phoneNumber')}"
+                                                th:errors="*{phoneNumber}"
+                                                id="phoneNumber-Error"
+                                                class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--======================================================================================================================-->
+                        <!--SUMMARY-->
+                        <div class="card-header mt-3">
+                            Booking Summary
+                        </div>
+                        <div class="summary-body border p-3" th:object="${summaryBookingViewModel}">
+                            <div class="row">
+                                <div class="col">
+                                    <div>
+                                        <span class="fw-bold">Hotel Name:</span>
+                                        <p th:text="*{getHotelName()}">RAdisson</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <div class="fw-bold">Category:</div>
+                                        <span class="col"
+                                              th:each="star : ${#numbers.sequence(1, summaryBookingViewModel.category)}">
+                                                <i class='bx bxs-star'> </i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div>
+                                            <span class="fw-bold">City:</span>
+                                            <p th:text="*{getCity()}">Sofia</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div>
+                                            <span class="fw-bold">Address:</span>
+                                            <p th:text="*{getAddress()}">Some address</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div>
+                                            <span class="fw-bold">Check in:</span>
+                                            <p th:text="${#temporals.format(summaryBookingViewModel.checkIn, 'dd-MM-yyyy')}">
+                                                19.02.2022</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div>
+                                            <span class="fw-bold">Check out:</span>
+                                            <p th:text="${#temporals.format(summaryBookingViewModel.checkOut, 'dd-MM-yyyy')}">
+                                                20.02.2022</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div>
+                                            <span class="fw-bold">Total nights:</span>
+                                            <p th:text="*{getTotalNights()}">34</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="fw-bold">Status:</span>
+                                        <p th:text="*{paymentStatus}">paid</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="table-responsive-sm">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Room type</th>
+                                                    <th scope="col">Price per room</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="e, rowStat : ${summaryBookingViewModel.rooms}">
+                                <span th:if="${e.numberOfRooms != 0}">
+                                <th scope="row" th:text="${rowStat.count}" type="number" name="index"></th>
+                                <td th:text="|${rowStat.current.type} x ${rowStat.current.numberOfRooms}|"
+                                    name="type"></td>
+                                <td th:text="${rowStat.current.price}" name="price"></td>
+                                </span>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="table-responsive-sm">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Total price</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td th:text="|*{getTotalPrice()} BGN|"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <div>
+                                                <span class="fw-bold">Comments:</span>
+                                                <p th:text="${#strings.isEmpty(summaryBookingViewModel.getComments())}
+                                     ? 'No comments!'
+                                     : *{getComments()}">comments</p>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <span class="fw-bold">Booking last updated:</span>
+                                                <p th:text="*{lastUpdated == null}
+                                     ? 'No updates made yet!'
+                                     : ${#temporals.format(summaryBookingViewModel.lastUpdated, 'dd-MM-yyyy HH:mm')} + 'hrs'">
+                                                    19.02.2020</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid booking-details">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <button type='submit' class="btn btn-primary mt-4">Save</button>
+                                        </div>
+                                        <div class="col text-center">
+                                            <button type='button' class="btn delete-btn btn-danger mt-4"
+                                                    th:data-id="*{bookingId}"
+                                                    id="delete">
+                                                Cancel Booking
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+</main>
+<!--End #main-->
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+<script src="/js/delete.js"></script>
+<script src="/js/follow.js"></script>
+
+</body>
+</html>

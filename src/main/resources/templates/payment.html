@@ -1,0 +1,229 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head th:replace="fragments/head::head"></head>
+
+<!--Bootstrap 4 CSS-->
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+
+<!--Bootstrap 4 JavaScript-->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--Stripe JavaScript Library-->
+<script src="https://js.stripe.com/v3/"></script>
+
+<body>
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+
+
+<section>
+
+    <div class="container d-flex justify-content-center mt-5 mb-5">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card-header">Payment Method</div>
+                <div class="card-header p-0">
+                    <h6 class="mb-0">
+                        <div class="d-flex align-items-center justify-content-between"> <span>Credit
+                                                    card</span>
+                            <div class="icons"><img src="https://i.imgur.com/2ISgYja.png"
+                                                    width="30"> <img
+                                    src="https://i.imgur.com/W1vtnOV.png"
+                                    width="30"> <img src="https://i.imgur.com/35tC99g.png"
+                                                     width="30"> <img
+                                    src="https://i.imgur.com/2ISgYja.png"
+                                    width="30">
+                            </div>
+                        </div>
+                    </h6>
+                </div>
+                <form action="#" id="payment-form" method="post">
+                    <!--                            <input class="form-control" name="bookingId" id="bookingId" type="hidden"-->
+                    <!--                                   th:value="${bookingId}">-->
+                    <input id="api-key" type="hidden" th:value="${stripePublicKey}">
+                    <div class="form-group">
+                        <label class="font-weight-medium" for="card-element">
+                            Enter credit or debit card below
+                        </label>
+                        <div class="w-100 border" id="card-element">
+                            <!-- A Stripe Element will be inserted here. -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="email" name="email"
+                               placeholder="Email Address" type="email" required>
+                    </div>
+                    <!-- Used to display Element errors. -->
+                    <div class="text-danger w-100" id="card-errors" role="alert"></div>
+                    <div class="form-group pt-2">
+                        <button class="btn btn-primary btn-block" id="submitButton" type="submit">
+                            Pay With Your Card
+                        </button>
+                        <div class="small text-muted mt-4">
+                            Pay securely with Stripe. By clicking the button above, you agree
+                            to our <a target="_blank" href="#">Terms of Service</a>,
+                            <a target="_blank" href="#">Privacy</a> and
+                            <a target="_blank" href="#">Refund</a> policies.
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!--            SUMMARY        -->
+            <div class="col-md-6">
+                <div class="card-header">Summary</div>
+                <div class="row p-3 ml-1" th:each="r : ${all.rooms}">
+                    <div class="col-5"><span class="border-bottom fw-bold">Type and number of rooms</span>
+                        <div th:text="|${r.type} x ${r.numberOfRooms}|">x</div>
+
+                    </div>
+                    <div class="col">
+                        <span class="border-bottom fw-bold">Nights</span>
+                        <div th:text="${nights}">x</div>
+                        <!--                            <div>1</div>-->
+                    </div>
+                    <div class="col">
+                        <span class="border-bottom fw-bold">Price</span>
+                        <div th:text="|${r.price} BGN|">x</div>
+                        <!--                        разминаване при смятане на -20% или + 20%-->
+                        <!--                        <div th:with="price=${r.value}"  th:text="${#numbers.formatDecimal(price * 0.8, 1, 2)}">x</div>-->
+                        <div>
+                            <span><sup>Prices including VAT</sup></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="mt-0 line">
+                <div class="row p-3 ml-1">
+                    <div class="row">
+                        <div class="col-5"><span class="border-bottom fw-bold">VAT:</span>
+
+                        </div>
+                        <div class="col">
+
+                        </div>
+                        <div class="col">
+                            <span class="border-bottom">20%</span>
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-0 line">
+                <div class="row p-3 ml-1">
+                    <div class="row">
+                        <div class="col-5"><span class="border-bottom fw-bold">Total:</span>
+
+                        </div>
+                        <div class="col">
+
+                        </div>
+                        <div class="col">
+                            <div th:if="${hasDiscount == true}">
+                                <span class="border-bottom" th:text="|${total} BGN|"></span>
+                                <div>
+                                    <span><sup>*Discount applied!</sup></span>
+                                </div>
+
+                            </div>
+                            <div th:if="${hasDiscount == false}">
+                                <span class="border-bottom" th:text="${total}">x</span>
+<!--                                <input class="form-control" name="totalAmount" id="totalAmount" type="hidden"-->
+<!--                                       th:value="${total}">-->
+                            </div>
+                            <input class="form-control" name="totalAmount" id="totalAmount" type="hidden"
+                                   th:value="${total}">
+                            <input class="form-control" name="bookingId" id="bookingId" type="hidden"
+                                   th:value="${bookingId}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+<!--<script>-->
+<!--    $('#delete').click(function () {-->
+<!--        if (confirm('Are you sure you want to delete the selected booking?')) {-->
+<!--            let bookingId = $(this).data('id');-->
+<!--            console.log("Booking id to delete is " + bookingId);-->
+
+<!--            fetch('http://localhost:8080/delete/' + bookingId, {-->
+<!--                method: 'DELETE'-->
+<!--            })-->
+<!--            console.log('deleted');-->
+<!--            window.location.href = '/view-all';-->
+<!--        }-->
+<!--    })-->
+
+<!--</script>-->
+<script>
+    $(function () {
+        let API_KEY = $('#api-key').val();
+        // Create a Stripe client.
+        let stripe = Stripe(API_KEY);
+
+        // Create an instance of Elements.
+        let elements = stripe.elements();
+
+        // Create an instance of the card Element.
+        let card = elements.create('card');
+
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function (event) {
+            let displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission.
+        let form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            // handle payment
+            handlePayments();
+        });
+
+        //handle card submission
+        function handlePayments() {
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    // Inform the user if there was an error.
+                    let errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server.
+                    let token = result.token.id;
+                    let email = $('#email').val();
+                    let amount = $('#totalAmount').val();
+                    let bookingId = $('#bookingId').val();
+                    console.log(amount);
+                    console.log(email);
+                    console.log(bookingId);
+                    $.post(
+                        "/create-charge",
+                        {email: email, token: token, amount: amount, bookingId: bookingId},
+                        function (data) {
+                            alert(data.details);
+                            window.location.href = '/view-all';
+                        }, 'json');
+                }
+            });
+        }
+    });
+
+</script>
+</body>
+
+</html>

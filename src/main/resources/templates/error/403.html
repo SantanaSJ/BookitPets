@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+
+<body class="not-found">
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<div class="mainbox">
+    <div class="err">4</div>
+    <i class='bx bxs-minus-circle bx-flashing' style="color: red" ></i>
+<!--    <i class='bx bx-error-circle bx-tada' ></i>-->
+    <div class="err2">3</div>
+    <div class="msg">
+        <p>Access to this resource on the server is denied!</p>
+    </div>
+</div>
+
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+</body>
+</html>
