@@ -1,59 +1,29 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<!--<head>-->
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>Day Bootstrap Template - Index</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-            rel="stylesheet">
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-    <!--        <link rel="stylesheet" href="/resources/demos/style.css">-->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
-    <!-- Vendor CSS Files -->
-    <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<head th:replace="fragments/head::head"></head>
 
 
-    <!-- Template Main CSS File -->
-    <link href="/css/style.css" type="text/css" rel="stylesheet">
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">-->
+<!--<script src="https://code.jquery.com/jquery-3.6.0.js"></script>-->
+<!--<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>-->
 
-    <!--    autocomplete-->
-    <!--    <script type="text/javascript">-->
 
-    <!--                $(function() {-->
-    <!--                    $("#Search_Property").autocomplete({-->
-    <!--                        source: "hotelNamesAutocomplete",-->
-    <!--                        minLength: 3,-->
-    <!--                        select: function(event, ui) {-->
-    <!--                            this.value = ui.item.label;-->
-    <!--                            $("#Search_Property").val(ui.item.label);-->
-    <!--                            return false;-->
-    <!--                        }-->
-    <!--                    });-->
-    <!--                });-->
-    <!--    </script>-->
-</head>
+<!--    autocomplete-->
+<!--    <script type="text/javascript">-->
 
+<!--                $(function() {-->
+<!--                    $("#Search_Property").autocomplete({-->
+<!--                        source: "hotelNamesAutocomplete",-->
+<!--                        minLength: 3,-->
+<!--                        select: function(event, ui) {-->
+<!--                            this.value = ui.item.label;-->
+<!--                            $("#Search_Property").val(ui.item.label);-->
+<!--                            return false;-->
+<!--                        }-->
+<!--                    });-->
+<!--                });-->
+<!--    </script>-->
 
 <body>
 
@@ -61,25 +31,23 @@
 <header th:replace="fragments/navbar::navbar"></header>
 <!-- End Header -->
 
+
 <main id="main">
 
-    <section>
-        <div class="checkin-checkout px-1 px-sm-5 mx-auto">
+    <section id="home">
+        <div class="px-1 px-sm-5 mx-auto mt-5">
             <form autocomplete="off">
                 <div class="d-flex justify-content-center">
                     <div class="col-sm-9 col-12 px-0 mb-2">
-                        <div class="ui-widget">
+                        <div class="search">
+                            <div class="d-flex justify-content-center">
+                                <img class="paws" src="/images/giphy.gif"/>
+                            </div>
                             <input id="Search_Property" type="text" class="form-control"
                                    placeholder="Search for a hotel">
                         </div>
-                        <!--                        <div class="input-group input-daterange">-->
-
-                        <!--                            <input type="text" class="form-control" placeholder="Arriving Date">-->
-                        <!--                            <input type="text" class="form-control" placeholder="Leaving Date">-->
-                        <!--                        </div>-->
                         <br/>
                         <div class="d-flex justify-content-center">
-                            <!--                            <button type="button" class="btn search-btn" id="searchHotel">Search Hotel</button>-->
                             <button type="button" class="btn search-btn" id="showAll">Show All</button>
                         </div>
                     </div>
@@ -90,171 +58,96 @@
         </div>
     </section>
     <section>
+        <div class="row justify-content-center">
+            <div class="col-xl-11">
 
-        <div class="justify-content-center">
-            <!--        SORT      -->
-            <div class="container">
-                <form class="d-sm-flex form-horizontal" role="form">
-                    <h5>Sort By</h5>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="price">
-                            Price
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="name">
-                            Name
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <!--      END SORT      -->
+                <div>
+                    <div class="row" id="output">
+                        <div class="bg-white p-2" id="load-hotels">
 
-            <div class="bg-white p-2 border" id="load-hotels">
-                <!--                <div class="hotel py-2 px-2 pb-4 border-bottom">-->
-                <div class="row" id="output">
-                    <!--                        <h2 id="output"> Accommodation </h2>-->
-                    <script type="text/javascript" th:inline="javascript">
+                            <script type="text/javascript" th:inline="javascript">
 
-                        document.getElementById('showAll').addEventListener('click', showAll);
+                                document.getElementById('showAll').addEventListener('click', showAll);
 
-                        function showAll() {
-                            // window.addEventListener('DOMContentLoaded', (event) => {
+                                function showAll() {
+                                    // window.addEventListener('DOMContentLoaded', (event) => {
+                                    fetch('http://localhost:8080/accommodations')
+                                        .then(response => {
+                                            return response.json()
+                                        })
+                                        .then((data) => {
+                                            console.dir(data)
 
-                            fetch('http://localhost:8080/accommodations')
-                                .then(response => {
-                                    return response.json()
-                                })
-                                .then((data) => {
-                                    console.dir(data) // what does it show?
+                                            let output = '<h2 style="padding-left: 27px"> Search Results </h2>'
 
-                                    let output = '<h2> Search Results </h2>'
-
-                                    data.forEach(function (hotel) {
-                                        console.dir(hotel) // what does this show? is there a hotel.id?
-
-                                        output += `
-                                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                            <img src= ${hotel.imageUrl}
-                                                    height="100" width="100" alt="" class="hotel-img">
+                                            data.forEach(function (hotel) {
+                                                // console.dir(hotel)
+                                                output += `
+                                    <div class="hotel py-4 px-2 pb-4 border-bottom">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-3 px-4">
+                                                <img src= ${hotel.imageUrl}
+                                                    height="200" width="250" alt="" class="hotel-img rounded">
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-2">
                                                 <div class="d-md-flex align-items-md-center">
-                                                    <div class="name">${hotel.name}</div>
+                                                    <div class="fw-bold">${hotel.name}</div>
                                                 </div>
-                                                <div class="rating">Category: ${hotel.category}</div>
-                                                    <div>City: ${hotel.city}</div>
-                                                    <div>Address: ${hotel.address}</div>
-                                                    <div>Postal Code: ${hotel.postalCode}</div>
-                                                    <div>Type: ${hotel.type}</div>
+                                                <small class="rating text-muted">Category: ${hotel.category}</small>
+                                                <div class="row">
+                                                    <small class="col fw-light text-muted">${hotel.address}</small>
+                                                </div>
+
+                                                <div class="row">
+                                                <small class="col fw-light text-muted">${hotel.city}, ${hotel.postalCode}</small>
+                                                </div>
+                                                 <div class="row">
+                                                 <small class="col fw-light text-muted">${hotel.type}</small>
+                                                 </div>
                                           </div>
-                                            <div class="col-lg-3">
-                                            Description
-                                            </div>
-                                            <div class="col-lg-3 ">
-                                                <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>
+                                           <div class="col-lg-4">
+                                           <style>
+                                           .col-lg-4 {
+                                           margin-right: 14px;
+                                           width: 31%;}
+                                            </style>
+                                              <div class="d-md-flex align-items-md-center">
+                                              <div class="fw-bold">Description</div>
+
+                                              </div>
+                                              <small class="text-muted">${hotel.description}</small>
+
+                                           </div>
+                                            <div class="col-lg-3 px-0" id="map">
+<!--                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=InterContinental+Sofia,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>-->
+                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=Best+Western+Premier+Sofia+Airport+Hotel,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>
                                             </div>
                                         </div>
 <!--                                        Book Now button -->
-                                        <div class="d-flex justify-content-end mt-1">
-                                            <button class="btn btn-primary booking-btn text-uppercase" data-hotel-id='${hotel.id}'>Book Now</button>
+                                        <div class="d-flex justify-content-end mt-4 px-4">
+                                            <button class="btn btn-primary booking-btn" data-hotel-id='${hotel.id}'>Book Now</button>
                                         </div>
                                     </div>`;
-                                    });
+                                            });
 
-                                    document.getElementById('output').innerHTML = output
+                                            document.getElementById('output').innerHTML = output
+                                        })
+                                }
+
+                                $('body').on('click', '.btn-primary', function () {
+                                    console.log(this)
+                                    // const hotelId = $(this).data('hotel-id')
+                                    const hotelId = $(this).attr('data-hotel-id')
+                                    // $.cookie('id', hotelId);
+                                    // window.location.href = 'booking-form?id=' + hotelId;
+                                    window.location.href = 'booking-form/accommodation/' + hotelId;
                                 })
-                        }
+                                console.log("visible");
 
-                        $('body').on('click', '.btn-primary', function () {
-                            console.log(this) // are you able to see the element and the dataset attribute hotel-id?
-                            // const hotelId = $(this).data('hotel-id')
-                            const hotelId = $(this).attr('data-hotel-id')
-                            $.cookie('id', hotelId);
-                            window.location.href = 'booking-form?id=' + hotelId;
-
-                            // window.open("booking-form?id=" + hotelId);
-
-                            // function setCookie(name,value,days) {
-                            //     var expires = "";
-                            //     if (days) {
-                            //         var date = new Date();
-                            //         expires = "; expires=" + date.toUTCString();
-                            //     }
-                            //     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-                            // }
-
-                            // console.log("Hotel id is " + hotelId);
-                            // fetch('http://localhost:8080/hotels/' + hotelId + '/booking-form', {
-                            //     // method: 'GET'
-                            //
-                            // })
-                              // .then((response) => {
-                              //
-                                // if (response.success) {
-                                //     window.location.href = response.redirect('http://localhost:8080/hotels/' + hotelId + '/booking-form')
-                                // }
-                            })
-                            console.log("visible");
-
-                    </script>
+                            </script>
+                        </div>
+                    </div>
                 </div>
-                <!--                    <div class="hotel py-2 px-2 pb-4 border-bottom">-->
-                <!--                        <div class="row">-->
-                <!--                            <div class="col-lg-3"><img-->
-                <!--                                    src="https://images.unsplash.com/photo-1596618502142-d2a9d0c1fc2e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTd8fHJlc29ydHN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"-->
-                <!--                                    height="100" width="100" alt="" class="hotel-img"></div>-->
-                <!--                            <div class="col-lg-9">-->
-                <!--                                <div class="d-md-flex align-items-md-center">-->
-                <!--                                    <div class="name">Sunflower Hibiscus Inn <span class="city">Zuhu,-->
-                <!--                                            Mumbai</span></div>-->
-                <!--                                </div>-->
-                <!--                                <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>-->
-                <!--                                    <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span-->
-                <!--                                            class="far fa-star"></span>-->
-                <!--                                    &lt;!&ndash; Book now  &ndash;&gt;-->
-                <!--                                </div>-->
-                <!--                                <div class="d-flex flex-column tags pt-1">-->
-                <!--                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>-->
-                <!--                                    <div><span class="fas fa-receipt"></span> Express check-in</div>-->
-                <!--                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                        <div class="d-flex justify-content-end mt-1">-->
-                <!--                            <div class="btn btn-primary text-uppercase">Book Now</div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    <div class="hotel py-2 px-2 pb-4">-->
-                <!--                        <div class="row">-->
-                <!--                            <div class="col-lg-3"><img-->
-                <!--                                    src="https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NzV8fHJlc29ydHN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"-->
-                <!--                                    height="100" width="100" alt="" class="hotel-img"></div>-->
-                <!--                            <div class="col-lg-9">-->
-                <!--                                <div class="d-md-flex align-items-md-center">-->
-                <!--                                    <div class="name">Atlantic Inn <span class="city">Mulund West, Mumbai</span>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                                <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>-->
-                <!--                                    <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span-->
-                <!--                                            class="far fa-star"></span>-->
-                <!--                                    &lt;!&ndash; Book now  &ndash;&gt;-->
-                <!--                                </div>-->
-                <!--                                <div class="d-flex flex-column tags pt-1">-->
-                <!--                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>-->
-                <!--                                    <div><span class="fas fa-receipt"></span> Express check-in</div>-->
-                <!--                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                        <div class="d-flex justify-content-end mt-1">-->
-                <!--                            <div class="btn btn-primary text-uppercase">Book Now</div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
             </div>
         </div>
     </section>
@@ -267,26 +160,77 @@
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
-<div id="preloader"></div>
-
-<!-- Vendor JS Files -->
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
-
 <script src="/js/custom-script.js"></script>
 <script src="/js/search.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&callback=initMap"></script>
 
+
+<script th:inline="javascript">
+    let id = 0;
+
+    // function initMap() {
+    //         const lng = $(this).attr('data-hotel-lng')
+    //         const lat = $(this).attr('data-hotel-lat')
+    //          let lng = hotel.lng;
+    //         let lat = hotel.lat;
+    //
+    //         console.log(lng);
+    //         console.log(lat);
+    //
+    //         let elementById = document.getElementById("map");
+    //         console.log(elementById);
+    //
+    // }
+
+
+
+    //
+    //     const coords = {
+    //         lat: parseFloat(lat),
+    //         lng: parseFloat(lng)
+    //     };
+    //
+    //     const map = new google.maps.Map(
+    //         document.getElementById("map"), {zoom: 15, center: coords});
+    //     const marker = new google.maps.Marker({position: coords, map: map});
+    //
+    // })
+
+
+        //             console.log(id);
+        // id++;
+
+
+        // console.log(coords);
+
+        // const numString = id.toString();
+        // const thisMapID = "map" + numString;
+
+        // const mapOptions = {
+        //     zoom: 15, center: coords
+        // };
+
+
+        // let elements = document.getElementById("map");
+        // console.log(elements);
+        // let lng = mapId.getAttribute("data-lng");
+        // let lat = mapId.getAttribute("data-lng");
+        // console.log(lng);
+        // const div = document.createElement("div");
+        //
+        // div.setAttribute("id", "newMap");
+        // console.log(div.id);
+        // let htmlDivElement = document.getElementById("map").appendChild(div);
+
+
+        // console.log(map);
+        //
+        // console.log(document.getElementById('map'));
+        // })
+
+
+
+</script>
 
 </body>
 

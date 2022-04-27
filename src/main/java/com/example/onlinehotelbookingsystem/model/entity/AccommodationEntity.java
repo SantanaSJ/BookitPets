@@ -14,48 +14,42 @@ public class AccommodationEntity extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+
     @Column(nullable = false)
-    private String category;
+    private int category;
 
     @Column(nullable = false)
     private String city;
+
     @Column(nullable = false, columnDefinition = "VARCHAR(30)")
     private String address;
+
     @Column(nullable = false)
     private Integer postalCode;
+
+    private String lat;
+    private String lng;
+
+    //    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(255)")
     private String imageUrl;
 
+    private LocalTime checkInTime;
+
+
+    private LocalTime checkOutTime;
+
     @OneToMany(mappedBy = "accommodationEntity", cascade = CascadeType.ALL)
     private List<RoomEntity> roomEntity;
 
-    private String cancellationPolicy;
-    private String paymentPolicy;
-
-    private LocalTime checkInTime;
-    private LocalTime checkOutTime;
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
     @ManyToOne
     private AccommodationTypeEntity type;
-//
-//    @OneToMany(mappedBy = "property")
-//    private List<BookingEntity> bookings = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "property")
-//    private List<RoomEntity> rooms = new ArrayList<>();
 
     public AccommodationEntity() {
     }
-
-//    public boolean isAvailableBetween(LocalDate checkin, LocalDate checkout) {
-//        return this.bookings.stream()
-//                .noneMatch(b ->
-//                        (b.isDateInsideCheckedIn(checkin) || b.isDateInsideCheckedIn(checkout))
-//                                || (b.getCheckin().equals(checkin) && b.getCheckOut().equals(checkout)));
-//    }
 
     public String getName() {
         return name;
@@ -66,24 +60,14 @@ public class AccommodationEntity extends BaseEntity {
         return this;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public AccommodationEntity setCategory(String category) {
+    public AccommodationEntity setCategory(int category) {
         this.category = category;
         return this;
     }
-
-
-//    public List<RoomEntity> getRooms() {
-//        return rooms;
-//    }
-//
-//    public AccommodationEntity setRooms(List<RoomEntity> rooms) {
-//        this.rooms = rooms;
-//        return this;
-//    }
 
     public String getCity() {
         return city;
@@ -93,15 +77,6 @@ public class AccommodationEntity extends BaseEntity {
         this.city = city;
         return this;
     }
-
-//    public List<BookingEntity> getBookings() {
-//        return bookings;
-//    }
-//
-//    public AccommodationEntity setBookings(List<BookingEntity> bookings) {
-//        this.bookings = bookings;
-//        return this;
-//    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -139,24 +114,6 @@ public class AccommodationEntity extends BaseEntity {
         return this;
     }
 
-    public String getCancellationPolicy() {
-        return cancellationPolicy;
-    }
-
-    public AccommodationEntity setCancellationPolicy(String cancellationPolicy) {
-        this.cancellationPolicy = cancellationPolicy;
-        return this;
-    }
-
-    public String getPaymentPolicy() {
-        return paymentPolicy;
-    }
-
-    public AccommodationEntity setPaymentPolicy(String paymentPolicy) {
-        this.paymentPolicy = paymentPolicy;
-        return this;
-    }
-
     public LocalTime getCheckInTime() {
         return checkInTime;
     }
@@ -190,6 +147,24 @@ public class AccommodationEntity extends BaseEntity {
 
     public AccommodationEntity setRoomEntity(List<RoomEntity> roomEntity) {
         this.roomEntity = roomEntity;
+        return this;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public AccommodationEntity setLat(String lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public AccommodationEntity setLng(String lng) {
+        this.lng = lng;
         return this;
     }
 }

@@ -1,12 +1,12 @@
 package com.example.onlinehotelbookingsystem.service;
 
 import com.example.onlinehotelbookingsystem.model.entity.UserEntity;
-import com.example.onlinehotelbookingsystem.model.service.ProfileServiceModel;
-import com.example.onlinehotelbookingsystem.model.service.ProfileUpdateServiceModel;
-import com.example.onlinehotelbookingsystem.model.service.UserRegistrationServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.*;
 import com.example.onlinehotelbookingsystem.model.view.ProfileViewModel;
+import org.springframework.data.domain.Page;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface UserService {
 
@@ -16,7 +16,7 @@ public interface UserService {
 
     boolean isEmailFree(String email);
 
-    ProfileServiceModel findUserProfileByEmail(String currentUserEmail);
+    boolean existsBy(String email);
 
     ProfileServiceModel findById(Long id);
 
@@ -24,6 +24,13 @@ public interface UserService {
 
     void update(ProfileUpdateServiceModel updateServiceModel) throws IOException;
 
+    void makeAdmin(String email);
 
-//    String findUserByEmail(String currentUserEmail);
+    void removeAdmin(String email);
+
+    Page<AllUsersServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
+
+    void deleteUser(String email);
+
+    boolean isOwnerOfProfile(String currentUserEmail, Long id);
 }

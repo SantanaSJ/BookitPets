@@ -1,9 +1,6 @@
 package com.example.onlinehotelbookingsystem.model.service;
 
-import com.example.onlinehotelbookingsystem.model.binding.AddImageBindingModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class ProfileUpdateServiceModel {
@@ -15,7 +12,15 @@ public class ProfileUpdateServiceModel {
     private String phoneNumber;
     private String petName;
     private Integer petKilograms;
-    private AddImageBindingModel addImageBindingModel;
+    private String profileImageUrl;
+    private String petImageUrl;
+    private String userImageTitle;
+    private MultipartFile userImageFile;
+    private String petImageTitle;
+    private MultipartFile petImageFile;
+
+//    private AddUserImageBindingModel addUserImageBindingModel;
+//    private AddPetImageBindingModel addPetImageBindingModel;
 
     public String getFirstName() {
         return firstName;
@@ -80,12 +85,75 @@ public class ProfileUpdateServiceModel {
         return this;
     }
 
-    public AddImageBindingModel getAddImageBindingModel() {
-        return addImageBindingModel;
+//    public AddPetImageBindingModel getAddPetImageBindingModel() {
+//        return addPetImageBindingModel;
+//    }
+//
+//    public ProfileUpdateServiceModel setAddPetImageBindingModel(AddPetImageBindingModel addPetImageBindingModel) {
+//        this.addPetImageBindingModel = addPetImageBindingModel;
+//        return this;
+//    }
+
+//    public AddUserImageBindingModel getAddUserImageBindingModel() {
+//        return addUserImageBindingModel;
+//    }
+//
+//    public ProfileUpdateServiceModel setAddUserImageBindingModel(AddUserImageBindingModel addUserImageBindingModel) {
+//        this.addUserImageBindingModel = addUserImageBindingModel;
+//        return this;
+//    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 
-    public ProfileUpdateServiceModel setAddImageBindingModel(AddImageBindingModel addImageBindingModel) {
-        this.addImageBindingModel = addImageBindingModel;
+    public ProfileUpdateServiceModel setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+        return this;
+    }
+
+    public String getPetImageUrl() {
+        return petImageUrl;
+    }
+
+    public ProfileUpdateServiceModel setPetImageUrl(String petImageUrl) {
+        this.petImageUrl = petImageUrl;
+        return this;
+    }
+
+    public String getUserImageTitle() {
+        return userImageTitle;
+    }
+
+    public ProfileUpdateServiceModel setUserImageTitle(String userImageTitle) {
+        this.userImageTitle = userImageTitle;
+        return this;
+    }
+
+    public MultipartFile getUserImageFile() {
+        return userImageFile;
+    }
+
+    public ProfileUpdateServiceModel setUserImageFile(MultipartFile userImageFile) {
+        this.userImageFile = userImageFile;
+        return this;
+    }
+
+    public String getPetImageTitle() {
+        return petImageTitle;
+    }
+
+    public ProfileUpdateServiceModel setPetImageTitle(String petImageTitle) {
+        this.petImageTitle = petImageTitle;
+        return this;
+    }
+
+    public MultipartFile getPetImageFile() {
+        return petImageFile;
+    }
+
+    public ProfileUpdateServiceModel setPetImageFile(MultipartFile petImageFile) {
+        this.petImageFile = petImageFile;
         return this;
     }
 }

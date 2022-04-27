@@ -7,18 +7,21 @@ public class AccommodationViewModel {
 
     private Long id;
     private String name;
-    private String category;
+    private int category;
     private String city;
     private String address;
     private Integer postalCode;
     private String imageUrl;
+    private String description;
+    private String lat;
+    private String lng;
 
     private List<RoomViewModel> rooms = new ArrayList<>();
 //    to change
     private String type;
 
-    private String cancellationPolicy;
-    private String paymentPolicy;
+//    private String cancellationPolicy;
+//    private String paymentPolicy;
     private LocalTime checkInTime;
     private LocalTime checkOutTime;
 
@@ -34,11 +37,11 @@ public class AccommodationViewModel {
         return this;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public AccommodationViewModel setCategory(String category) {
+    public AccommodationViewModel setCategory(int category) {
         this.category = category;
         return this;
     }
@@ -105,24 +108,24 @@ public class AccommodationViewModel {
         this.id = id;
         return this;
     }
+//
+//    public String getCancellationPolicy() {
+//        return cancellationPolicy;
+//    }
+//
+//    public AccommodationViewModel setCancellationPolicy(String cancellationPolicy) {
+//        this.cancellationPolicy = cancellationPolicy;
+//        return this;
+//    }
 
-    public String getCancellationPolicy() {
-        return cancellationPolicy;
-    }
-
-    public AccommodationViewModel setCancellationPolicy(String cancellationPolicy) {
-        this.cancellationPolicy = cancellationPolicy;
-        return this;
-    }
-
-    public String getPaymentPolicy() {
-        return paymentPolicy;
-    }
-
-    public AccommodationViewModel setPaymentPolicy(String paymentPolicy) {
-        this.paymentPolicy = paymentPolicy;
-        return this;
-    }
+//    public String getPaymentPolicy() {
+//        return paymentPolicy;
+//    }
+//
+//    public AccommodationViewModel setPaymentPolicy(String paymentPolicy) {
+//        this.paymentPolicy = paymentPolicy;
+//        return this;
+//    }
 
     public LocalTime getCheckInTime() {
         return checkInTime;
@@ -148,6 +151,33 @@ public class AccommodationViewModel {
 
     public AccommodationViewModel setRooms(List<RoomViewModel> rooms) {
         this.rooms = rooms;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public AccommodationViewModel setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public AccommodationViewModel setLat(String lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public AccommodationViewModel setLng(String lng) {
+        this.lng = lng;
         return this;
     }
 }

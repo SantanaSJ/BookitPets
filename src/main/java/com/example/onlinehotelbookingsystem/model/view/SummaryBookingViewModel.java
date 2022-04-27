@@ -2,7 +2,9 @@ package com.example.onlinehotelbookingsystem.model.view;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SummaryBookingViewModel {
@@ -17,24 +19,31 @@ public class SummaryBookingViewModel {
 
     private Integer petKilograms;
     private String email;
+    private String phoneNumber;
     private String comments;
 
 //    DateTimeFormatter.ISO_LOCAL_DATE.format(localDate)
     private LocalDate checkIn;
     private LocalDate checkOut;
+//    private LocalDate cancellationDate;
+    private LocalDateTime cancelledOn;
 
-    private Map<String, BigDecimal> roomTypesCostPerNight = new HashMap<>();
+    private List<RoomViewModel> rooms;
 
-    private Integer numberOfPeople;
-    private String category;
+    private int category;
     private String hotelName;
     private String hotelImage;
     private String type;
     private String address;
     private String city;
-    //    private BigDecimal costPerNight;
+    private String phone;
     private BigDecimal totalPrice;
     private long totalNights;
+    private LocalDateTime lastUpdated;
+    private boolean isCancelled;
+    private boolean hasDiscount;
+    private String paymentStatus;
+
 
 
     public String getFirstName() {
@@ -110,20 +119,11 @@ public class SummaryBookingViewModel {
     }
 
 
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public SummaryBookingViewModel setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-        return this;
-    }
-
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public SummaryBookingViewModel setCategory(String category) {
+    public SummaryBookingViewModel setCategory(int category) {
         this.category = category;
         return this;
     }
@@ -165,15 +165,6 @@ public class SummaryBookingViewModel {
         return this;
     }
 
-    public Map<String, BigDecimal> getRoomTypesCostPerNight() {
-        return roomTypesCostPerNight;
-    }
-
-    public SummaryBookingViewModel setRoomTypesCostPerNight(Map<String, BigDecimal> roomTypesCostPerNight) {
-        this.roomTypesCostPerNight = roomTypesCostPerNight;
-        return this;
-    }
-
     public long getTotalNights() {
         return totalNights;
     }
@@ -207,6 +198,91 @@ public class SummaryBookingViewModel {
 
     public SummaryBookingViewModel setBookingId(Long bookingId) {
         this.bookingId = bookingId;
+        return this;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public SummaryBookingViewModel setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+        return this;
+    }
+
+//    public LocalDate getCancellationDate() {
+//        return cancellationDate;
+//    }
+//
+//    public SummaryBookingViewModel setCancellationDate(LocalDate cancellationDate) {
+//        this.cancellationDate = cancellationDate;
+//        return this;
+//    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public SummaryBookingViewModel setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+        return this;
+    }
+
+    public LocalDateTime getCancelledOn() {
+        return cancelledOn;
+    }
+
+    public SummaryBookingViewModel setCancelledOn(LocalDateTime cancelledOn) {
+        this.cancelledOn = cancelledOn;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public SummaryBookingViewModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public SummaryBookingViewModel setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
+        return this;
+    }
+
+    public boolean hasDiscount() {
+        return hasDiscount;
+    }
+
+    public SummaryBookingViewModel setHasDiscount(boolean hasDiscount) {
+        this.hasDiscount = hasDiscount;
+        return this;
+    }
+
+    public List<RoomViewModel> getRooms() {
+        return rooms;
+    }
+
+    public SummaryBookingViewModel setRooms(List<RoomViewModel> rooms) {
+        this.rooms = rooms;
+        return this;
+    }
+
+    public boolean isHasDiscount() {
+        return hasDiscount;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public SummaryBookingViewModel setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 }

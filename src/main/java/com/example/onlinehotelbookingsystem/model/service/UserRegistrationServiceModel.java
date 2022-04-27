@@ -1,10 +1,15 @@
 package com.example.onlinehotelbookingsystem.model.service;
 
+import com.example.onlinehotelbookingsystem.model.binding.UserRegistrationBindingModel;
+
 public class UserRegistrationServiceModel {
 
     private String firstName;
 
     private String lastName;
+
+    private String petName;
+    private String petKilograms;
 
     private String phoneNumber;
 
@@ -58,6 +63,24 @@ public class UserRegistrationServiceModel {
 
     public UserRegistrationServiceModel setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public UserRegistrationServiceModel setPetName(String petName) {
+        this.petName = petName;
+        return this;
+    }
+
+    public String getPetKilograms() {
+        return petKilograms;
+    }
+
+    public UserRegistrationServiceModel setPetKilograms(String petKilograms) {
+        this.petKilograms = petKilograms;
         return this;
     }
 }

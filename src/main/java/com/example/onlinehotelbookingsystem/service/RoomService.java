@@ -12,6 +12,8 @@ public interface RoomService {
 
    RoomEntity findById(Long roomId);
 
+
+
 //    void addRooms(AccommodationViewModel accommodationViewModel);
 
 }

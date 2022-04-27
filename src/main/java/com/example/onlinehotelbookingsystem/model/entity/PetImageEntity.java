@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pet_image")
+@Table(name = "pet_profile_images")
 public class PetImageEntity extends BaseEntity {
 
 

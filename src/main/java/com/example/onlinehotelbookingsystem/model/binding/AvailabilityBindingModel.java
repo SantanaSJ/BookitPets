@@ -12,11 +12,13 @@ import java.util.List;
 public class AvailabilityBindingModel {
 
     private Long hotelId;
+    private String hotelName;
 
-    @NotNull(message = "Check in date is required!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Future
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Check in date is required!")
     private LocalDate checkIn;
+
     @Future
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Check out date is required!")
@@ -25,8 +27,13 @@ public class AvailabilityBindingModel {
     @Valid
     private List<RoomBindingModel> rooms = new ArrayList<>();
 
-    @NotNull(message = "Number of people is required!")
-    private Integer numberOfPeople;
+//    private String cancellationPolicy;
+    private int category;
+    private String city;
+    private String address;
+
+//    @NotNull(message = "Number of people is required!")
+//    private Integer numberOfPeople;
 
 
     public AvailabilityBindingModel() {
@@ -60,14 +67,14 @@ public class AvailabilityBindingModel {
         return this;
     }
 
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public AvailabilityBindingModel setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-        return this;
-    }
+//    public Integer getNumberOfPeople() {
+//        return numberOfPeople;
+//    }
+//
+//    public AvailabilityBindingModel setNumberOfPeople(Integer numberOfPeople) {
+//        this.numberOfPeople = numberOfPeople;
+//        return this;
+//    }
 
 //    public String getEmail() {
 //        return email;
@@ -93,6 +100,43 @@ public class AvailabilityBindingModel {
 
     public AvailabilityBindingModel setHotelId(Long hotelId) {
         this.hotelId = hotelId;
+        return this;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public AvailabilityBindingModel setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+        return this;
+    }
+
+
+    public int getCategory() {
+        return category;
+    }
+
+    public AvailabilityBindingModel setCategory(int category) {
+        this.category = category;
+        return this;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public AvailabilityBindingModel setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public AvailabilityBindingModel setAddress(String address) {
+        this.address = address;
         return this;
     }
 }

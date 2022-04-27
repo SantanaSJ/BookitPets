@@ -15,6 +15,5 @@ public interface AccommodationService {
 
     AccommodationServiceModel findById(Long id);
 
-//    boolean isAvailableBetween(LocalDate checkIn, LocalDate checkOut, Long id,List<RoomBindingModel> rooms);
 
 }

@@ -11,6 +11,8 @@ public class ProfileViewModel {
     private String petName;
     private String petImageUrl;
     private String petKilograms;
+    private String phoneNumber;
+    private String profileImageUrl;
 
     private LocalDateTime joined;
 
@@ -86,6 +88,24 @@ public class ProfileViewModel {
 
     public ProfileViewModel setPetKilograms(String petKilograms) {
         this.petKilograms = petKilograms;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public ProfileViewModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public ProfileViewModel setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
         return this;
     }
 }

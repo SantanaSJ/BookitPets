@@ -2,9 +2,7 @@ package com.example.onlinehotelbookingsystem.model.binding;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +13,15 @@ public class BookingBindingModel {
     private Long hotelId;
 
     @NotBlank(message = "First name is required!")
+    @Size(min = 3, max = 20, message = "First name must be between 3 and 20 characters.")
     private String firstName;
 
     @NotBlank(message = "Last name is required!")
+    @Size(min = 3, max = 20, message = "Last name must be between 3 and 20 characters.")
     private String lastName;
 
     @NotBlank(message = "Pet name is required!")
+    @Size(min = 3, max = 10, message = "Pet name must be between 3 and 10 characters.")
     private String petName;
 
     @NotNull(message = "Pet kilograms are required!")
@@ -28,17 +29,24 @@ public class BookingBindingModel {
     private Integer petKilograms;
 
     @NotBlank(message = "Email is required!")
+    @Pattern(regexp = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$", message = "Please enter a valid email!")
     private String email;
+
+    @NotBlank(message = "Phone number is required!")
+    @Pattern(regexp = "^0\\d{9}$", message = "Phone number should be in the format: 0884444333")
+    private String phoneNumber;
+
     private String comments;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOut;
+//    private String petImageUrl;
+
 
     private List<RoomBindingModel> bookedRooms = new ArrayList<>();
 
-    private Integer numberOfPeople;
 
     public String getFirstName() {
         return firstName;
@@ -121,14 +129,14 @@ public class BookingBindingModel {
         return this;
     }
 
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public BookingBindingModel setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-        return this;
-    }
+//    public Integer getNumberOfPeople() {
+//        return numberOfPeople;
+//    }
+//
+//    public BookingBindingModel setNumberOfPeople(Integer numberOfPeople) {
+//        this.numberOfPeople = numberOfPeople;
+//        return this;
+//    }
 
         public Long getHotelId() {
         return hotelId;
@@ -138,4 +146,31 @@ public class BookingBindingModel {
         this.hotelId = hotelId;
         return this;
     }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public BookingBindingModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+//    public AddPetImageBindingModel getAddPetImageBindingModel() {
+//        return addPetImageBindingModel;
+//    }
+//
+//    public BookingBindingModel setAddPetImageBindingModel(AddPetImageBindingModel addPetImageBindingModel) {
+//        this.addPetImageBindingModel = addPetImageBindingModel;
+//        return this;
+//    }
+
+//    public String getPetImageUrl() {
+//        return petImageUrl;
+//    }
+//
+//    public BookingBindingModel setPetImageUrl(String petImageUrl) {
+//        this.petImageUrl = petImageUrl;
+//        return this;
+//    }
 }

@@ -6,8 +6,8 @@
 <!-- ======= Header ======= -->
 <header th:replace="fragments/navbar::navbar"></header>
 <!-- End Header -->
-<section>
-    <div class="container-fluid">
+<section style="padding: 73px">
+    <div class="container-fluid stats">
         <h1 class="text-center text-black mt-3">Welcome to Stats!</h1>
         <h3 class="text-center text-black mt-3">Total requests
             <th:block th:text="${stats.getTotalRequests()}"></th:block>

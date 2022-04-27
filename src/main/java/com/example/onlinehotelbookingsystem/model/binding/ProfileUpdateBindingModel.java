@@ -1,19 +1,16 @@
 package com.example.onlinehotelbookingsystem.model.binding;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.onlinehotelbookingsystem.model.binding.validator.ValidateMultipartForm;
+import org.springframework.web.multipart.MultipartFile;
 
-public class ProfileUpdateBindingModel {
+import javax.validation.constraints.*;
+
+public class    ProfileUpdateBindingModel {
 
     private Long userId;
 
-    @NotBlank(message = "Please provide first name!")
+    @NotEmpty(message = "Please provide first name!")
     @Size(min = 3, max = 20, message = "First name must be between 3 and 20 characters.")
-
     private String firstName;
 
     @NotBlank(message = "Please provide last name!")
@@ -25,18 +22,39 @@ public class ProfileUpdateBindingModel {
     private String email;
 
     @NotBlank(message = "Please provide a phone number!")
-    @Pattern(regexp = "[0-9 ]{10}", message = "Phone number should be in the format: 0xxxxxxx")
+    @Pattern(regexp = "^0\\d{9}$", message = "Phone number should be in the format: 0xx xx xx x")
     private String phoneNumber;
 
     @NotBlank(message = "Please provide your pet name!")
     @Size(min = 3, max = 10, message = "Pet name must be between 3 and 10 characters.")
     private String petName;
 
-    @Valid
-    private AddImageBindingModel addImageBindingModel;
+    private String profileImageUrl;
+    private String petImageUrl;
 
-    @NotBlank(message = "Please provide pet kilograms.")
-    private String petKilograms;
+    @NotBlank(message = "Photo title is required!")
+    @Size(min = 2, max = 20, message = "Title must be between 2-20 characters!")
+    private String userImageTitle;
+
+    @ValidateMultipartForm
+    private MultipartFile userImageFile;
+
+    @NotBlank(message = "Photo title is required!")
+    @Size(min = 2, max = 20, message = "Title must be between 2-20 characters!")
+    private String petImageTitle;
+
+    @ValidateMultipartForm
+    private MultipartFile petImageFile;
+
+//    @Valid
+//    private AddPetImageBindingModel addPetImageBindingModel;
+
+//    @Valid
+//    private AddUserImageBindingModel addUserImageBindingModel;
+
+    @NotNull(message = "Please provide pet kilograms.")
+    @Positive
+    private Integer petKilograms;
 
     public Long getUserId() {
         return userId;
@@ -83,11 +101,11 @@ public class ProfileUpdateBindingModel {
         return this;
     }
 
-    public String getPetKilograms() {
+    public Integer getPetKilograms() {
         return petKilograms;
     }
 
-    public ProfileUpdateBindingModel setPetKilograms(String petKilograms) {
+    public ProfileUpdateBindingModel setPetKilograms(Integer petKilograms) {
         this.petKilograms = petKilograms;
         return this;
     }
@@ -102,12 +120,76 @@ public class ProfileUpdateBindingModel {
         return this;
     }
 
-    public AddImageBindingModel getAddImageBindingModel() {
-        return addImageBindingModel;
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 
-    public ProfileUpdateBindingModel setAddImageBindingModel(AddImageBindingModel addImageBindingModel) {
-        this.addImageBindingModel = addImageBindingModel;
+    public ProfileUpdateBindingModel setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+        return this;
+    }
+
+    public String getPetImageUrl() {
+        return petImageUrl;
+    }
+
+    public ProfileUpdateBindingModel setPetImageUrl(String petImageUrl) {
+        this.petImageUrl = petImageUrl;
+        return this;
+    }
+
+//    public AddPetImageBindingModel getAddPetImageBindingModel() {
+//        return addPetImageBindingModel;
+//    }
+//
+//    public ProfileUpdateBindingModel setAddPetImageBindingModel(AddPetImageBindingModel addPetImageBindingModel) {
+//        this.addPetImageBindingModel = addPetImageBindingModel;
+//        return this;
+//    }
+
+//    public AddUserImageBindingModel getAddUserImageBindingModel() {
+//        return addUserImageBindingModel;
+//    }
+//
+//    public ProfileUpdateBindingModel setAddUserImageBindingModel(AddUserImageBindingModel addUserImageBindingModel) {
+//        this.addUserImageBindingModel = addUserImageBindingModel;
+//        return this;
+//    }
+
+
+    public String getUserImageTitle() {
+        return userImageTitle;
+    }
+
+    public ProfileUpdateBindingModel setUserImageTitle(String userImageTitle) {
+        this.userImageTitle = userImageTitle;
+        return this;
+    }
+
+    public MultipartFile getUserImageFile() {
+        return userImageFile;
+    }
+
+    public ProfileUpdateBindingModel setUserImageFile(MultipartFile userImageFile) {
+        this.userImageFile = userImageFile;
+        return this;
+    }
+
+    public String getPetImageTitle() {
+        return petImageTitle;
+    }
+
+    public ProfileUpdateBindingModel setPetImageTitle(String petImageTitle) {
+        this.petImageTitle = petImageTitle;
+        return this;
+    }
+
+    public MultipartFile getPetImageFile() {
+        return petImageFile;
+    }
+
+    public ProfileUpdateBindingModel setPetImageFile(MultipartFile petImageFile) {
+        this.petImageFile = petImageFile;
         return this;
     }
 }

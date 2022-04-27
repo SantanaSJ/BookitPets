@@ -4,6 +4,7 @@ import com.example.onlinehotelbookingsystem.model.entity.RoomEntity;
 import com.example.onlinehotelbookingsystem.model.service.RoomServiceModel;
 import com.example.onlinehotelbookingsystem.repository.RoomRepository;
 import com.example.onlinehotelbookingsystem.service.RoomService;
+import com.example.onlinehotelbookingsystem.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +37,6 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomEntity findById(Long roomId) {
-        return this.roomRepository.findById(roomId).orElse(null);
+        return this.roomRepository.findById(roomId).orElseThrow(() -> new ObjectNotFoundException("Room with id " + roomId + "not found!"));
     }
-
-
-//    @Override
-//    public void addRooms(AccommodationViewModel accommodationViewModel) {
-//        AccommodationServiceModel serviceModel = this.mapper.map(accommodationViewModel, AccommodationServiceModel.class);
-//        this.mapper.map(serviceModel, )
-//    }
 }

@@ -8,8 +8,10 @@ public class RoomViewModel {
     private Long id;
     private String type;
     private BigDecimal price;
-    @NotNull(message = "Number of rooms is required!")
+
     private Integer numberOfRooms;
+
+    private String description;
 
     public RoomViewModel() {
     }
@@ -47,6 +49,15 @@ public class RoomViewModel {
 
     public RoomViewModel setNumberOfRooms(Integer numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public RoomViewModel setDescription(String description) {
+        this.description = description;
         return this;
     }
 }

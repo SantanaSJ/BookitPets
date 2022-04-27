@@ -3,20 +3,9 @@
 
 <head th:replace="fragments/head::head"></head>
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script src="https://unpkg.com/popper.js@1.16.1-lts/dist/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
-<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
-<!--      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+<!--AOS LIBRARY-->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <body>
 
@@ -29,165 +18,203 @@
 
     <!--    <input type="hidden" name="hotelId" id="hotelId">-->
     <section>
-        <div class="row justify-content-center">
 
-            <div class="col-xl-8 col-lg-7">
-                <div class="x_content">
-                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                        <div class="row" th:object="${accommodationViewModel}">
-                            <div class="col-lg-3">
-                                <img th:src="*{getImageUrl()}"
-                                     height="100" width="100" alt="Hotel Image" class="hotel-img">
-                            </div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name" th:text="|Name: *{getName()}|">Hotel Name</div>
-                                </div>
-                                <div class="rating" th:text="|Category: *{getCategory()}|">Category:</div>
-                                <div class="city" th:text="|City: *{getCity()}|">City:</div>
-                                <div class="address" th:text="|Address: *{getAddress()}|">Address:</div>
-                                <div class="pk" th:text="|Postal Code: *{getPostalCode()}|">Postal Code:</div>
-                                <div class="type" th:text="|Type: *{getType()}|">Type:</div>
-                                <div class="type" th:text="|Check in time: *{getCheckInTime()} hrs|">Type:</div>
-                                <div class="type" th:text="|Check out time: *{getCheckOutTime()} hrs|">Type:</div>
-
-                            </div>
-                        </div>
-
+        <div class="booking-container">
+            <div class="row">
+                <div class="col-3 p-0 summary " th:object="${accommodationViewModel}">
+                    <div class="card-header">
+                        Hotel Summary
                     </div>
+                    <div class="summary-body p-3" data-aos="fade-up">
+                        <div>
+                            <span class="fw-bold">Hotel Name:</span>
+                            <p th:text="*{getName()}">Interhotel Continental</p>
+                        </div>
+                        <div>
+                            <div class="fw-bold">Category:</div>
+                            <span class="col"
+                                  th:each="star : ${#numbers.sequence(1, accommodationViewModel.category)}">
 
-                    <!--  RESERVATION -->
+                                <i class='bx bxs-star'>
+                                </i>
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="fw-bold">City:</span>
+                            <p th:text="*{getCity()}">Sofia</p>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Address:</span>
+                            <p th:text="*{getAddress()}">Center</p>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Check in:</span>
+                            <p th:text="|*{getCheckInTime()} hrs|">18.02.2022</p>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Check out:</span>
+                            <p th:text="|*{getCheckOutTime()} hrs|">19.02.2022</p>
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------------- AVAILABILITY----------------------------->
+                <div class="col booking">
                     <form class="" th:action="@{/room-availability}" th:method="GET" th:object="${bindingModel}">
-                        <div class="title border-bottom h2" id="title">
-                            <div class="card-header">
-                                <p>Check Availability</p>
-                            </div>
+                        <div class="card-header">
+                            Check Availability
                         </div>
-                        <div class="row">
-                            <div class="col">
+                        <div class="main-body p-3" data-aos="fade-up">
+                            <div class="row">
+                                <div class="col">
 
-
-                                <span class="form-label">Check In</span>
-                                <input th:field="*{checkIn}" class="form-control" type="date">
-                                <div class="col-auto">
-                                    <small th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"
-                                           id="checkIn-Error"
-                                           class="text-light form-text bg-danger rounded">xxx</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <span class="form-label">Check out</span>
-                                <input th:field="*{checkOut}" class="form-control" type="date">
-                                <div class="col-auto">
-                                    <small th:if="${#fields.hasErrors('checkOut')}" th:errors="*{checkOut}"
-                                           id="checkOut-Error"
-                                           class="text-light form-text bg-danger rounded">xxx</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-header">
-                                    Room Type and price per night per person
-                                </div>
-                                <table>
-                                    <tbody>
-
-                                    <tr th:each="r, rowStat : ${accommodationViewModel.getRooms()}">
-                                        <td th:text="${rowStat.count}" type="number" name="index"></td>
-                                        <td th:text="${rowStat.current.type}" name="type"></td>
-                                        <!--                                        GET HOTEL ID-->
-                                        <input class="form-control" name="hotelId" id="hotelId" type="hidden"
-                                               th:value="${accommodationViewModel.getId()}">
-
-                                        <!--                                        Get ROOM ID-->
-                                        <input th:value="${rowStat.current.id}" name="roomId" type="hidden"/>
-
-                                        <!--                                        PRICE-->
-                                        <td th:text="${#numbers.formatCurrency(r.price)}"></td>
-                                        <input class="form-control" name="price" id="price" type="hidden"
-                                               th:value="${r.price}">
-
-                                        <td>
-                                            <!--                                    GET NUMBER OF ROOMS FOR EACH ROOM-->
-                                            <input class="form-control" type="number" min="0" max="10"
-                                                   th:field="*{rooms[__${rowStat.index}__].numberOfRooms}"/>
-                                            <!--                                    GET INDEX AND TYPE-->
-                                            <!--                                            <input class="form-control" type="hidden"-->
-                                            <!--                                                   th:value="${rowStat.index}" name="index"/>-->
-                                            <input
-                                                    th:value="${accommodationViewModel.getRooms()[__${rowStat.index}__].getType()}"
-                                                    name="type"
-                                                    hidden="hidden"
-                                                    type="text"/>
-
-                                            <div>
-                                                <small class="col-auto"
-                                                       th:if="${#fields.hasErrors('*{rooms[__${rowStat.index}__].numberOfRooms}')}"
-                                                       th:errors="*{rooms[__${rowStat.index}__].numberOfRooms}"
-                                                       id="numberOfRoms-Error">
-                                                </small>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label class="label-align">Number of people <span
-                                        class="required">*</span></label>
-                                <input th:field="*{numberOfPeople}" type="number" min="1" max="10" id="people"
-                                       class="form-control"/>
-                                <div class="col-auto">
-                                    <small th:if="${#fields.hasErrors('numberOfPeople')}" th:errors="*{numberOfPeople}"
-                                           id="people-Error"
-                                           class="text-light form-text bg-danger rounded">xxx</small>
-                                </div>
-                            </div>
-
-
-                            <div th:if="${messages}"
-                                 class="alert alert-danger alert-dismissible fade show"
-                                 role="alert">
-                                <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span></span></strong>
-                                <span th:text="${#strings.listJoin(messages.getNoRoomsMessage, ' ')}">Rooms</span>
-                                <button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div th:if="${successMessage}"
-                                 class="alert alert-success alert-dismissible fade show"
-                                 role="alert">
-                                <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span></strong>
-                                <span th:text="${#strings.listJoin(successMessage.getSuccessMessage, ' ')}">Rooms</span>
-                                <button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <!--         unless - покажи го ако не е-->
-                            <div th:unless="${successMessage}" class="ln_solid">
-                                <div class="form-group">
-                                    <div class="col-md-6 offset-md-3">
-                                        <button type='submit' class="btn btn-primary">Check</button>
-                                        <button type='reset' class="btn btn-success">Reset</button>
+                                    <label for="checkIn" class="form-label fw-bold">Check In</label>
+                                    <input
+                                            th:field="*{checkIn}"
+                                            class="form-control"
+                                            type="date"
+                                            id="checkIn"
+                                            required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"
+                                               id="checkIn-Error"
+                                               class="text-light form-text bg-danger rounded">xxx</small>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col">
+                                    <label for="checkOut" class="form-label fw-bold">Check out</label>
+                                    <input
+                                            th:field="*{checkOut}"
+                                            class="form-control"
+                                            type="date"
+                                            id="checkOut"
+                                            required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('checkOut')}" th:errors="*{checkOut}"
+                                               id="checkOut-Error"
+                                               class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
 
-                            <div th:if="${successMessage}" class="ln_solid">
-                                <div class="form-group">
-                                    <div class="col-md-6 offset-md-3">
-                                        <!--                                        <button type='submit' class="btn btn-primary" name="action" value="proceed">-->
-                                        <!--                                            Proceed-->
-                                        <!--                                        </button>-->
-                                        <span><a th:href="@{/create-booking}"
-                                                 class="btn btn-sm btn-primary ml-2 mr-2"><i
-                                                class="fas fa-list-ol"></i> Proceed</a></span>
-                                        <button type='reset' class="btn btn-success">Reset</button>
+                                <input class="form-control" name="hotelName" id="hotelName" type="hidden"
+                                       th:value="${accommodationViewModel.name}">
+
+                                <input class="form-control" name="category" id="category" type="hidden"
+                                       th:value="${accommodationViewModel.category}">
+                                <input class="form-control" name="city" id="city" type="hidden"
+                                       th:value="${accommodationViewModel.city}">
+                                <input class="form-control" name="address" id="address" type="hidden"
+                                       th:value="${accommodationViewModel.address}">
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-header">
+                                        Room Information
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Room type</th>
+                                            <th scope="col">Room description</th>
+                                            <th scope="col">Room price per night</th>
+                                            <th scope="col">No. of rooms</th>
+                                            <!--                                    <th scope="col">No. of people *</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="room, rowStat : ${accommodationViewModel.getRooms()}">
+                                            <th scope="row" th:text="${rowStat.count}" type="number" name="index"></th>
+                                            <td th:text="${rowStat.current.type}" name="type"></td>
+                                            <td th:text="${rowStat.current.description}" name="description"></td>
+
+                                            <!--                                        GET HOTEL ID -->
+
+                                            <input class="form-control" name="hotelId" id="hotelId" type="hidden"
+                                                   th:value="${accommodationViewModel.getId()}"/>
+
+                                            <!--                                        Get ROOM ID-->
+                                            <input th:value="${rowStat.current.id}" name="roomId" type="hidden"/>
+
+                                            <!--                                        PRICE-->
+                                            <!-- <td th:text="${#numbers.formatCurrency(room.price)}"></td>-->
+                                            <td th:text="|${room.price} BGN|"></td>
+                                            <input class="form-control" name="price" id="price" type="hidden"
+                                                   th:value="${room.price}"/>
+
+                                            <td>
+                                                <!--                                    GET NUMBER OF ROOMS FOR EACH ROOM-->
+                                                <label for="numberOfRooms"></label>
+                                                <select name="numberOfRooms" id="numberOfRooms"
+                                                        th:field="*{rooms[__${rowStat.index}__].numberOfRooms}">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </select>
+                                                <label for="type"></label>
+                                                <input th:value="${accommodationViewModel.getRooms()[__${rowStat.index}__].getType()}"
+                                                       name="type"
+                                                       id="type"
+                                                       hidden="hidden"
+                                                       type="text"/>
+                                                <div>
+                                                    <small class="col-auto"
+                                                           th:if="${#fields.hasErrors('*{rooms[__${rowStat.index}__].numberOfRooms}')}"
+                                                           th:errors="*{rooms[__${rowStat.index}__].numberOfRooms}"
+                                                           id="numberOfRoms-Error">
+                                                    </small>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+
+                                <div th:if="${messages}"
+                                     class="alert alert-danger alert-dismissible fade show"
+                                     role="alert">
+                                    <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span>
+                                    </strong>
+                                    <span th:text="${#strings.listJoin(messages.getNoRoomsMessage, ' ')}">Rooms</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close">
+                                        <!--                                        <span aria-hidden="true">&times;</span>-->
+                                    </button>
+                                </div>
+                                <div th:if="${successMessage}"
+                                     class="alert alert-success alert-dismissible fade show"
+                                     role="alert">
+                                    <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span></strong>
+                                    <span th:text="${#strings.listJoin(successMessage.getSuccessMessage, ' ')}">Rooms</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close">
+                                        <!--                                        <span aria-hidden="true">&times;</span>-->
+                                    </button>
+                                </div>
+                                <div th:unless="${successMessage}" class="ln_solid">
+                                    <div class="form-group">
+                                        <div class="p-4 text-center" id="check">
+                                            <button type='submit' class="btn btn-primary">Check</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div th:if="${successMessage}" class="ln_solid">
+                                    <div class="form-group">
+                                        <div class="p-4 text-center">
+                                            <span>
+                                                <a th:href="@{/create-booking}"
+                                                   class="btn btn-primary">Proceed</a>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -197,34 +224,14 @@
             </div>
         </div>
     </section>
-
 </main>
 <!-- End #main -->
-<script>
-    const input = $("input:reset");
-</script>
 <!-- ======= Footer ======= -->
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
-<div id="preloader"></div>
-
-
-<!-- Vendor JS Files -->
-<script src="/assets/vendor/aos/aos.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-<!-- Template Main JS File -->
-<script src="/assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
-
-<!--<script src="/static/js/booking-form.js"></script>-->
+<script src="/js/aos.js"></script>
+<!--<script src="/js/booking-form.js"></script>-->
 
 </body>
 

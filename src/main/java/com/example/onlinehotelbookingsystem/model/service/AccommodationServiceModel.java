@@ -8,15 +8,21 @@ public class AccommodationServiceModel {
 
     private Long id;
     private String name;
-    private String category;
+    private int category;
     private String city;
     private String address;
     private String postalCode;
     private String imageUrl;
+    private String description;
+
+    private String lat;
+    private String lng;
+
+
     private List<RoomServiceModel> rooms = new ArrayList<>();
     private String type;
-    private String cancellationPolicy;
-    private String paymentPolicy;
+//    private String cancellationPolicy;
+//    private String paymentPolicy;
     private LocalTime checkInTime;
     private LocalTime checkOutTime;
 
@@ -33,11 +39,11 @@ public class AccommodationServiceModel {
         return this;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public AccommodationServiceModel setCategory(String category) {
+    public AccommodationServiceModel setCategory(int category) {
         this.category = category;
         return this;
     }
@@ -97,23 +103,23 @@ public class AccommodationServiceModel {
     }
 
 
-    public String getCancellationPolicy() {
-        return cancellationPolicy;
-    }
+//    public String getCancellationPolicy() {
+//        return cancellationPolicy;
+//    }
+//
+//    public AccommodationServiceModel setCancellationPolicy(String cancellationPolicy) {
+//        this.cancellationPolicy = cancellationPolicy;
+//        return this;
+//    }
 
-    public AccommodationServiceModel setCancellationPolicy(String cancellationPolicy) {
-        this.cancellationPolicy = cancellationPolicy;
-        return this;
-    }
-
-    public String getPaymentPolicy() {
-        return paymentPolicy;
-    }
-
-    public AccommodationServiceModel setPaymentPolicy(String paymentPolicy) {
-        this.paymentPolicy = paymentPolicy;
-        return this;
-    }
+//    public String getPaymentPolicy() {
+//        return paymentPolicy;
+//    }
+//
+//    public AccommodationServiceModel setPaymentPolicy(String paymentPolicy) {
+//        this.paymentPolicy = paymentPolicy;
+//        return this;
+//    }
 
     public LocalTime getCheckInTime() {
         return checkInTime;
@@ -139,6 +145,33 @@ public class AccommodationServiceModel {
 
     public AccommodationServiceModel setRooms(List<RoomServiceModel> rooms) {
         this.rooms = rooms;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public AccommodationServiceModel setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public AccommodationServiceModel setLng(String lng) {
+        this.lng = lng;
+        return this;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public AccommodationServiceModel setLat(String lat) {
+        this.lat = lat;
         return this;
     }
 }

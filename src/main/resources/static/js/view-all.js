@@ -1,4 +1,10 @@
-$(document).ready(function () {
+window.onload = (function () {
+     loadBookings();
+
+})
+
+function loadBookings() {
+
     let counter = 1;
     fetch("http://localhost:8080/all-bookings")
         .then(response => response.json())
@@ -6,6 +12,8 @@ $(document).ready(function () {
             if (json.length > 0) {
                 json.forEach(b => {
                     console.log(json)
+                    let ci = new Date(b.checkIn).toLocaleDateString();
+                    let co = new Date(b.checkOut).toLocaleDateString();
                     let tableRow =
                         '<tr>' +
                         '<td>' + counter + '</td>' +
@@ -13,12 +21,12 @@ $(document).ready(function () {
                         '<td>' + b.lastName + '</td>' +
                         '<td>' + b.hotelName + '</td>' +
                         '<td>' + b.city + '</td>' +
-                        '<td>' + b.checkIn + '</td>' +
-                        '<td>' + b.checkOut + '</td>' +
+                        '<td>' + ci + '</td>' +
+                        '<td>' + co + '</td>' +
                         // '<td>' + b.cancelBefore + '</td>' +
                         '<td>' +
-                        '<button class="update-btn" data-booking-id="' + b.bookingId + '">Details</button>' +
-                        '<button class="delete-btn" data-booking-id="' + b.bookingId + '">Cancel Booking</button>' +
+                        '<button class="btn btn-primary update-btn m-2" data-booking-id="' + b.bookingId + '">Details</button>' +
+                        '<button class="btn btn-danger btn-sm delete-btn" data-booking-id="' + b.bookingId + '">Cancel Booking</button>' +
                         '</td>' +
                         '</tr>'
                     counter = counter + 1;
@@ -26,16 +34,17 @@ $(document).ready(function () {
                 })
             } else {
                 const errorMsg = `
-                        <h4>You currently have no bookings!</h4>`;
+                        <h5>You currently have no bookings!</h5>`;
                 $("#table-container").append(errorMsg);
             }
 
         })
+}
 
     $('body').on('click', '.update-btn', function () {
         let bookingId = $(this).data('booking-id');
         // $.cookie('bookingId', bookingId);
-        window.location.href = 'bookings/details/' + bookingId;
+        window.location.href = '/bookings/details/' + bookingId;
 
     })
 
@@ -46,52 +55,13 @@ $(document).ready(function () {
 
             fetch('http://localhost:8080/delete/' + bookingId, {
                 method: 'DELETE'
-            }).then(_ => reloadBookings())
+            }).then(_ => loadBookings())
+            location.reload();
             console.log('deleted');
         } else {
             console.log('Thing was not deleted from the database.');
         }
     });
-})
 
 
-//  function getBookings() {
-//     const res =  fetch('http://localhost:8080/all-bookings');
-//     const bookings =  res.json();
-//     console.log(bookings)
-//     console.log()
-//     return outputHTML(bookings);
-// }
-//
-// // Show results in html
-//
-//
-// const outputHTML = bookings => {
-//     let counter = 1;
-//
-//     if (bookings.length > 0) {
-//         const  html = bookings.map(b =>
-//
-//                                             '<tr>' +
-//                                             '<td>' + counter + '</td>' +
-//                                             '<td>' + b.firstName + '</td>' +
-//                                             '<td>' + b.lastName + '</td>' +
-//                                             '<td>' + b.hotelName + '</td>' +
-//                                             '<td>' + b.city + '</td>' +
-//                                             '<td>' + b.checkIn + '</td>' +
-//                                             '<td>' + b.checkOut + '</td>' +
-//                                             // '<td>' + b.cancelBefore + '</td>' +
-//                                             '<td>' +
-//                                             '<button class="update-btn" data-booking-id="' + b.bookingId + '">Update</button>' +
-//                                             '<button class="delete-btn" data-booking-id="' + b.bookingId + '">Cancel Booking</button>' +
-//                                             '</td>' +
-//                                             '</tr>').join('');
-//                                         counter = counter + 1;
-//                                         // $("#table-container").append(output);
-//         output.innerHTML = html;
-//     } else {
-//         const errorMsg =  `
-//       <h4>You have no bookings!</h4>`;
-//         output.innerHTML = errorMsg;
-//     }
-// }
+

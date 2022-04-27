@@ -23,6 +23,7 @@ public class HomeController {
 //    https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html
     @GetMapping("/")
     public String index(HttpSession session) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             CustomUser principal = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

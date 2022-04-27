@@ -1,26 +1,22 @@
 package com.example.onlinehotelbookingsystem.web;
 
-import com.example.onlinehotelbookingsystem.errors.RoomMessages;
-import com.example.onlinehotelbookingsystem.model.binding.BookingBindingModel;
-import com.example.onlinehotelbookingsystem.model.binding.AvailabilityBindingModel;
-import com.example.onlinehotelbookingsystem.model.binding.BookingUpdateBindingModel;
-import com.example.onlinehotelbookingsystem.model.binding.RoomBindingModel;
+import com.example.onlinehotelbookingsystem.web.responseMessages.RoomMessages;
+import com.example.onlinehotelbookingsystem.event.BookingCreatedEvent;
+import com.example.onlinehotelbookingsystem.model.binding.*;
 import com.example.onlinehotelbookingsystem.model.service.*;
 import com.example.onlinehotelbookingsystem.model.view.AccommodationViewModel;
-import com.example.onlinehotelbookingsystem.model.view.BookingViewModel;
 import com.example.onlinehotelbookingsystem.model.view.SummaryBookingViewModel;
-import com.example.onlinehotelbookingsystem.service.AccommodationService;
-import com.example.onlinehotelbookingsystem.service.AccommodationTypeService;
-import com.example.onlinehotelbookingsystem.service.BookingService;
-import com.example.onlinehotelbookingsystem.service.RoomService;
+import com.example.onlinehotelbookingsystem.service.*;
 import com.example.onlinehotelbookingsystem.security.CustomUser;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -28,39 +24,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
-@SessionAttributes("bindingModel")
+@SessionAttributes({"bindingModel", "summaryBookingViewModel"})
 public class BookingController {
 
     private final AccommodationService accommodationService;
-    private final AccommodationTypeService accommodationTypeService;
-    private final RoomService roomService;
-    private final BookingService bookingService;
     private final ModelMapper mapper;
+    private final UserService userService;
+    private final ApplicationEventPublisher eventPublisher;
+    private final BookingService bookingService;
 
-    public BookingController(AccommodationService accommodationService, AccommodationTypeService accommodationTypeService, RoomService roomService, BookingService bookingService, ModelMapper mapper) {
+    public BookingController(AccommodationService accommodationService,
+                             ModelMapper mapper, UserService userService,
+                             ApplicationEventPublisher applicationEventPublisher, BookingService bookingService) {
         this.accommodationService = accommodationService;
-        this.accommodationTypeService = accommodationTypeService;
-        this.roomService = roomService;
-        this.bookingService = bookingService;
         this.mapper = mapper;
+        this.userService = userService;
+        this.eventPublisher = applicationEventPublisher;
+        this.bookingService = bookingService;
     }
 
-    @GetMapping("/booking-form")
-    public String bookingForm(HttpServletRequest request, Model model, HttpSession session) {
-        Cookie[] cookies = request.getCookies();
-        long id = 0;
-        for (Cookie cookie : cookies) {
-//            if null
-            if (cookie.getName().equals("id")) {
-                id = Long.parseLong(cookie.getValue());
-                break;
-            }
-        }
-        session.setAttribute("id", id);
+//    open booking form
+    @GetMapping("/booking-form/accommodation/{id}")
+    public String bookingForm(HttpServletRequest request, Model model, HttpSession session, @PathVariable Long id) {
+//        Cookie[] cookies = request.getCookies();
+//        long id = 0;
+//        for (Cookie cookie : cookies) {
+////            if null
+//            if (cookie.getName().equals("id")) {
+//                id = Long.parseLong(cookie.getValue());
+//                break;
+//            }
+//        }
+//        session.setAttribute("id", id);
         AccommodationServiceModel serviceModel = this.accommodationService.findById(id);
         AccommodationViewModel accommodationViewModel = this.mapper.map(serviceModel, AccommodationViewModel.class);
 
@@ -71,35 +69,30 @@ public class BookingController {
 
     @ModelAttribute("bindingModel")
     public AvailabilityBindingModel bindingModel() {
+        System.out.println();
         return new AvailabilityBindingModel();
     }
-
-//    @PostMapping("/addRoom")
-//    public String addContact(BookingBindingModel bindingModel, HttpSession session, Model model) {
-//        this.bookingService.addRoom(bindingModel);
-//        System.out.println();
-//        return "booking-form :: rooms"; // returning the updated section
-//    }
-
 
     //    TODO: handle requestParam exception when required=true
 //    https://stackoverflow.com/questions/37746428/java-spring-how-to-handle-missing-required-request-parameters
     @GetMapping("/room-availability")
     public String checkAvailability(@Valid AvailabilityBindingModel bindingModel, BindingResult br,
                                     RedirectAttributes rAtt, Model model,
-                                    @ModelAttribute("messages") RoomMessages roomMessages,
                                     @RequestParam(value = "type", required = false) List<String> type,
                                     @RequestParam(value = "price", required = false) List<BigDecimal> prices,
                                     @RequestParam(value = "roomId", required = false) List<Long> ids) {
-        if (br.hasErrors()) {
+        if (br.hasErrors() || isRoomListEmpty(bindingModel)) {
 //            System.out.println(br);
             rAtt
                     .addFlashAttribute("bindingModel", bindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.bindingModel", br);
-            return "redirect:booking-form";
+            Long hotelId = bindingModel.getHotelId();
+
+            return "redirect:/booking-form/accommodation/" + hotelId;
         }
 
         for (int i = 0; i < type.size(); i++) {
+//            if rooms are null - dont add
 
             String s = type.get(i);
             Long roomId = ids.get(i);
@@ -111,8 +104,8 @@ public class BookingController {
         }
 
 //        TODO: map in the controller everywhere or check best practices
-        AvailabilityServiceModel dto = this.mapper.map(bindingModel, AvailabilityServiceModel.class);
-        roomMessages = this.bookingService.checkAvailability(dto);
+        AvailabilityServiceModel serviceModel = this.mapper.map(bindingModel, AvailabilityServiceModel.class);
+        RoomMessages roomMessages = this.bookingService.checkAvailability(serviceModel);
 
         if (!roomMessages.getNoRoomsMessage().isEmpty()) {
 
@@ -120,22 +113,42 @@ public class BookingController {
                     .addFlashAttribute("messages", roomMessages)
                     .addFlashAttribute("bindingModel", bindingModel);
 
-            return "redirect:booking-form";
+            return "redirect:/booking-form/accommodation/" + bindingModel.getHotelId();
         }
 
         rAtt
                 .addFlashAttribute("successMessage", roomMessages)
                 .addFlashAttribute("bindingModel", bindingModel);
-        return "redirect:booking-form";
+        return "redirect:/booking-form/accommodation/" + bindingModel.getHotelId();
     }
 
-    @ModelAttribute("bookingBindingModel")
-    public BookingBindingModel bookingBindingModel() {
-        return new BookingBindingModel();
+    private boolean isRoomListEmpty(AvailabilityBindingModel bindingModel) {
+//         will return true if the list contains a 0
+//        bindingModel.getRooms().stream().map(RoomBindingModel::getNumberOfRooms).anyMatch(e -> e == 0);
+
+        boolean flag = false;
+        for (RoomBindingModel room : bindingModel.getRooms()) {
+            if (room.getNumberOfRooms() == 0) {
+                flag = true;
+            } else {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 
     @GetMapping("/create-booking")
-    public String createBooking() {
+    public String showCreateBookingForm(Model model, @AuthenticationPrincipal CustomUser user) {
+
+        ProfileServiceModel profileServiceModel = this.userService.findById(user.getUserId());
+        BookingBindingModel bookingBindingModel = this.mapper.map(profileServiceModel, BookingBindingModel.class);
+
+
+        if (!model.containsAttribute("bookingBindingModel")) {
+            model.addAttribute("bookingBindingModel", bookingBindingModel);
+        }
+        System.out.println();
         return "create-booking";
     }
 
@@ -143,7 +156,8 @@ public class BookingController {
     public String createBooking(@Valid BookingBindingModel bookingBindingModel,
                                 BindingResult br, RedirectAttributes rAtt,
                                 @ModelAttribute("bindingModel") AvailabilityBindingModel bindingModel,
-                                @AuthenticationPrincipal CustomUser user) {
+                                SessionStatus sessionStatus,
+                                @AuthenticationPrincipal CustomUser user, Model model) {
 
         if (br.hasErrors()) {
             rAtt
@@ -153,47 +167,62 @@ public class BookingController {
         }
 
         bookingBindingModel.setBookedRooms(bindingModel.getRooms());
-        bookingBindingModel.setHotelId(bindingModel.getHotelId());
+//        bookingBindingModel.setHotelId(bindingModel.getHotelId());
 
+        CreateBookingServiceModel serviceModel = this.mapper.map(bookingBindingModel, CreateBookingServiceModel.class);
+        Long bookingId = this.bookingService.createBooking(serviceModel, user.getUserId());
 
-        BookingServiceModel serviceModel = this.mapper.map(bookingBindingModel, BookingServiceModel.class);
-        SummaryBookingServiceModel serviceBooking = this.bookingService.createBooking(serviceModel, user.getUserId());
-        Long bookingId = serviceBooking.getBookingId();
-//        message for successful booking + link to all bookings
+//        publish event
+        BookingCreatedEvent event = new BookingCreatedEvent(this, bookingId);
+        this.eventPublisher.publishEvent(event);
 
-//        serviceModel.setHotelId(id);
+//        model.addAttribute("successfulBooking", new Messages("Booking created successfully"));
+
+//        when to use
+        sessionStatus.setComplete();
         return "redirect:/bookings/details/" + bookingId;
     }
 
-
-    @PreAuthorize("isOwner(#id)")
+    //    Booking Summary
+    @ModelAttribute("summaryBookingViewModel")
+    public SummaryBookingViewModel summaryBookingViewModel() {
+        System.out.println();
+        return new SummaryBookingViewModel();
+    }
+    @PreAuthorize("isOwner(#id) or hasRole('ADMIN')")
     @GetMapping("/bookings/details/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model, @AuthenticationPrincipal CustomUser user) {
-        SummaryBookingServiceModel bookingServiceModel = this.bookingService.findById(id, user.getUserId());
+        SummaryBookingServiceModel bookingServiceModel = this.bookingService.findById(id);
 
-        SummaryBookingViewModel bookingViewModel = this.mapper.map(bookingServiceModel, SummaryBookingViewModel.class);
-        model.addAttribute("bookingViewModel", bookingViewModel);
+        SummaryBookingViewModel summaryBookingViewModel = this.mapper.map(bookingServiceModel, SummaryBookingViewModel.class);
+        model.addAttribute("summaryBookingViewModel", summaryBookingViewModel);
+        model.addAttribute("paymentStatus", summaryBookingViewModel.getPaymentStatus());
         return "details";
     }
 
-    @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("isOwner(#id) or hasRole('ADMIN')")
     @GetMapping("/bookings/update/{id}")
-    public String showUpdate(@PathVariable Long id, @AuthenticationPrincipal CustomUser user, Model model) {
-        SummaryBookingServiceModel serviceModel = this.bookingService.findById(id, user.getUserId());
-        SummaryBookingViewModel updateViewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
-//        binding model??
-        model.addAttribute("updateViewModel", updateViewModel);
+    public String showUpdate(@PathVariable Long id, @AuthenticationPrincipal CustomUser user, Model model,
+                             SessionStatus sessionStatus) {
+
+        BookingUpdateServiceModel bookingUpdateService = this.bookingService.findBookingUpdateServiceById(id);
+        BookingUpdateBindingModel bookingUpdateBindingModel = this.mapper.map(bookingUpdateService, BookingUpdateBindingModel.class);
+
+        if (!model.containsAttribute("bookingUpdateBindingModel")) {
+            model.addAttribute("bookingUpdateBindingModel", bookingUpdateBindingModel);
+        }
+        sessionStatus.setComplete();
         System.out.println();
         return "update";
     }
 
-//    TODO: to handle 403
-    @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("isOwner(#id) or hasRole('ADMIN')")
     @PatchMapping("/bookings/update/{id}")
-    public String updateOffer(@PathVariable Long id, @Valid BookingUpdateBindingModel bookingUpdateBindingModel,
-                              BindingResult bindingResult,
-                              RedirectAttributes rAtt,
-                              @AuthenticationPrincipal CustomUser user) {
+    public String updateBooking(@Valid BookingUpdateBindingModel bookingUpdateBindingModel,
+                                BindingResult bindingResult,
+                                RedirectAttributes rAtt,
+                                @PathVariable Long id,
+                                @AuthenticationPrincipal CustomUser user) {
         if (bindingResult.hasErrors()) {
             rAtt
                     .addFlashAttribute("bookingUpdateBindingModel", bookingUpdateBindingModel)
@@ -206,11 +235,10 @@ public class BookingController {
         return "redirect:/bookings/details/" + id;
     }
 
+//    @PreAuthorize(value = "hasRole('ADMIN') or isBookingsOwner(#principal.username)")
     @GetMapping("/view-all")
-    public String viewAllBookings(Model model) {
+    public String viewAllBookings(@AuthenticationPrincipal CustomUser user) {
         System.out.println();
-//        List<TitleBookingServiceModel> allBookings = this.bookingService.getAllBookings();
-//        model.addAttribute("all", allBookings);
         return "view-all";
     }
 

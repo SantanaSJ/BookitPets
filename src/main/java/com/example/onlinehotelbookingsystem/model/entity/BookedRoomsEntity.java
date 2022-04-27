@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "booked_rooms")
 public class BookedRoomsEntity extends BaseEntity {
 
+//when create booking
 //because without this I was getting an error
 // object references an unsaved transient instance - save the transient instance before flushing
 //cascde type all from parent didnt solve the problem
@@ -22,6 +23,7 @@ public class BookedRoomsEntity extends BaseEntity {
     private BigDecimal price;
 //    ??
     private Integer numberOfRooms;
+//    private Integer numberOfPeople;
 
 
     public BookingEntity getBooking() {
@@ -59,4 +61,13 @@ public class BookedRoomsEntity extends BaseEntity {
         this.numberOfRooms = numberOfRooms;
         return this;
     }
+
+//    public Integer getNumberOfPeople() {
+//        return numberOfPeople;
+//    }
+//
+//    public BookedRoomsEntity setNumberOfPeople(Integer numberOfPeople) {
+//        this.numberOfPeople = numberOfPeople;
+//        return this;
+//    }
 }

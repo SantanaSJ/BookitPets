@@ -39,4 +39,9 @@ public class ApplicationConfig {
 
     }
 
+//    @Bean
+//    public StripeConfigurationService stripeConfigurationService() {
+//        return new StripeConfigurationService();
+//    }
+
 }

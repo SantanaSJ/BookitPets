@@ -11,6 +11,8 @@ public class TitleBookingViewModel {
     private String city;
     private LocalDate checkIn;
     private LocalDate checkOut;
+    private boolean isCancelled;
+
 
     public String getFirstName() {
         return firstName;
@@ -72,6 +74,15 @@ public class TitleBookingViewModel {
 
     public TitleBookingViewModel setBookingId(Long bookingId) {
         this.bookingId = bookingId;
+        return this;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public TitleBookingViewModel setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
         return this;
     }
 }

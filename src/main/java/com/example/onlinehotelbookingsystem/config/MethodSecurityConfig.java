@@ -1,6 +1,10 @@
 package com.example.onlinehotelbookingsystem.config;
 
+import com.example.onlinehotelbookingsystem.repository.UserRepository;
+import com.example.onlinehotelbookingsystem.service.BookingHistoryService;
 import com.example.onlinehotelbookingsystem.service.BookingService;
+import com.example.onlinehotelbookingsystem.service.PhotoService;
+import com.example.onlinehotelbookingsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +16,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
-//    with constructor injection form a cycle
+//    with constructor injection - forms a cycle
     @Autowired
     private AppMethodSecurityExpressionHandler appMethodSecurityExpressionHandler;
 
@@ -22,7 +26,9 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     }
 
     @Bean
-    public AppMethodSecurityExpressionHandler createExpressionHandler(BookingService bookingService) {
-        return new AppMethodSecurityExpressionHandler(bookingService);
+    public AppMethodSecurityExpressionHandler createExpressionHandler
+            (BookingService bookingService, BookingHistoryService bookingHistoryService,
+             UserService userService, PhotoService photoService) {
+        return new AppMethodSecurityExpressionHandler(bookingService, bookingHistoryService, userService, photoService);
     }
 }

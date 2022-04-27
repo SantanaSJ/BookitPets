@@ -4,10 +4,8 @@ package com.example.onlinehotelbookingsystem.model.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +21,8 @@ public class BookingEntity extends BaseEntity {
     @ManyToOne
     private AccommodationEntity property;
 
-
-      //    changed from Many to Many to One to Many
-    @OneToMany(mappedBy = "booking",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private List<BookedRoomsEntity> bookedRooms = new ArrayList<>();
-
-//    private Map<Long, Integer> numberOfRooms = new HashMap<>();
 
     private String firstName;
     private String lastName;
@@ -41,28 +35,31 @@ public class BookingEntity extends BaseEntity {
 
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkIn;
-
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkOut;
-
-    private Integer numberOfPeople;
+//    @Column(columnDefinition = "DATE")
+//    private LocalDate cancellationDate;
     private BigDecimal totalPrice;
     private long totalNights;
     private String comments;
     private Integer petKilograms;
     private String petName;
     private String email;
+    private String phoneNumber;
+//    @Column(columnDefinition = "TIMESTAMP DEFAULT '0000-00-00 00:00:00'")
+//    private LocalDateTime cancelledOn;
+    private int countBookings;
+    private boolean hasDiscount;
+//    @Column(columnDefinition="tinyint(1) default 1")
+//    private boolean isCompleted;
 
     @OneToOne
-    private InvoiceEntity payment;
+    private PaymentEntity payment;
 
 
     public BookingEntity() {
     }
 
-//    public boolean isDateInsideCheckedIn(LocalDate date) {
-//        return this.checkIn.isBefore(date) && checkOut.isAfter(date);
-//    }
 
     public UserEntity getGuest() {
         return guest;
@@ -100,21 +97,12 @@ public class BookingEntity extends BaseEntity {
         return this;
     }
 
-    public InvoiceEntity getPayment() {
+    public PaymentEntity getPayment() {
         return payment;
     }
 
-    public BookingEntity setPayment(InvoiceEntity payment) {
+    public BookingEntity setPayment(PaymentEntity payment) {
         this.payment = payment;
-        return this;
-    }
-
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public BookingEntity setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
         return this;
     }
 
@@ -214,6 +202,34 @@ public class BookingEntity extends BaseEntity {
 
     public BookingEntity setTotalNights(long totalNights) {
         this.totalNights = totalNights;
+        return this;
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public BookingEntity setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public int getCountBookings() {
+        return countBookings;
+    }
+
+    public BookingEntity setCountBookings(int countBookings) {
+        this.countBookings = countBookings;
+        return this;
+    }
+
+    public boolean isHasDiscount() {
+        return hasDiscount;
+    }
+
+    public BookingEntity setHasDiscount(boolean hasDiscount) {
+        this.hasDiscount = hasDiscount;
         return this;
     }
 

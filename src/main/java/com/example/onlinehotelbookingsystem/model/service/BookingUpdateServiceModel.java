@@ -15,6 +15,7 @@ public class BookingUpdateServiceModel {
 
     private Integer petKilograms;
     private String email;
+    private String phoneNumber;
     private String comments;
 
     public String getFirstName() {
@@ -77,6 +78,15 @@ public class BookingUpdateServiceModel {
 
     public BookingUpdateServiceModel setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public BookingUpdateServiceModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 }

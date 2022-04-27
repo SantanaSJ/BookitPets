@@ -1,31 +1,40 @@
 package com.example.onlinehotelbookingsystem.service;
 
-import com.example.onlinehotelbookingsystem.errors.RoomMessages;
+import com.example.onlinehotelbookingsystem.web.responseMessages.RoomMessages;
 import com.example.onlinehotelbookingsystem.model.service.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface BookingService {
 
-    SummaryBookingServiceModel createBooking(BookingServiceModel serviceModel, Long userId);
+    Long createBooking(CreateBookingServiceModel serviceModel, Long userId);
 
     RoomMessages checkAvailability(AvailabilityServiceModel dto);
 
-    List<TitleBookingServiceModel> getAllBookingsByCurrentUserId(Long userId);
-
-    SummaryBookingServiceModel getLastBookingByCurrentUserId(Long id);
+    List<TitleBookingServiceModel> getAllActiveBookingsByCurrentUserId(Long userId);
 
     void update(BookingUpdateServiceModel updateServiceModel);
 
-    SummaryBookingServiceModel findById(Long bookingId, Long userId);
+    SummaryBookingServiceModel findById(Long bookingId);
+
+    BookingUpdateServiceModel findBookingUpdateServiceById(Long bookingId);
+
+//    AdminBookingServiceModel findAllById(Long bookingId);
 
     void delete(Long id);
 
     boolean isOwner(String userEmail, Long bookingId);
 
-//    boolean isAvailableBetween(LocalDate checkIn, LocalDate checkOut, Long hotelId, List<RoomBindingModel> rooms);
+    void countBookings(Long id);
 
-//    void addRoom(BookingBindingModel bindingModel);
+    Page<SummaryBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
+//    Page<TitleBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
-//    void setRooms(BookingBindingModel bindingModel);
+    void moveCompletedBookingsToHistory();
+
+    BookingServiceModel findBookingById(Long id);
+
+    void setPaymentStatus(Long bookingId);
+
 }

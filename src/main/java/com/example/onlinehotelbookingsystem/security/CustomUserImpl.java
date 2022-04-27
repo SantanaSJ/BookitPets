@@ -26,6 +26,7 @@ public class CustomUserImpl implements UserDetailsService {
         UserEntity userEntity = this.userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found! "));
+        System.out.println();
         return mapToUserDetails(userEntity);
     }
 

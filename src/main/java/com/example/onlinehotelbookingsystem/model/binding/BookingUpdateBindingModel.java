@@ -1,29 +1,38 @@
 package com.example.onlinehotelbookingsystem.model.binding;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class BookingUpdateBindingModel {
 
-    private Long id;
+    private Long bookingId;
 
-    @NotBlank
+    @NotBlank(message = "Please provide first name!")
     @Size(min = 3, max = 20, message = "First name length must be between 3 and 20 characters.")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Please provide last name!")
     @Size(min = 3, max = 20, message = "Last name length must be between 3 and 20 characters.")
     private String lastName;
 
-    @NotBlank
+    @NotBlank(message = "Please provide pet name!")
+    @Size(min = 3, max = 10, message = "Pet name must be between 3 and 10 characters.")
     private String petName;
 
-    @NotNull
+    @NotNull(message = "Please provide pet kilograms!")
+    @Positive
     private Integer petKilograms;
-    @NotBlank
+
+    @NotBlank(message = "Please provide an email!")
+    @Pattern(regexp = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$", message = "Please enter a valid email!")
     private String email;
+
+    @NotBlank(message = "Please provide a phone number!")
+    @Pattern(regexp = "^0\\d{9}$", message = "Phone number should be in the format: 0884444333")
+    private String phoneNumber;
+
     private String comments;
+
+    private String paymentStatus;
 
     public String getFirstName() {
         return firstName;
@@ -80,11 +89,38 @@ public class BookingUpdateBindingModel {
     }
 
     public Long getId() {
-        return id;
+        return bookingId;
     }
 
     public BookingUpdateBindingModel setId(Long id) {
-        this.id = id;
+        this.bookingId = id;
+        return this;
+    }
+
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public BookingUpdateBindingModel setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public BookingUpdateBindingModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public BookingUpdateBindingModel setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
         return this;
     }
 }

@@ -1,21 +1,26 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "rooms")
 public class RoomEntity extends BaseEntity {
 
-    @ManyToOne
+//    tests
+    @JoinColumn(nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AccommodationEntity accommodationEntity;
 
     @Column(nullable = false)
     private String roomType;
 
-//    private int free;
-
+    @Column(nullable = false)
     private BigDecimal currentPrice;
+
+    @Column(nullable = false)
+    private String description;
 
 
     public RoomEntity() {
@@ -45,6 +50,15 @@ public class RoomEntity extends BaseEntity {
 
     public RoomEntity setAccommodationEntity(AccommodationEntity accommodationEntity) {
         this.accommodationEntity = accommodationEntity;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public RoomEntity setDescription(String description) {
+        this.description = description;
         return this;
     }
 }

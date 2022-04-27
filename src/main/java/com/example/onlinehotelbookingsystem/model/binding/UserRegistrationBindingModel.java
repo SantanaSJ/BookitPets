@@ -1,8 +1,8 @@
 package com.example.onlinehotelbookingsystem.model.binding;
 
-import com.example.onlinehotelbookingsystem.model.validator.UniqueEmail;
 
-import javax.persistence.Column;
+import com.example.onlinehotelbookingsystem.model.binding.validator.UniqueEmail;
+
 import javax.validation.constraints.*;
 
 public class UserRegistrationBindingModel {
@@ -17,13 +17,21 @@ public class UserRegistrationBindingModel {
     private String lastName;
 
     @NotBlank(message = "Please enter phone number")
-    @Pattern(regexp = "[0-9 ]{10}", message = "Phone number should be in the format: 0xxxxxxx")
+    @Pattern(regexp = "^0\\d{9}$", message = "Phone number should be in the format: 0884444333")
     private String phoneNumber;
 
     @NotBlank(message = "Please enter an email!")
     @UniqueEmail
     @Pattern(regexp = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$", message = "Please enter a valid email!")
     private String email;
+
+    @NotBlank
+    @Size(min = 3, max = 10, message = "Pet name must be between 3 and 10 characters.")
+    private String petName;
+
+    @Positive
+    private String petKilograms;
+
 
     @NotBlank(message = "Please provide a password!")
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
@@ -93,6 +101,24 @@ public class UserRegistrationBindingModel {
 
     public UserRegistrationBindingModel setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+        return this;
+    }
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public UserRegistrationBindingModel setPetName(String petName) {
+        this.petName = petName;
+        return this;
+    }
+
+    public String getPetKilograms() {
+        return petKilograms;
+    }
+
+    public UserRegistrationBindingModel setPetKilograms(String petKilograms) {
+        this.petKilograms = petKilograms;
         return this;
     }
 }

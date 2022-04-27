@@ -1,12 +1,9 @@
 package com.example.onlinehotelbookingsystem.web;
 
 import com.example.onlinehotelbookingsystem.model.binding.UserRegistrationBindingModel;
-import com.example.onlinehotelbookingsystem.model.response.ResponseMessage;
 import com.example.onlinehotelbookingsystem.model.service.UserRegistrationServiceModel;
 import com.example.onlinehotelbookingsystem.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

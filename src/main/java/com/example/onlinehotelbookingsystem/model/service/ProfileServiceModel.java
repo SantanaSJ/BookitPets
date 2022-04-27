@@ -10,8 +10,10 @@ public class ProfileServiceModel {
     private String email;
     private String petName;
     private String petImageUrl;
-    private String petKilograms;
+    private Integer petKilograms;
     private LocalDateTime joined;
+    private String phoneNumber;
+    private String profileImageUrl;
 
     public ProfileServiceModel() {
     }
@@ -70,14 +72,39 @@ public class ProfileServiceModel {
         return this;
     }
 
-    public String getPetKilograms() {
+    public Integer getPetKilograms() {
         return petKilograms;
     }
 
-    public ProfileServiceModel setPetKilograms(String petKilograms) {
+    public ProfileServiceModel setPetKilograms(Integer petKilograms) {
         this.petKilograms = petKilograms;
         return this;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
 
+    public ProfileServiceModel setUserId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public ProfileServiceModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public ProfileServiceModel setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+        return this;
+    }
 }

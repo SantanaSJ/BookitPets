@@ -2,11 +2,10 @@ package com.example.onlinehotelbookingsystem.model.entity;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -30,48 +29,26 @@ public class UserEntity extends BaseEntity {
     @OneToOne
     private PetImageEntity petImage;
 
+    @OneToOne
+    private ProfileImageEntity profilePicture;
+
     private Integer petKilograms;
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime joined;
 
-//    @OneToMany
-//    private List<BookingEntity> bookings = new ArrayList<>();
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "guest")
-    private List<InvoiceEntity> invoices = new ArrayList<>();
+    private List<BookingEntity> bookings;
 
-//    @ManyToMany
-//    private Set<RoomEntity> rooms;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<PhotoEntity> photoEntities;
 
-
-//    @OneToMany(mappedBy = "guest")
-//    private Set<InvoiceEntity> invoices;
 
     public UserEntity() {
     }
-
-//    public List<PetEntity> getPets() {
-//        return pets;
-//    }
-//
-//    public UserEntity setPets(List<PetEntity> pets) {
-//        this.pets = pets;
-//        return this;
-//    }
-
-
-//    public List<BookingEntity> getBookings() {
-//        return bookings;
-//    }
-//
-//    public UserEntity setBookings(List<BookingEntity> bookings) {
-//        this.bookings = bookings;
-//        return this;
-//    }
 
     public Set<UserRoleEntity> getRoles() {
         return roles;
@@ -79,15 +56,6 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
-        return this;
-    }
-
-    public List<InvoiceEntity> getInvoices() {
-        return invoices;
-    }
-
-    public UserEntity setInvoices(List<InvoiceEntity> invoices) {
-        this.invoices = invoices;
         return this;
     }
 
@@ -171,4 +139,46 @@ public class UserEntity extends BaseEntity {
         this.petImage = petImage;
         return this;
     }
+
+    public ProfileImageEntity getProfilePicture() {
+        return profilePicture;
+    }
+
+    public UserEntity setProfilePicture(ProfileImageEntity profilePicture) {
+        this.profilePicture = profilePicture;
+        return this;
+    }
+
+    public List<BookingEntity> getBookings() {
+        return bookings;
+    }
+
+    public UserEntity setBookings(List<BookingEntity> bookings) {
+        this.bookings = bookings;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity user = (UserEntity) o;
+        return Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return roles.hashCode();
+    }
+
+    public List<PhotoEntity> getPhotoEntities() {
+        return photoEntities;
+    }
+
+    public UserEntity setPhotoEntities(List<PhotoEntity> photoEntities) {
+        this.photoEntities = photoEntities;
+        return this;
+    }
 }
+
+

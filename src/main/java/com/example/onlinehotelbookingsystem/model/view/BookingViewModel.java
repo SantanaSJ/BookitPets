@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingViewModel {
-    private Long hotelId;
+//    private Long hotelId;
     private Long bookingId;
 
     private String firstName;
@@ -18,25 +18,12 @@ public class BookingViewModel {
 
     private Integer petKilograms;
     private String email;
+    private String phoneNumber;
     private String comments;
+    private String paymentStatus;
 
-    private LocalDate checkIn;
-    private LocalDate checkOut;
 
-    private List<RoomServiceModel> bookedRooms = new ArrayList<>();
-
-    private Integer numberOfPeople;
-
-    public Long getHotelId() {
-        return hotelId;
-    }
-
-    public BookingViewModel setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
-        return this;
-    }
-
-    public String getFirstName() {
+        public String getFirstName() {
         return firstName;
     }
 
@@ -90,48 +77,30 @@ public class BookingViewModel {
         return this;
     }
 
-    public LocalDate getCheckIn() {
-        return checkIn;
-    }
-
-    public BookingViewModel setCheckIn(LocalDate checkIn) {
-        this.checkIn = checkIn;
-        return this;
-    }
-
-    public LocalDate getCheckOut() {
-        return checkOut;
-    }
-
-    public BookingViewModel setCheckOut(LocalDate checkOut) {
-        this.checkOut = checkOut;
-        return this;
-    }
-
-    public List<RoomServiceModel> getBookedRooms() {
-        return bookedRooms;
-    }
-
-    public BookingViewModel setBookedRooms(List<RoomServiceModel> bookedRooms) {
-        this.bookedRooms = bookedRooms;
-        return this;
-    }
-
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public BookingViewModel setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-        return this;
-    }
-
     public Long getBookingId() {
         return bookingId;
     }
 
     public BookingViewModel setBookingId(Long bookingId) {
         this.bookingId = bookingId;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public BookingViewModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public BookingViewModel setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
         return this;
     }
 }

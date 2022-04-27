@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 public class RoomBindingModel {
     private Long id;
 
-    @NotNull(message = "Number of rooms is required!")
     private Integer numberOfRooms;
     private String type;
-
     private BigDecimal price;
+//    @NotNull(message = "Number of people is required!")
+//    private Integer numberOfPeople;
 
     public Long getId() {
         return id;
@@ -47,4 +47,13 @@ public class RoomBindingModel {
         this.price = price;
         return this;
     }
+
+//    public Integer getNumberOfPeople() {
+//        return numberOfPeople;
+//    }
+//
+//    public RoomBindingModel setNumberOfPeople(Integer numberOfPeople) {
+//        this.numberOfPeople = numberOfPeople;
+//        return this;
+//    }
 }

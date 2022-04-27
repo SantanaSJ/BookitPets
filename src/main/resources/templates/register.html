@@ -9,11 +9,10 @@
 <header th:replace="fragments/navbar::navbar"></header>
 <!-- End Header -->
 <main>
-    <section class="vh-100 bg-image"
-             style="background-image: url('https://mdbootstrap.com/img/Photos/new-templates/search-box/img4.jpg');">
+    <section id="register">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-header">Register</div>
                         <div class="card-body">
@@ -23,15 +22,15 @@
                                   th:object="${userModel}">
                                 <div class="form-group row">
                                     <label for="first-name" class="col-md-4 col-form-label text-md-right">First
-                                        Name</label>
+                                        Name<span class="required">*</span></label>
                                     <div class="col-md-6 mb-3">
                                         <input type="text"
+                                               required
                                                th:field="*{firstName}"
                                                id="first-name"
                                                class="form-control"
                                                name="first-name"
-                                               placeholder="First Name"
-                                               >
+                                               placeholder="First Name">
                                     </div>
                                     <div class="col-auto">
                                         <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
@@ -43,15 +42,15 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="last-name" class="col-md-4 col-form-label text-md-right">Last
-                                        Name</label>
+                                        Name<span class="required">*</span></label>
                                     <div class="col-md-6 mb-3">
                                         <input type="text"
+                                               required
                                                th:field="*{lastName}"
                                                id="last-name"
                                                class="form-control"
                                                name="last-name"
-                                               placeholder="Last Name"
-                                               >
+                                               placeholder="Last Name">
                                     </div>
                                     <div class="col-auto">
                                         <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
@@ -62,17 +61,51 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="pet-name" class="col-md-4 col-form-label text-md-right">Pet Name<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text"
+                                               required
+                                               th:field="*{petName}"
+                                               id="pet-name"
+                                               class="form-control"
+                                               name="pet-name"
+                                               placeholder="Pet Name">
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('petName')}" th:errors="*{petName}"
+                                               id="pet-nameError"
+                                               class="text-light form-text bg-danger rounded">Pet name length must be
+                                            more than 3
+                                            characters</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="pet-kg" class="col-md-4 col-form-label text-md-right">Pet kilograms
+                                        <p class="reg-info"><small style="font-size: 10px">(You can update later in
+                                            profile)</small></p></label>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text"
+                                               th:field="*{petKilograms}"
+                                               id="pet-kg"
+                                               class="form-control"
+                                               name="pet-kg"
+                                               placeholder="Pet kg">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="phone" class="col-md-4 col-form-label text-md-right">Phone
-                                        Number</label>
+                                        Number<span class="required">*</span>
+                                        <p><small>(format: 0884444333)</small></p></label>
                                     <div class="col-md-6 mb-3">
                                         <input type="tel"
+                                               required
                                                th:field="*{phoneNumber}"
                                                id="phone"
                                                class="form-control"
                                                name="phone"
                                                placeholder="Phone number"
-                                               >
-                                        <!--                                        pattern="[0-9 ]{10}"-->
+                                               pattern="^0\d{9}$">
                                     </div>
                                     <div class="col-auto">
                                         <small th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
@@ -85,15 +118,15 @@
 
                                 <div class="form-group row">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail
-                                        Address</label>
+                                        Address<span class="required">*</span><p><small>(format: john@yahoo.com)</small></p></label>
                                     <div class="col-md-6 mb-3">
-                                        <input type="text"
+                                        <input type="email"
+                                               required
                                                th:field="*{email}"
                                                id="email_address"
                                                class="form-control"
                                                name="email-address"
-                                               placeholder="Email"
-                                               >
+                                               placeholder="Email">
                                     </div>
                                     <div class="col-auto">
                                         <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
@@ -105,15 +138,17 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password<span
+                                            class="required">*</span></label>
                                     <div class="col-md-6 mb-3">
                                         <input type="password"
+                                               required
                                                th:field="*{password}"
                                                id="password"
                                                class="form-control"
                                                name="password"
                                                placeholder="Password"
-                                               >
+                                        >
                                     </div>
                                     <div class="col-auto">
                                         <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
@@ -125,15 +160,16 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="confirm-password" class="col-md-4 col-form-label text-md-right">Confirm
-                                        Password</label>
+                                        Password<span class="required">*</span></label>
                                     <div class="col-md-6 mb-3">
                                         <input type="password"
+                                               required
                                                th:field="*{confirmPassword}"
                                                id="confirm-password"
                                                class="form-control"
                                                name="confirm-password"
                                                placeholder="Confirm Password"
-                                               >
+                                        >
                                     </div>
                                     <div class="col-auto">
                                         <small th:if="${#fields.hasErrors('confirmPassword')}"
@@ -145,7 +181,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 offset-md-4">
+                                <div class="col-md-6 offset-md-6">
                                     <button type="submit" class="btn btn-primary" id="submit">
                                         Register
                                     </button>
@@ -161,18 +197,10 @@
 
 </main>
 
-<!-- Vendor JS Files -->
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
 
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
-<!--<script src="/js/registration.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
 
 </body>
 </html>

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BookingServiceModel {
 
-    private Long hotelId;
+//    private Long hotelId;
     private Long bookingId;
 
     private String firstName;
@@ -17,14 +17,16 @@ public class BookingServiceModel {
 
     private Integer petKilograms;
     private String email;
+    private String phoneNumber;
     private String comments;
+    private String paymentStatus;
 
-    private LocalDate checkIn;
-    private LocalDate checkOut;
 
-    private List<RoomServiceModel> bookedRooms = new ArrayList<>();
+//    private LocalDate checkIn;
+//    private LocalDate checkOut;
+//
+//    private List<RoomServiceModel> bookedRooms = new ArrayList<>();
 
-    private Integer numberOfPeople;
 
     public String getFirstName() {
         return firstName;
@@ -80,48 +82,13 @@ public class BookingServiceModel {
         return this;
     }
 
-    public Long getHotelId() {
-        return hotelId;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public BookingServiceModel setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
-        return this;
-    }
-
-    public LocalDate getCheckIn() {
-        return checkIn;
-    }
-
-    public BookingServiceModel setCheckIn(LocalDate checkIn) {
-        this.checkIn = checkIn;
-        return this;
-    }
-
-    public LocalDate getCheckOut() {
-        return checkOut;
-    }
-
-    public BookingServiceModel setCheckOut(LocalDate checkOut) {
-        this.checkOut = checkOut;
-        return this;
-    }
-
-    public List<RoomServiceModel> getBookedRooms() {
-        return bookedRooms;
-    }
-
-    public BookingServiceModel setBookedRooms(List<RoomServiceModel> bookedRooms) {
-        this.bookedRooms = bookedRooms;
-        return this;
-    }
-
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public BookingServiceModel setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
+    public BookingServiceModel setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 
@@ -131,6 +98,15 @@ public class BookingServiceModel {
 
     public BookingServiceModel setBookingId(Long bookingId) {
         this.bookingId = bookingId;
+        return this;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public BookingServiceModel setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
         return this;
     }
 }

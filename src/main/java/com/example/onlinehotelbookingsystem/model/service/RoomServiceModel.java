@@ -10,6 +10,8 @@ public class RoomServiceModel {
     private String type;
 
     private BigDecimal price;
+    private String description;
+
 
     public RoomServiceModel() {
     }
@@ -47,6 +49,15 @@ public class RoomServiceModel {
 
     public RoomServiceModel setPrice(BigDecimal price) {
         this.price = price;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public RoomServiceModel setDescription(String description) {
+        this.description = description;
         return this;
     }
 }

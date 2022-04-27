@@ -8,6 +8,7 @@ import com.example.onlinehotelbookingsystem.model.view.RoomViewModel;
 import com.example.onlinehotelbookingsystem.repository.AccommodationRepository;
 import com.example.onlinehotelbookingsystem.service.AccommodationService;
 import com.example.onlinehotelbookingsystem.service.RoomService;
+import com.example.onlinehotelbookingsystem.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -51,35 +52,13 @@ public class AccommodationServiceImpl implements AccommodationService {
                 .map(a -> {
                     AccommodationServiceModel serviceModel = this.mapper.map(a, AccommodationServiceModel.class);
                     serviceModel.setType(a.getType().getType().name());
-//                 to correct it - map it and add it to the accViewModel here.
                     List<RoomServiceModel> roomServiceModels = this.roomService.findByHotelId(id);
                     serviceModel.setRooms(roomServiceModels);
                     return serviceModel;
                 })
-                .orElse(null);
-//      TODO:  to check orElseThrow
+                .orElseThrow(() -> new ObjectNotFoundException("Accommodation with id " + id + " not found!"));
 
     }
-
-//    @Override
-//    public boolean isAvailableBetween(LocalDate checkIn, LocalDate checkOut, Long id, List<RoomBindingModel> rooms) {
-////        TODO: check when to use orElse(null) and orElseThrow()
-//
-//        for (RoomBindingModel room : rooms) {
-//            String type = room.getType();
-//            AccommodationEntity entity = this.accommodationRepository.findById(id).orElseThrow();
-////            this.accommodationRepository.isRoomAvailableBetween(checkIn, checkOut, type);
-//
-//        }
-
-
-
-//        boolean availableBetween = entity.isAvailableBetween(checkIn, checkOut);
-//        return this.bookings.stream()
-//                    .noneMatch(b ->
-//                            (b.isDateInsideCheckedIn(checkin) || b.isDateInsideCheckedIn(checkout))
-//                                    || (b.getCheckin().equals(checkin) && b.getCheckOut().equals(checkout)));
-
 
 
 

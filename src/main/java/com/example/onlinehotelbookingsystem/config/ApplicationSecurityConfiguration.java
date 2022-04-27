@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Configuration
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -34,13 +35,17 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         http
 
-
+//                iframe options - DENY
+                .headers()
+                .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/assets/**","/", "/users/login", "/users/register", "/resources/**").permitAll()
-                .antMatchers("/statistics").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers("/", "/users/login", "/users/register", "/resources/**").permitAll()
+                .antMatchers("/statistics", "/admin/**").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers("/**").authenticated()
+
 
                 .and()
 //                .csrf()
