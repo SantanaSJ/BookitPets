@@ -1,0 +1,1 @@
+web: java -jar target/ONLINE-HOTEL-BOOKING-SYSTEM-0.0.1-SNAPSHOT.jar

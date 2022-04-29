@@ -1,62 +1,35 @@
 package com.example.onlinehotelbookingsystem.web;
 
-import com.example.onlinehotelbookingsystem.model.entity.*;
-import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationTypeEnum;
-import com.example.onlinehotelbookingsystem.model.entity.enums.PaymentStatusEnum;
-import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
-import com.example.onlinehotelbookingsystem.repository.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static com.example.onlinehotelbookingsystem.constants.Constants.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-
-@SpringBootTest
-@AutoConfigureMockMvc
-class BookingControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private AccommodationRepository accommodationRepository;
-
-    @Autowired
-    private AccommodationTypeRepository accommodationTypeRepository;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
-    private BookedRoomsRepository bookedRoomsRepository;
-
-    @Autowired
-    private PaymentRepository paymentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoomRepository roomRepository;
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//class BookingControllerTest {
+//
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Autowired
+//    private AccommodationRepository accommodationRepository;
+//
+//    @Autowired
+//    private AccommodationTypeRepository accommodationTypeRepository;
+//
+//    @Autowired
+//    private UserRoleRepository userRoleRepository;
+//
+//    @Autowired
+//    private BookingRepository bookingRepository;
+//
+//    @Autowired
+//    private BookedRoomsRepository bookedRoomsRepository;
+//
+//    @Autowired
+//    private PaymentRepository paymentRepository;
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Autowired
+//    private RoomRepository roomRepository;
 //
 //    private final CustomUser customUserDetails = new CustomUser
 //            (TEST_USER_EMAIL, TEST_USER_PASSWORD, TEST_USER_ID, TEST_USER_FIRST_NAME,
@@ -66,53 +39,53 @@ class BookingControllerTest {
 //            (TEST_ADMIN_EMAIL, TEST_ADMIN_PASSWORD, TEST_ADMIN_ID, TEST_ADMIN_FIRST_NAME,
 //                    List.of(new SimpleGrantedAuthority("ADMIN")));
 
-    private UserEntity testUser;
-    private AccommodationEntity testAccommodationEntity;
-    private BookingEntity testBookingEntity;
+//    private UserEntity testUser;
+//    private AccommodationEntity testAccommodationEntity;
+//    private BookingEntity testBookingEntity;
 
-    @BeforeEach
-    public void setUp() {
-        this.testUser = getTestUser();
-        this.testAccommodationEntity = getAccommodationEntity();
-        this.testBookingEntity = getBookingEntity();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        this.bookedRoomsRepository.deleteAll();
-        this.roomRepository.deleteAll();
-        this.bookingRepository.deleteAll();
-        this.accommodationRepository.deleteAll();
-        this.userRepository.deleteAll();
-    }
-
-    @Test
-    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
-    void when_booking_form_is_opened_by_authenticated_user_expect_status_200() throws Exception {
+//    @BeforeEach
+//    public void setUp() {
+//        this.testUser = getTestUser();
+//        this.testAccommodationEntity = getAccommodationEntity();
+//        this.testBookingEntity = getBookingEntity();
+//    }
+//
+//    @AfterEach
+//    public void tearDown() {
+//        this.bookedRoomsRepository.deleteAll();
+//        this.roomRepository.deleteAll();
+//        this.bookingRepository.deleteAll();
+//        this.accommodationRepository.deleteAll();
+//        this.userRepository.deleteAll();
+//    }
+//
+//    @Test
+//    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
+//    void when_booking_form_is_opened_by_authenticated_user_expect_status_200() throws Exception {
+////        Long id = this.testAccommodationEntity.getId();
+//        this.mockMvc
+//                .perform(get("/booking-form/accommodation/" + this.testAccommodationEntity.getId()))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("booking-form"));
+//    }
+//
+//    @Test
+//    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
+//    void when_invalid_params_entered_in_booking_form_redirect_with_errors() throws Exception {
 //        Long id = this.testAccommodationEntity.getId();
-        this.mockMvc
-                .perform(get("/booking-form/accommodation/" + this.testAccommodationEntity.getId()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("booking-form"));
-    }
-
-    @Test
-    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
-    void when_invalid_params_entered_in_booking_form_redirect_with_errors() throws Exception {
-        Long id = this.testAccommodationEntity.getId();
-        BindingResult bindingResult = (BindingResult) this.mockMvc
-                .perform(get("/room-availability")
-                        .param("checkIn", String.valueOf(TEST_INVALID_CHECKIN))
-                        .param("checkOut", String.valueOf(TEST_INVALID_CHECKOUT))
-                        .param("hotelId", String.valueOf(this.testAccommodationEntity.getId())))
-                .andExpect(redirectedUrl("/booking-form/accommodation/" + id))
-                .andExpect(flash().attributeExists("org.springframework.validation.BindingResult.bindingModel"))
-                .andReturn().getFlashMap().get("org.springframework.validation.BindingResult.bindingModel");
-
-        assertTrue(bindingResult.hasErrors());
-        assertTrue(bindingResult.hasFieldErrors("checkIn"));
-        assertTrue(bindingResult.hasFieldErrors("checkOut"));
-    }
+//        BindingResult bindingResult = (BindingResult) this.mockMvc
+//                .perform(get("/room-availability")
+//                        .param("checkIn", String.valueOf(TEST_INVALID_CHECKIN))
+//                        .param("checkOut", String.valueOf(TEST_INVALID_CHECKOUT))
+//                        .param("hotelId", String.valueOf(this.testAccommodationEntity.getId())))
+//                .andExpect(redirectedUrl("/booking-form/accommodation/" + id))
+//                .andExpect(flash().attributeExists("org.springframework.validation.BindingResult.bindingModel"))
+//                .andReturn().getFlashMap().get("org.springframework.validation.BindingResult.bindingModel");
+//
+//        assertTrue(bindingResult.hasErrors());
+//        assertTrue(bindingResult.hasFieldErrors("checkIn"));
+//        assertTrue(bindingResult.hasFieldErrors("checkOut"));
+//    }
 
     //                HOW TO SET PARAMS FOR   private List<RoomBindingModel> rooms = new ArrayList<>();
 //    @Test
@@ -290,101 +263,101 @@ class BookingControllerTest {
 //        assertEquals(1, this.bookingRepository.count());
 //    }
 
-    private BookingEntity getBookingEntity() {
-
-        RoomEntity roomEntity = new RoomEntity();
-//        AccommodationEntity testAccommodationEntity = this.testAccommodationEntity;
-        roomEntity
-                .setRoomType(TEST_ROOM_TYPE)
-                .setAccommodationEntity(this.testAccommodationEntity)
-                .setCurrentPrice(TEST_ROOM_CURRENT_PRICE)
-                .setDescription(TEST_ROOM_DESCRIPTION)
-                .setId(TEST_ROOM_ID);
-        this.roomRepository.save(roomEntity);
-
-        List<BookedRoomsEntity> bookedRoomsEntities = new ArrayList<>();
-        BookedRoomsEntity bookedRooms = new BookedRoomsEntity();
-        bookedRooms.setNumberOfRooms(1)
-                .setBooking(this.testBookingEntity)
-                .setPrice(TEST_BOOKED_ROOMS_PRICE)
-                .setRoom(roomEntity)
-                .setNumberOfRooms(TEST_BOOKED_ROOMS_NUMBER_OF_ROOMS)
-                .setId(TEST_BOOKED_ROOMS_ID);
-        bookedRoomsEntities.add(bookedRooms);
-        this.bookedRoomsRepository.save(bookedRooms);
-
-        PaymentEntity paymentEntity = new PaymentEntity();
-        paymentEntity.setStatusEnum(PaymentStatusEnum.UNPAID);
-        this.paymentRepository.save(paymentEntity);
-
-
-        this.testBookingEntity = new BookingEntity();
-        this.testBookingEntity
-                .setGuest(this.testUser)
-                .setProperty(this.testAccommodationEntity)
-                .setFirstName(TEST_USER_FIRST_NAME)
-                .setLastName(TEST_USER_LAST_NAME)
-                .setTotalPrice(BigDecimal.valueOf(200))
-                .setPhoneNumber(TEST_USER_PHONE)
-                .setEmail(TEST_USER_EMAIL)
-                .setPetKilograms(TEST_USER_PET_KG)
-                .setPetName(TEST_USER_PET_NAME)
-                .setCheckIn(TEST_VALID_CHECKIN)
-                .setCheckOut(TEST_VALID_CHECKOUT)
-                .setTotalNights(TEST_BOOKING_NIGHTS)
-                .setBookedRooms(bookedRoomsEntities)
-                .setBookingTime(LocalDateTime.now())
-                .setPayment(paymentEntity)
-                .setId(TEST_BOOKING_ID);
-        this.bookingRepository.save(this.testBookingEntity);
-
-        return this.testBookingEntity;
-    }
-
-    private AccommodationEntity getAccommodationEntity() {
-
-        AccommodationTypeEntity accommodationTypeEntity = getAccommodationTypeEntity();
-        this.testAccommodationEntity = new AccommodationEntity();
-        this.testAccommodationEntity
-                .setName(TEST_HOTEL_NAME)
-                .setType(accommodationTypeEntity)
-                .setCity(TEST_HOTEL_CITY)
-                .setAddress(TEST_HOTEL_ADDRESS)
-                .setPostalCode(TEST_HOTEL_PK)
-                .setImageUrl(TEST_HOTEL_IMAGE)
-                .setId(TEST_HOTEL_ID);
-        this.accommodationRepository.save(this.testAccommodationEntity);
-        return this.testAccommodationEntity;
-    }
-
-    private UserEntity getTestUser() {
-        UserRoleEntity userRoleEntity = getUserRoleEntity();
-
-        this.testUser = new UserEntity();
-        this.testUser
-                .setPassword(TEST_USER_PASSWORD)
-                .setFirstName(TEST_USER_FIRST_NAME)
-                .setLastName(TEST_USER_LAST_NAME)
-                .setEmail(TEST_USER_EMAIL)
-                .setRoles(Set.of(userRoleEntity))
-                .setPhoneNumber(TEST_USER_PHONE)
-                .setId(TEST_USER_ID);
-
-        return this.userRepository.save(this.testUser);
-    }
-
-    private UserRoleEntity getUserRoleEntity() {
-        UserRoleEntity userRoleEntity = new UserRoleEntity();
-        userRoleEntity.setRole(UserRoleEnum.USER);
-        this.userRoleRepository.save(userRoleEntity);
-        return userRoleEntity;
-    }
-
-    private AccommodationTypeEntity getAccommodationTypeEntity() {
-        AccommodationTypeEntity accommodationTypeEntity = new AccommodationTypeEntity();
-        accommodationTypeEntity.setType(AccommodationTypeEnum.HOTEL);
-        this.accommodationTypeRepository.save(accommodationTypeEntity);
-        return accommodationTypeEntity;
-    }
-
-}
+//    private BookingEntity getBookingEntity() {
+//
+//        RoomEntity roomEntity = new RoomEntity();
+////        AccommodationEntity testAccommodationEntity = this.testAccommodationEntity;
+//        roomEntity
+//                .setRoomType(TEST_ROOM_TYPE)
+//                .setAccommodationEntity(this.testAccommodationEntity)
+//                .setCurrentPrice(TEST_ROOM_CURRENT_PRICE)
+//                .setDescription(TEST_ROOM_DESCRIPTION)
+//                .setId(TEST_ROOM_ID);
+//        this.roomRepository.save(roomEntity);
+//
+//        List<BookedRoomsEntity> bookedRoomsEntities = new ArrayList<>();
+//        BookedRoomsEntity bookedRooms = new BookedRoomsEntity();
+//        bookedRooms.setNumberOfRooms(1)
+//                .setBooking(this.testBookingEntity)
+//                .setPrice(TEST_BOOKED_ROOMS_PRICE)
+//                .setRoom(roomEntity)
+//                .setNumberOfRooms(TEST_BOOKED_ROOMS_NUMBER_OF_ROOMS)
+//                .setId(TEST_BOOKED_ROOMS_ID);
+//        bookedRoomsEntities.add(bookedRooms);
+//        this.bookedRoomsRepository.save(bookedRooms);
+//
+//        PaymentEntity paymentEntity = new PaymentEntity();
+//        paymentEntity.setStatusEnum(PaymentStatusEnum.UNPAID);
+//        this.paymentRepository.save(paymentEntity);
+//
+//
+//        this.testBookingEntity = new BookingEntity();
+//        this.testBookingEntity
+//                .setGuest(this.testUser)
+//                .setProperty(this.testAccommodationEntity)
+//                .setFirstName(TEST_USER_FIRST_NAME)
+//                .setLastName(TEST_USER_LAST_NAME)
+//                .setTotalPrice(BigDecimal.valueOf(200))
+//                .setPhoneNumber(TEST_USER_PHONE)
+//                .setEmail(TEST_USER_EMAIL)
+//                .setPetKilograms(TEST_USER_PET_KG)
+//                .setPetName(TEST_USER_PET_NAME)
+//                .setCheckIn(TEST_VALID_CHECKIN)
+//                .setCheckOut(TEST_VALID_CHECKOUT)
+//                .setTotalNights(TEST_BOOKING_NIGHTS)
+//                .setBookedRooms(bookedRoomsEntities)
+//                .setBookingTime(LocalDateTime.now())
+//                .setPayment(paymentEntity)
+//                .setId(TEST_BOOKING_ID);
+//        this.bookingRepository.save(this.testBookingEntity);
+//
+//        return this.testBookingEntity;
+//    }
+//
+//    private AccommodationEntity getAccommodationEntity() {
+//
+//        AccommodationTypeEntity accommodationTypeEntity = getAccommodationTypeEntity();
+//        this.testAccommodationEntity = new AccommodationEntity();
+//        this.testAccommodationEntity
+//                .setName(TEST_HOTEL_NAME)
+//                .setType(accommodationTypeEntity)
+//                .setCity(TEST_HOTEL_CITY)
+//                .setAddress(TEST_HOTEL_ADDRESS)
+//                .setPostalCode(TEST_HOTEL_PK)
+//                .setImageUrl(TEST_HOTEL_IMAGE)
+//                .setId(TEST_HOTEL_ID);
+//        this.accommodationRepository.save(this.testAccommodationEntity);
+//        return this.testAccommodationEntity;
+//    }
+//
+//    private UserEntity getTestUser() {
+//        UserRoleEntity userRoleEntity = getUserRoleEntity();
+//
+//        this.testUser = new UserEntity();
+//        this.testUser
+//                .setPassword(TEST_USER_PASSWORD)
+//                .setFirstName(TEST_USER_FIRST_NAME)
+//                .setLastName(TEST_USER_LAST_NAME)
+//                .setEmail(TEST_USER_EMAIL)
+//                .setRoles(Set.of(userRoleEntity))
+//                .setPhoneNumber(TEST_USER_PHONE)
+//                .setId(TEST_USER_ID);
+//
+//        return this.userRepository.save(this.testUser);
+//    }
+//
+//    private UserRoleEntity getUserRoleEntity() {
+//        UserRoleEntity userRoleEntity = new UserRoleEntity();
+//        userRoleEntity.setRole(UserRoleEnum.USER);
+//        this.userRoleRepository.save(userRoleEntity);
+//        return userRoleEntity;
+//    }
+//
+//    private AccommodationTypeEntity getAccommodationTypeEntity() {
+//        AccommodationTypeEntity accommodationTypeEntity = new AccommodationTypeEntity();
+//        accommodationTypeEntity.setType(AccommodationTypeEnum.HOTEL);
+//        this.accommodationTypeRepository.save(accommodationTypeEntity);
+//        return accommodationTypeEntity;
+//    }
+//
+//}
