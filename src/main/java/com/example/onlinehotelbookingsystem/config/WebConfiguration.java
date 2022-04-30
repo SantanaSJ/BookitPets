@@ -1,7 +1,7 @@
 package com.example.onlinehotelbookingsystem.config;
 
-import com.example.onlinehotelbookingsystem.web.interceptor.StatsInterceptor;
 import com.example.onlinehotelbookingsystem.web.interceptor.LogRegisteredUserInterceptor;
+import com.example.onlinehotelbookingsystem.web.interceptor.StatsInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,6 +22,5 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry
                 .addInterceptor(new LogRegisteredUserInterceptor())
                 .addPathPatterns("/users/register");
-//        registry.addInterceptor(this.executeTimeInterceptor).addPathPatterns("/users/login");
     }
 }
