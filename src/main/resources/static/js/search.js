@@ -31,7 +31,7 @@ const searchHotels = async searchText => {
       matches.forEach(constructOutput);
 
       function constructOutput(hotel) {
-        console.dir(hotel) // what does this show? is there a hotel.id?
+        console.dir(hotel)
 
         output += `
                                     <div class="hotel py-4 px-2 pb-4 border-bottom">
@@ -116,7 +116,6 @@ const searchHotels = async searchText => {
       const msg =  `
       <h4>No Matches Found!</h4>`;
       output.innerHTML = msg;
-    //  TODO to handle it better
     }
   }
 

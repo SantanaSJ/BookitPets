@@ -1,12 +1,18 @@
 package com.example.onlinehotelbookingsystem.service.impl;
 
-import com.example.onlinehotelbookingsystem.model.entity.*;
+import com.example.onlinehotelbookingsystem.model.entity.PetImageEntity;
+import com.example.onlinehotelbookingsystem.model.entity.ProfileImageEntity;
+import com.example.onlinehotelbookingsystem.model.entity.UserEntity;
+import com.example.onlinehotelbookingsystem.model.entity.UserRoleEntity;
 import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
-import com.example.onlinehotelbookingsystem.model.service.*;
+import com.example.onlinehotelbookingsystem.model.service.AllUsersServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.ProfileServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.ProfileUpdateServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.UserRegistrationServiceModel;
 import com.example.onlinehotelbookingsystem.repository.ProfileImageRepository;
 import com.example.onlinehotelbookingsystem.repository.UserRepository;
-import com.example.onlinehotelbookingsystem.security.CustomUserImpl;
 import com.example.onlinehotelbookingsystem.repository.UserRoleRepository;
+import com.example.onlinehotelbookingsystem.security.CustomUserImpl;
 import com.example.onlinehotelbookingsystem.service.CloudinaryService;
 import com.example.onlinehotelbookingsystem.service.PetImageService;
 import com.example.onlinehotelbookingsystem.service.UserService;
@@ -69,7 +75,6 @@ public class UserServiceImpl implements UserService {
             UserRoleEntity adminRole = this.userRoleRepository.findByRole(UserRoleEnum.ADMIN);
             UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
 
-//            TODO: to change dog to pet and to add select option for pet - dog, cat, etc (enum)
             UserEntity admin = new UserEntity();
             admin
                     .setEmail("admin@admin.bg")
@@ -107,14 +112,14 @@ public class UserServiceImpl implements UserService {
 
     private void initializeRoles() {
 
-        if (userRoleRepository.count() == 0) {
+        if (this.userRoleRepository.count() == 0) {
             UserRoleEntity adminRole = new UserRoleEntity();
             adminRole.setRole(UserRoleEnum.ADMIN);
 
             UserRoleEntity userRole = new UserRoleEntity();
             userRole.setRole(UserRoleEnum.USER);
 
-            userRoleRepository.saveAll(List.of(adminRole, userRole));
+            this.userRoleRepository.saveAll(List.of(adminRole, userRole));
         }
     }
 
@@ -152,7 +157,6 @@ public class UserServiceImpl implements UserService {
                 .isEmpty();
     }
 
-    //    TODO: to add  where needed .orElseThrow(() -> new ObjectNotFoundException("User with this email " + email + " not found", email));
     @Override
     public boolean existsBy(String email) {
         boolean exists = this.userRepository.existsByEmail(email);
@@ -213,26 +217,6 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.save(userEntity);
     }
-
-//    @Override
-//    public List<AllUsersServiceModel> findAll() {
-//        List<UserEntity> entities = this.userRepository.findAll();
-//
-//        List<AllUsersServiceModel> allUsers = entities
-//                .stream()
-//                .map(userEntity -> {
-//                    AllUsersServiceModel serviceModel = this.mapper.map(userEntity, AllUsersServiceModel.class);
-//                    serviceModel.setNumberOfBookings(userEntity.getBookings().size());
-//                    for (UserRoleEntity role : userEntity.getRoles()) {
-//                        serviceModel.getRoles().add(role.getRole());
-//                    }
-//                    serviceModel.getRoles().remove(null);
-//                    return serviceModel;
-//                })
-//                .collect(Collectors.toList());
-//
-//        return allUsers;
-//    }
 
     @Override
     public void makeAdmin(String email) {

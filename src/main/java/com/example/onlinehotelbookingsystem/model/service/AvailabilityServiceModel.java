@@ -12,8 +12,6 @@ public class AvailabilityServiceModel {
 
     private List<RoomServiceModel> rooms = new ArrayList<>();
 
-//    private Integer numberOfPeople;
-
     public Long getHotelId() {
         return hotelId;
     }
@@ -49,13 +47,4 @@ public class AvailabilityServiceModel {
         this.rooms = rooms;
         return this;
     }
-
-//    public Integer getNumberOfPeople() {
-//        return numberOfPeople;
-//    }
-//
-//    public AvailabilityServiceModel setNumberOfPeople(Integer numberOfPeople) {
-//        this.numberOfPeople = numberOfPeople;
-//        return this;
-//    }
 }

@@ -20,7 +20,7 @@ public class MoveCompletedBookings {
     }
 
     //    @Scheduled(cron = "* 0 22 * * 7")
-    @Scheduled(cron = "0 30 21 * * *")
+    @Scheduled(cron = "0 30 12 * * *")
     private void moveCompletedBookings() {
         this.bookingService.moveCompletedBookingsToHistory();
         LOGGER.info("Moved successfully at {}", LocalDateTime.now());

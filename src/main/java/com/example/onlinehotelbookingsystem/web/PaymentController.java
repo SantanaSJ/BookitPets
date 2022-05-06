@@ -69,8 +69,6 @@ public class PaymentController {
             return new StripeResponseMessage(false, "An error occurred while trying to create a charge.");
         }
 
-        // You may want to store charge id along with order information
-
         return new StripeResponseMessage(true, "Success! Your charge id is " + chargeId);
     }
 

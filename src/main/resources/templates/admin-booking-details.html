@@ -11,7 +11,7 @@
 <main>
 
     <section>
-        <div class="container booking-container-details" th:object="${summaryBookingViewModel}">
+        <div class="booking-container-details" th:object="${summaryBookingViewModel}">
             <div class="row">
                 <div class="col-sm mb-3 fw-bold text-center">
                     Booking Summary
@@ -59,11 +59,11 @@
                             </div>
                             <div class="mb-2">
                                 <span class="fw-bold">Address:</span>
-                                <span class="text-muted">12 Kalimantsi</span>
+                                <span class="text-muted" th:text="*{getAddress()}">Address</span>
                             </div>
                             <div class="mb-2">
                                 <span class="fw-bold">Phone:</span>
-                                <span class="text-muted">to add phone number in entity and db</span>
+                                <span class="text-muted">+359 887766554</span>
                             </div>
                             <div>
                                 <span class="fw-bold">Category</span>
@@ -160,279 +160,67 @@
                     : *{getComments()}">comments</p>
                     </div>
                 </div>
+                <div class="col-sm-3" style="padding: 11px">
+                    <div class="form-group booking-details">
+                        <form th:method="GET" th:action="@{/admin/manage/{id}(id=*{bookingId})}">
+                            <button type='submit' class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <!-- MAP -->
             <div class="row justify-content-center mt-3">
                 <div class="row justify-content-center">
-                    <div class="col-sm-10 text-center">
-                        <iframe class="mb-4 mb-lg-0 rounded"
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                                frameborder="0" style="border:0; width: 93%; height: 200px;" allowfullscreen></iframe>
+                    <div class="col-sm-10 text-center" id="map" style="width:100%;height:400px;">
+                        <!--                        <iframe class="mb-4 mb-lg-0 rounded"-->
+                        <!--                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"-->
+                        <!--                                frameborder="0" style="border:0; width: 93%; height: 200px;" allowfullscreen></iframe>-->
                     </div>
                 </div>
             </div>
+
 
         </div>
     </section>
 
 
-    <!--    <section>-->
-    <!--        <div class="booking-container update">-->
-    <!--            <div class="row justify-content-center">-->
-
-    <!--                <div class="col-6" th:object="${summaryBookingViewModel}">-->
-    <!--                    <div class="card-header mt-3">-->
-    <!--                        Booking Summary-->
-    <!--                    </div>-->
-    <!--                    <div class="summary-body border p-3">-->
-    <!--                        <div class="row">-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">First Name:</span>-->
-    <!--                                    <div th:text="*{getFirstName()}">Pesho</div>-->
-    <!--                                </div>-->
-
-    <!--                            </div>-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">Last Name:</span>-->
-    <!--                                    <p th:text="*{getLastName()}">Pesho</p>-->
-    <!--                                </div>-->
-
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                        <div class="row">-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">Email:</span>-->
-    <!--                                    <p th:text="*{getEmail()}">email</p>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">Pet Name:</span>-->
-    <!--                                    <p th:text="*{getPetName()}">Bren</p>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                        <div class="row">-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">Pet kilograms:</span>-->
-    <!--                                    <p th:text="*{getPetKilograms()}">34</p>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">Phone number:</span>-->
-    <!--                                    <p th:text="*{phoneNumber}">33423424</p>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-
-    <!--                    &lt;!&ndash;==================================================================================================================&ndash;&gt;-->
-    <!--                    &lt;!&ndash;SUMMARY&ndash;&gt;-->
-
-    <!--                    <div class="summary-body border p-3 mt-3">-->
-    <!--                        <div class="row">-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <span class="fw-bold">Hotel Name:</span>-->
-    <!--                                    <p th:text="*{getHotelName()}">RAdisson</p>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="col">-->
-    <!--                                <div>-->
-    <!--                                    <div class="fw-bold">Category:</div>-->
-    <!--                                    <span class="col"-->
-    <!--                                          th:each="star : ${#numbers.sequence(1, summaryBookingViewModel.category)}">-->
-    <!--                                                <i class='bx bxs-star'> </i>-->
-    <!--                                        </span>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="row">-->
-    <!--                                <div class="col">-->
-    <!--                                    <div>-->
-    <!--                                        <span class="fw-bold">City:</span>-->
-    <!--                                        <p th:text="*{getCity()}">Sofia</p>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                <div class="col">-->
-    <!--                                    <div>-->
-    <!--                                        <span class="fw-bold">Address:</span>-->
-    <!--                                        <p th:text="*{getAddress()}">Some address</p>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="row">-->
-    <!--                                <div class="col">-->
-    <!--                                    <div>-->
-    <!--                                        <span class="fw-bold">Check in:</span>-->
-    <!--                                        <p th:text="${#temporals.format(summaryBookingViewModel.checkIn, 'dd-MM-yyyy')}">-->
-    <!--                                            19.02.2022</p>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                <div class="col">-->
-    <!--                                    <div>-->
-    <!--                                        <span class="fw-bold">Check out:</span>-->
-    <!--                                        <p th:text="${#temporals.format(summaryBookingViewModel.checkOut, 'dd-MM-yyyy')}">-->
-    <!--                                            20.02.2022</p>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="row">-->
-    <!--                                <div class="col">-->
-    <!--                                    <div>-->
-    <!--                                        <span class="fw-bold">Total nights:</span>-->
-    <!--                                        <p th:text="*{getTotalNights()}">34</p>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                <div class="col">-->
-    <!--                                    <div class="col">-->
-    <!--                                    <div>-->
-    <!--                                        <span class="fw-bold">Payment Status</span>-->
-    <!--                                        <p th:text="*{paymentStatus}">paid</p>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="row">-->
-    <!--                                <div class="col">-->
-    <!--                                    <div class="table-responsive-sm">-->
-    <!--                                        <table class="table">-->
-    <!--                                            <thead>-->
-    <!--                                            <tr>-->
-    <!--                                                <th scope="col">#</th>-->
-    <!--                                                <th scope="col">Room type</th>-->
-    <!--                                                <th scope="col">Price per room</th>-->
-    <!--                                            </tr>-->
-    <!--                                            </thead>-->
-    <!--                                            <tbody>-->
-    <!--                                            <tr th:each="e, rowStat : ${summaryBookingViewModel.rooms}">-->
-    <!--                                <span th:if="${e.numberOfRooms != 0}">-->
-    <!--                                <th scope="row" th:text="${rowStat.count}" type="number" name="index"></th>-->
-    <!--                                <td th:text="|${rowStat.current.type} x ${rowStat.current.numberOfRooms}|"-->
-    <!--                                    name="type"></td>-->
-    <!--                                <td th:text="${rowStat.current.price}" name="price"></td>-->
-    <!--                                </span>-->
-    <!--                                            </tr>-->
-    <!--                                            </tbody>-->
-    <!--                                        </table>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                <div class="col">-->
-    <!--                                    <div class="table-responsive-sm">-->
-    <!--                                        <table class="table">-->
-    <!--                                            <thead>-->
-    <!--                                            <tr>-->
-    <!--                                                <th scope="col">Total price</th>-->
-    <!--                                            </tr>-->
-    <!--                                            </thead>-->
-    <!--                                            <tbody>-->
-    <!--                                            <tr>-->
-    <!--                                                <td id="totalPrice"></td>-->
-    <!--                                            </tr>-->
-    <!--                                            <script th:inline="javascript">-->
-    <!--                                                total();-->
-
-    <!--                                                function total() {-->
-    <!--                                                    /*<![CDATA[*/-->
-    <!--                                                    let hasDiscount = /*[[*{hasDiscount}]]*/ 'default';-->
-    <!--                                                    let totalPrice = /*[[*{totalPrice}]]*/ 'default';-->
-    <!--                                                    console.log(hasDiscount);-->
-    <!--                                                    console.log(totalPrice);-->
-    <!--                                                    let output;-->
-    <!--                                                    if (hasDiscount === true) {-->
-    <!--                                                        output = `<td>${totalPrice} BGN <small><sub>(*Discount applied!)</sub></small></td>`-->
-    <!--                                                        // document.getElementById('totalPrice').innerHTML = output;-->
-    <!--                                                    } else {-->
-    <!--                                                        output = `<td>${totalPrice} BGN</td>`-->
-    <!--                                                    }-->
-    <!--                                                    document.getElementById('totalPrice').innerHTML = output;-->
-
-    <!--                                                    /*]]>*/-->
-    <!--                                                }-->
-    <!--                                            </script>-->
-    <!--                                            </tbody>-->
-    <!--                                        </table>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                <div class="row">-->
-
-    <!--                                    <div class="col">-->
-    <!--                                        <div>-->
-    <!--                                            <span class="fw-bold">Comments:</span>-->
-    <!--                                            <p th:text="${#strings.isEmpty(summaryBookingViewModel.getComments())}-->
-    <!--                                     ? 'No comments!'-->
-    <!--                                     : *{getComments()}">comments</p>-->
-    <!--                                        </div>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="col">-->
-    <!--                                        <div>-->
-    <!--                                            <span class="fw-bold">Booking last updated:</span>-->
-    <!--                                            <p th:text="*{lastUpdated == null}-->
-    <!--                                     ? 'No updates made yet!'-->
-    <!--                                     : ${#temporals.format(summaryBookingViewModel.lastUpdated, 'dd-MM-yyyy HH:mm')} + 'hrs'">-->
-    <!--                                                19.02.2020</p>-->
-    <!--                                        </div>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-
-    <!--                        <div class="ln_solid booking-details">-->
-    <!--                            <div class="form-group">-->
-    <!--                                <div class="row">-->
-    <!--                                    <div class="col text-center">-->
-    <!--                                        <form th:action="@{/admin/manage/{id}(id=*{bookingId})}"-->
-    <!--                                              th:method="GET">-->
-    <!--                                            <button type='submit' class="btn btn-primary mt-4">Update</button>-->
-    <!--                                        </form>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="col text-center">-->
-    <!--                                        <button type='button' class="btn delete-btn btn-danger mt-4"-->
-    <!--                                                th:data-id="*{bookingId}"-->
-    <!--                                                id="delete">-->
-    <!--                                            Cancel Booking-->
-    <!--                                        </button>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-
-    <!--                                &lt;!&ndash;                    <button type="button" class="btn btn-primary" id="loadBookings" >View All Bookings</button>&ndash;&gt;-->
-
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-
-    <!--            </div>-->
-
-    <!--        </div>-->
-    <!--    </section>-->
-
-
-</main>
+  </main>
 <!--End #main-->
 
 <!--======= Footer =======-->
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
-<script>
-    $('#delete').click(function () {
-        if (confirm('Are you sure you want to delete the selected booking?')) {
-            let bookingId = $(this).data('id');
-            console.log("Booking id to delete is " + bookingId);
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4"></script>
 
-            fetch('http://localhost:8080/delete/' + bookingId, {
-                method: 'DELETE'
-            })
-            console.log('deleted');
-            window.location = '/admin/manage-all-bookings';
-        }
-    })
-</script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function initMap() {
+
+        const lat = /*[[${summaryBookingViewModel.lat}]]*/ 'default';
+        const lng = /*[[${summaryBookingViewModel.lng}]]*/ 'default';
+
+        console.log(lng);
+        console.log(lat);
+
+        let elementById = document.getElementById("map");
+        console.log(elementById);
+
+        const coords = {
+        lat: parseFloat(lat),
+        lng: parseFloat(lng)
+    };
+
+        const map = new google.maps.Map(
+        document.getElementById("map"), {zoom: 15, center: coords});
+        const marker = new google.maps.Marker({position: coords, map: map});
+
+    }
+        /*]]>*/
+
+        initMap();
+    </script>
+
 </body>
 </html>
 

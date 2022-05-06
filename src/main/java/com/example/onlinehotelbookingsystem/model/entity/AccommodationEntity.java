@@ -1,11 +1,10 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
 
+import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationTypeEnum;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,8 +44,10 @@ public class AccommodationEntity extends BaseEntity {
     @OneToMany(mappedBy = "accommodationEntity", cascade = CascadeType.ALL)
     private List<RoomEntity> roomEntity;
 
-    @ManyToOne
-    private AccommodationTypeEntity type;
+    //    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AccommodationTypeEnum type;
 
     public AccommodationEntity() {
     }
@@ -87,14 +88,23 @@ public class AccommodationEntity extends BaseEntity {
         return this;
     }
 
-    public AccommodationTypeEntity getType() {
+    public AccommodationTypeEnum getType() {
         return type;
     }
 
-    public AccommodationEntity setType(AccommodationTypeEntity type) {
+    public AccommodationEntity setType(AccommodationTypeEnum type) {
         this.type = type;
         return this;
     }
+
+    //    public AccommodationTypeEntity getType() {
+//        return type;
+//    }
+//
+//    public AccommodationEntity setType(AccommodationTypeEntity type) {
+//        this.type = type;
+//        return this;
+//    }
 
     public String getAddress() {
         return address;

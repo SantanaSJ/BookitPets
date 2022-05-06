@@ -12,9 +12,6 @@ public class LogRegisteredUserInterceptor implements HandlerInterceptor {
 
 //    https://www.learnbestcoding.com/post/23/spring-framework-handlerinterceptor
 
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-//    }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

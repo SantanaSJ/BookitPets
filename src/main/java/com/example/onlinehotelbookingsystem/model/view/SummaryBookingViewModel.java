@@ -3,9 +3,7 @@ package com.example.onlinehotelbookingsystem.model.view;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SummaryBookingViewModel {
 
@@ -22,10 +20,8 @@ public class SummaryBookingViewModel {
     private String phoneNumber;
     private String comments;
 
-//    DateTimeFormatter.ISO_LOCAL_DATE.format(localDate)
     private LocalDate checkIn;
     private LocalDate checkOut;
-//    private LocalDate cancellationDate;
     private LocalDateTime cancelledOn;
 
     private List<RoomViewModel> rooms;
@@ -33,6 +29,8 @@ public class SummaryBookingViewModel {
     private int category;
     private String hotelName;
     private String hotelImage;
+    private String lat;
+    private String lng;
     private String type;
     private String address;
     private String city;
@@ -210,15 +208,6 @@ public class SummaryBookingViewModel {
         return this;
     }
 
-//    public LocalDate getCancellationDate() {
-//        return cancellationDate;
-//    }
-//
-//    public SummaryBookingViewModel setCancellationDate(LocalDate cancellationDate) {
-//        this.cancellationDate = cancellationDate;
-//        return this;
-//    }
-
     public String getPaymentStatus() {
         return paymentStatus;
     }
@@ -283,6 +272,24 @@ public class SummaryBookingViewModel {
 
     public SummaryBookingViewModel setPhone(String phone) {
         this.phone = phone;
+        return this;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public SummaryBookingViewModel setLat(String lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public SummaryBookingViewModel setLng(String lng) {
+        this.lng = lng;
         return this;
     }
 }

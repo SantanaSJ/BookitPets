@@ -10,11 +10,11 @@
 <!-- End Header -->
 
 <main>
-    <section class="manage-all">
+    <section class="all">
         <div class="page-content page-container" id="page-content">
 
 
-            <div class="padding">
+            <div>
 <!--                /*@thymesVar id="successMsg" type=""*/-->
                 <div th:if="${successMsg}"
                      class="alert alert-success alert-dismissible fade show col-7 users-success"
@@ -44,7 +44,6 @@
                     <span th:text="${successMsgRemoveUser.getMessage()}">text</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                             aria-label="Close">
-                        <!--                        <span aria-hidden="true">&times;</span>-->
                     </button>
                 </div>
                 <div class="row justify-content-center">
@@ -160,6 +159,5 @@
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
 
-<script src="/js/tooltip.js"></script>
 </body>
 </html>

@@ -12,9 +12,6 @@ public class RoomsHistoryEntity extends BaseEntity {
     @ManyToOne
     private BookingHistoryEntity bookingHistory;
 
-//    @ManyToOne
-//    private CancelledBookingEntity cancelledBooking;
-
     @ManyToOne
     private RoomEntity room;
 

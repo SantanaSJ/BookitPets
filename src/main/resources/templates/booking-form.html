@@ -21,7 +21,7 @@
 
         <div class="booking-container">
             <div class="row">
-                <div class="col-3 p-0 summary " th:object="${accommodationViewModel}">
+                <div class="col-sm-3 p-0 summary " th:object="${accommodationViewModel}">
                     <div class="card-header">
                         Hotel Summary
                     </div>
@@ -111,67 +111,69 @@
                                     <div class="card-header">
                                         Room Information
                                     </div>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Room type</th>
-                                            <th scope="col">Room description</th>
-                                            <th scope="col">Room price per night</th>
-                                            <th scope="col">No. of rooms</th>
-                                            <!--                                    <th scope="col">No. of people *</th>-->
-                                        </tr>
-                                        </thead>
-                                        <tbody>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Room type</th>
+                                                <th scope="col">Room description</th>
+                                                <th scope="col">Room price per night</th>
+                                                <th scope="col">No. of rooms</th>
+                                                <!--                                    <th scope="col">No. of people *</th>-->
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                                        <tr th:each="room, rowStat : ${accommodationViewModel.getRooms()}">
-                                            <th scope="row" th:text="${rowStat.count}" type="number" name="index"></th>
-                                            <td th:text="${rowStat.current.type}" name="type"></td>
-                                            <td th:text="${rowStat.current.description}" name="description"></td>
+                                            <tr th:each="room, rowStat : ${accommodationViewModel.getRooms()}">
+                                                <th scope="row" th:text="${rowStat.count}" name="index"></th>
+                                                <td th:text="${rowStat.current.type}" name="type"></td>
+                                                <td th:text="${rowStat.current.description}" name="description"></td>
 
-                                            <!--                                        GET HOTEL ID -->
+                                                <!--                                        GET HOTEL ID -->
 
-                                            <input class="form-control" name="hotelId" id="hotelId" type="hidden"
-                                                   th:value="${accommodationViewModel.getId()}"/>
+                                                <input class="form-control" name="hotelId" id="hotelId" type="hidden"
+                                                       th:value="${accommodationViewModel.getId()}"/>
 
-                                            <!--                                        Get ROOM ID-->
-                                            <input th:value="${rowStat.current.id}" name="roomId" type="hidden"/>
+                                                <!--                                        Get ROOM ID-->
+                                                <input th:value="${rowStat.current.id}" name="roomId" type="hidden"/>
 
-                                            <!--                                        PRICE-->
-                                            <!-- <td th:text="${#numbers.formatCurrency(room.price)}"></td>-->
-                                            <td th:text="|${room.price} BGN|"></td>
-                                            <input class="form-control" name="price" id="price" type="hidden"
-                                                   th:value="${room.price}"/>
+                                                <!--                                        PRICE-->
+                                                <!-- <td th:text="${#numbers.formatCurrency(room.price)}"></td>-->
+                                                <td th:text="|${room.price} BGN|"></td>
+                                                <input class="form-control" name="price" id="price" type="hidden"
+                                                       th:value="${room.price}"/>
 
-                                            <td>
-                                                <!--                                    GET NUMBER OF ROOMS FOR EACH ROOM-->
-                                                <label for="numberOfRooms"></label>
-                                                <select name="numberOfRooms" id="numberOfRooms"
-                                                        th:field="*{rooms[__${rowStat.index}__].numberOfRooms}">
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                </select>
-                                                <label for="type"></label>
-                                                <input th:value="${accommodationViewModel.getRooms()[__${rowStat.index}__].getType()}"
-                                                       name="type"
-                                                       id="type"
-                                                       hidden="hidden"
-                                                       type="text"/>
-                                                <div>
-                                                    <small class="col-auto"
-                                                           th:if="${#fields.hasErrors('*{rooms[__${rowStat.index}__].numberOfRooms}')}"
-                                                           th:errors="*{rooms[__${rowStat.index}__].numberOfRooms}"
-                                                           id="numberOfRoms-Error">
-                                                    </small>
-                                                </div>
-                                            </td>
+                                                <td>
+                                                    <!--                                    GET NUMBER OF ROOMS FOR EACH ROOM-->
+                                                    <label for="numberOfRooms"></label>
+                                                    <select name="numberOfRooms" id="numberOfRooms"
+                                                            th:field="*{rooms[__${rowStat.index}__].numberOfRooms}">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                    </select>
+                                                    <label for="type"></label>
+                                                    <input th:value="${accommodationViewModel.getRooms()[__${rowStat.index}__].getType()}"
+                                                           name="type"
+                                                           id="type"
+                                                           hidden="hidden"
+                                                           type="text"/>
+                                                    <div>
+                                                        <small class="col-auto"
+                                                               th:if="${#fields.hasErrors('*{rooms[__${rowStat.index}__].numberOfRooms}')}"
+                                                               th:errors="*{rooms[__${rowStat.index}__].numberOfRooms}"
+                                                               id="numberOfRoms-Error">
+                                                        </small>
+                                                    </div>
+                                                </td>
 
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

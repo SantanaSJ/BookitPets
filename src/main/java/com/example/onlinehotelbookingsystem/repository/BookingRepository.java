@@ -1,7 +1,6 @@
 package com.example.onlinehotelbookingsystem.repository;
 
 import com.example.onlinehotelbookingsystem.model.entity.BookingEntity;
-import com.example.onlinehotelbookingsystem.model.entity.BookingHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -79,17 +78,17 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     void deleteAllCompleted();
 
     //@Procedure(name = "usp_move_completed_bookings") -> ok
-    @Modifying
-    @Transactional
-    @Query(value = "CALL usp_move_completed_bookings", nativeQuery = true)
-    void moveCompletedBookingsToHistory();
+//    @Modifying
+//    @Transactional
+//    @Query(value = "CALL usp_move_completed_bookings", nativeQuery = true)
+//    void moveCompletedBookingsToHistory();
 
 //    get all Completed from BookingEntity
 //    @Query(value = "SELECT b FROM BookingEntity b WHERE b.checkOut = CURRENT_DATE")
 //    List<BookingEntity> getAllCompletedBookings();
 
-    @Modifying
-    @Transactional
-    @Query(value = "CALL usp_move_cancelled_booking(:id)", nativeQuery = true)
-    void moveCancelledBookingToHistory(Long id);
+//    @Modifying
+//    @Transactional
+//    @Query(value = "CALL usp_move_cancelled_booking(:id)", nativeQuery = true)
+//    void moveCancelledBookingToHistory(Long id);
 }

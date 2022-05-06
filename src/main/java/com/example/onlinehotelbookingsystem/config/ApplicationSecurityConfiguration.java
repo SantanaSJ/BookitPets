@@ -37,7 +37,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .headers()
                 .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and()
-//                .csrf().disable()
+//                ??payment not working without csrf().disable
+                .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/users/login", "/users/register", "/resources/**").permitAll()

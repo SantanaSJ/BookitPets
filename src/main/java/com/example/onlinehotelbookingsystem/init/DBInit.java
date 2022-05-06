@@ -14,7 +14,9 @@ public class DBInit implements CommandLineRunner {
     private final AccommodationTypeService propertyTypeService;
     private final AccommodationService accommodationService;
 
-    public DBInit(UserService userService, AccommodationTypeService propertyTypeService, AccommodationService accommodationService) {
+
+    public DBInit(UserService userService, AccommodationTypeService propertyTypeService,
+                  AccommodationService accommodationService) {
         this.userService = userService;
         this.propertyTypeService = propertyTypeService;
         this.accommodationService = accommodationService;
@@ -25,6 +27,7 @@ public class DBInit implements CommandLineRunner {
 
         this.userService.initializeUsersAndRoles();
         this.propertyTypeService.initAccommodationTypes();
+        this.accommodationService.initHotels();
 
     }
 }

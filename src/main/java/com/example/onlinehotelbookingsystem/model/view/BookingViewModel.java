@@ -1,13 +1,6 @@
 package com.example.onlinehotelbookingsystem.model.view;
 
-import com.example.onlinehotelbookingsystem.model.service.RoomServiceModel;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 public class BookingViewModel {
-//    private Long hotelId;
     private Long bookingId;
 
     private String firstName;

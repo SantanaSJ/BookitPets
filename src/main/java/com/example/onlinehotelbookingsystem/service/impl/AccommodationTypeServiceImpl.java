@@ -18,15 +18,13 @@ public class AccommodationTypeServiceImpl implements AccommodationTypeService {
 
     @Override
     public void initAccommodationTypes() {
-//        TODO: Add description
 
         if (this.accommodationTypeRepository.count() == 0) {
             for (AccommodationTypeEnum type : AccommodationTypeEnum.values()) {
-                AccommodationTypeEntity propertyType = new AccommodationTypeEntity();
-                propertyType.setType(type);
-                this.accommodationTypeRepository.save(propertyType);
+                AccommodationTypeEntity accommodationTypeEntity = new AccommodationTypeEntity();
+                accommodationTypeEntity.setType(type);
+                this.accommodationTypeRepository.save(accommodationTypeEntity);
             }
-
         }
     }
 

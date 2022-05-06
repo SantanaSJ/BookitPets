@@ -32,9 +32,7 @@
                         <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span>
                         </strong>
                         <span>Your booking is paid and guaranteed.</span>
-
                         <!--                            <a th:href="@{/payment/{id}(id=*{bookingId})}">Complete Payment</a>-->
-
                     </div>
                 </div>
                 <div class="col-6">
@@ -150,15 +148,6 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <label for="comments" class="label-align fw-bold mt-3">Comments</label>
-                                    <div class="col-md-6 col-sm-6">
-                                        <textarea th:field="*{comments}" class="form-control" rows="1" id="comments"
-                                                  style="width: 16em"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
                                     <label for="phoneNumber" class="label-align fw-bold mt-3">Phone number<span
                                             class="required">*</span></label>
                                     <input
@@ -174,6 +163,16 @@
                                                 th:errors="*{phoneNumber}"
                                                 id="phoneNumber-Error"
                                                 class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="comments" class="label-align fw-bold mt-3">Comments</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <textarea th:field="*{comments}" class="form-control" rows="1" id="comments"
+                                                  style="width: 16em"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -320,8 +319,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -333,8 +330,6 @@
 
         </div>
     </section>
-
-
 </main>
 <!--End #main-->
 
@@ -342,7 +337,6 @@
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
 <script src="/js/delete.js"></script>
-<script src="/js/follow.js"></script>
 
 </body>
 </html>

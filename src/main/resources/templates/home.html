@@ -3,12 +3,6 @@
 <head th:replace="fragments/head::head"></head>
 
 
-<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">-->
-<!--<script src="https://code.jquery.com/jquery-3.6.0.js"></script>-->
-<!--<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>-->
-
-
 <!--    autocomplete-->
 <!--    <script type="text/javascript">-->
 
@@ -118,7 +112,7 @@
                                               <small class="text-muted">${hotel.description}</small>
 
                                            </div>
-                                            <div class="col-lg-3 px-0" id="map">
+                                            <div class="col-lg-3 px-0" id="dynamicMap">
 <!--                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=InterContinental+Sofia,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>-->
                                             <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=Best+Western+Premier+Sofia+Airport+Hotel,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>
                                             </div>
@@ -160,7 +154,6 @@
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
 
-<script src="/js/custom-script.js"></script>
 <script src="/js/search.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&callback=initMap"></script>
 

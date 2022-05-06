@@ -20,9 +20,6 @@ public class BookingHistoryEntity extends BaseEntity {
     @ManyToOne
     private AccommodationEntity property;
 
-//    @OneToMany(mappedBy = "booking",cascade = CascadeType.ALL)
-//    private List<BookedRoomsEntity> bookedRooms = new ArrayList<>();
-
     private String firstName;
     private String lastName;
 
@@ -37,10 +34,6 @@ public class BookingHistoryEntity extends BaseEntity {
 
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkOut;
-
-    @Column(columnDefinition = "DATE")
-    private LocalDate cancellationDate;
-
 //    ??
     private Long deletedBookingId;
 
@@ -51,13 +44,14 @@ public class BookingHistoryEntity extends BaseEntity {
     private String petName;
     private String email;
     private String phoneNumber;
+    private String lat;
+    private String lng;
     @Column(columnDefinition="tinyint(1) default 1")
     private boolean isCompleted;
     @Column(columnDefinition="tinyint(1) default 1")
     private boolean isCancelled;
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime cancelledOn;
-//    private int countBookings;
 
     @OneToOne
     private PaymentEntity payment;
@@ -79,15 +73,6 @@ public class BookingHistoryEntity extends BaseEntity {
         this.property = property;
         return this;
     }
-
-//    public List<BookedRoomsEntity> getBookedRooms() {
-//        return bookedRooms;
-//    }
-//
-//    public BookingHistoryEntity setBookedRooms(List<BookedRoomsEntity> bookedRooms) {
-//        this.bookedRooms = bookedRooms;
-//        return this;
-//    }
 
     public String getFirstName() {
         return firstName;
@@ -143,14 +128,6 @@ public class BookingHistoryEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDate getCancellationDate() {
-        return cancellationDate;
-    }
-
-    public BookingHistoryEntity setCancellationDate(LocalDate cancellationDate) {
-        this.cancellationDate = cancellationDate;
-        return this;
-    }
 
     public BigDecimal getTotalPrice() {
         return totalPrice;
@@ -215,15 +192,6 @@ public class BookingHistoryEntity extends BaseEntity {
         return this;
     }
 
-//    public int getCountBookings() {
-//        return countBookings;
-//    }
-//
-//    public CompletedBookingEntity setCountBookings(int countBookings) {
-//        this.countBookings = countBookings;
-//        return this;
-//    }
-
     public PaymentEntity getPayment() {
         return payment;
     }
@@ -278,12 +246,21 @@ public class BookingHistoryEntity extends BaseEntity {
         return this;
     }
 
-    //    public boolean isCompleted() {
-//        return isCompleted;
-//    }
-//
-//    public CompletedBookingEntity setCompleted(boolean completed) {
-//        isCompleted = completed;
-//        return this;
-//    }
+    public String getLat() {
+        return lat;
+    }
+
+    public BookingHistoryEntity setLat(String lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public BookingHistoryEntity setLng(String lng) {
+        this.lng = lng;
+        return this;
+    }
 }

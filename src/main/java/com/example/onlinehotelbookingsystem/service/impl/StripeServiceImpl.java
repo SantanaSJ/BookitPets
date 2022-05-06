@@ -78,10 +78,4 @@ public class StripeServiceImpl implements StripeService {
         System.out.println();
     }
 
-//    private void savePaymentId(String id) {
-//        PaymentEntity paymentEntity = new PaymentEntity();
-//        paymentEntity.setChargeId(id);
-//        paymentEntity.setStatusEnum(PaymentStatusEnum.PAID);
-//        this.paymentRepository.save(paymentEntity);
-//    }
 }

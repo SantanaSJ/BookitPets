@@ -4,7 +4,6 @@ import com.example.onlinehotelbookingsystem.model.entity.PetImageEntity;
 import com.example.onlinehotelbookingsystem.repository.PetImageRepository;
 import com.example.onlinehotelbookingsystem.service.CloudinaryService;
 import com.example.onlinehotelbookingsystem.service.PetImageService;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,12 +13,10 @@ import java.io.IOException;
 public class PetImageServiceImpl implements PetImageService {
     private final CloudinaryService cloudinaryService;
     private final PetImageRepository petImageRepository;
-    private final ModelMapper mapper;
 
-    public PetImageServiceImpl(CloudinaryService cloudinaryService, PetImageRepository petImageRepository, ModelMapper mapper) {
+    public PetImageServiceImpl(CloudinaryService cloudinaryService, PetImageRepository petImageRepository) {
         this.cloudinaryService = cloudinaryService;
         this.petImageRepository = petImageRepository;
-        this.mapper = mapper;
     }
 
 

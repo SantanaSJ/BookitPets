@@ -26,18 +26,6 @@ public class UserRoleEntity extends BaseEntity {
         return this;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        UserRoleEntity that = (UserRoleEntity) o;
-//        return Objects.equals(id, that.id) && role == that.role;
-//    }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, role);
-//    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

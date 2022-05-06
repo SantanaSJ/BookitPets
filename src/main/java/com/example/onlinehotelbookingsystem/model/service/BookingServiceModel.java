@@ -1,12 +1,7 @@
 package com.example.onlinehotelbookingsystem.model.service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 public class BookingServiceModel {
 
-//    private Long hotelId;
     private Long bookingId;
 
     private String firstName;
@@ -20,13 +15,6 @@ public class BookingServiceModel {
     private String phoneNumber;
     private String comments;
     private String paymentStatus;
-
-
-//    private LocalDate checkIn;
-//    private LocalDate checkOut;
-//
-//    private List<RoomServiceModel> bookedRooms = new ArrayList<>();
-
 
     public String getFirstName() {
         return firstName;

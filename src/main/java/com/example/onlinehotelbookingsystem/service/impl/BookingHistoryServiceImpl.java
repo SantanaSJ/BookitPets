@@ -54,7 +54,7 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         serviceModel.setRooms(roomServiceModels);
         serviceModel.setCategory(entity.getProperty().getCategory());
         serviceModel.setHotelName(entity.getProperty().getName());
-        serviceModel.setType(entity.getProperty().getType().getType().name());
+        serviceModel.setType(entity.getProperty().getType().name());
         serviceModel.setAddress(entity.getProperty().getAddress());
         serviceModel.setCity(entity.getProperty().getCity());
         serviceModel.setHotelImage(entity.getProperty().getImageUrl());
@@ -120,6 +120,7 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         return serviceModel;
     }
 
+
     private SummaryBookingServiceModel mapToTSummaryBookingServiceModel(BookingHistoryEntity entity) {
         SummaryBookingServiceModel serviceModel = this.mapper.map(entity, SummaryBookingServiceModel.class);
         serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
@@ -137,12 +138,14 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         serviceModel.setRooms(roomServiceModels);
         serviceModel.setCategory(entity.getProperty().getCategory());
         serviceModel.setHotelName(entity.getProperty().getName());
-        serviceModel.setType(entity.getProperty().getType().getType().name());
+        serviceModel.setType(entity.getProperty().getType().name());
         serviceModel.setAddress(entity.getProperty().getAddress());
         serviceModel.setCity(entity.getProperty().getCity());
         serviceModel.setHotelImage(entity.getProperty().getImageUrl());
         serviceModel.setBookingId(entity.getId());
         serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
+        serviceModel.setLng(entity.getLng());
+        serviceModel.setLat(entity.getLat());
         return serviceModel;
 
     }

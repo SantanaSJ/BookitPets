@@ -1,13 +1,9 @@
 package com.example.onlinehotelbookingsystem.model.service;
 
-import com.example.onlinehotelbookingsystem.model.view.RoomViewModel;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SummaryBookingServiceModel {
 
@@ -31,6 +27,8 @@ public class SummaryBookingServiceModel {
     private int category;
     private String hotelName;
     private String hotelImage;
+    private String lat;
+    private String lng;
     private String type;
     private String address;
     private String city;
@@ -207,15 +205,6 @@ public class SummaryBookingServiceModel {
         return this;
     }
 
-//    public LocalDate getCancellationDate() {
-//        return cancellationDate;
-//    }
-//
-//    public SummaryBookingServiceModel setCancellationDate(LocalDate cancellationDate) {
-//        this.cancellationDate = cancellationDate;
-//        return this;
-//    }
-
     public String getPaymentStatus() {
         return paymentStatus;
     }
@@ -233,15 +222,6 @@ public class SummaryBookingServiceModel {
         this.cancelledOn = cancelledOn;
         return this;
     }
-
-//    public boolean isCompleted() {
-//        return isCompleted;
-//    }
-//
-//    public SummaryBookingServiceModel setCompleted(boolean completed) {
-//        isCompleted = completed;
-//        return this;
-//    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -285,6 +265,24 @@ public class SummaryBookingServiceModel {
 
     public SummaryBookingServiceModel setPhone(String phone) {
         this.phone = phone;
+        return this;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public SummaryBookingServiceModel setLat(String lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public SummaryBookingServiceModel setLng(String lng) {
+        this.lng = lng;
         return this;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.onlinehotelbookingsystem.service;
 
-import com.example.onlinehotelbookingsystem.web.responseMessages.RoomMessages;
 import com.example.onlinehotelbookingsystem.model.service.*;
+import com.example.onlinehotelbookingsystem.web.responseMessages.RoomMessages;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -20,8 +20,6 @@ public interface BookingService {
 
     BookingUpdateServiceModel findBookingUpdateServiceById(Long bookingId);
 
-//    AdminBookingServiceModel findAllById(Long bookingId);
-
     void delete(Long id);
 
     boolean isOwner(String userEmail, Long bookingId);
@@ -29,12 +27,14 @@ public interface BookingService {
     void countBookings(Long id);
 
     Page<SummaryBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
-//    Page<TitleBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
     void moveCompletedBookingsToHistory();
 
     BookingServiceModel findBookingById(Long id);
 
     void setPaymentStatus(Long bookingId);
+
+    void moveCancelledBookingToHistory(Long id);
+
 
 }

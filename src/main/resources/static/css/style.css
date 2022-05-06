@@ -724,10 +724,11 @@ section {
 /*}*/
 
 #register {
-    padding: 60px 137px;
+    /*padding: 60px 137px;*/
     overflow: hidden;
-    margin-bottom: 55px;
-    margin-top: 45px;
+    margin-bottom: 102px;
+    margin-top: 130px;
+
 }
 
 /*#register h1 {*/
@@ -795,11 +796,11 @@ section {
 }
 
 #login {
-    padding: 83px 125px;
+    /*padding: 83px 125px;*/
     overflow: hidden;
-    margin-top: 45px;
-    margin-bottom: 80px;
-    /*padding-bottom: 60px;*/
+    margin-top: 130px;
+    margin-bottom: 102px;
+    /*padding-bottom: 102px;*/
 }
 
 #login .form-control {
@@ -1000,14 +1001,14 @@ h1 {
 /*    background-color: #f9f9fa*/
 /*}*/
 
-.padding {
-    padding: 3rem !important;
+/*.padding {*/
+/*    padding: 3rem !important;*/
 
-}
+/*}*/
 
-.user-card-full {
-    overflow: hidden
-}
+/*.user-card-full {*/
+/*    overflow: hidden*/
+/*}*/
 
 /*.profile-card {*/
 /*    border-radius: 5px;*/
@@ -1028,18 +1029,18 @@ h1 {
 }
 
 .pet-update {
-    margin-top: 96px;
+    margin-top: 200px;
 }
 
-.m-r-0 {
-    margin-right: 0px
-}
+/*.m-r-0 {*/
+/*    margin-right: 0px*/
+/*}*/
 
-.m-l-0 {
-    margin-left: 0px
-}
+/*.m-l-0 {*/
+/*    margin-left: 0px*/
+/*}*/
 
-.user-card-full .user-profile {
+.user-profile {
     border-radius: 5px 0 0 5px
 }
 
@@ -1054,9 +1055,9 @@ h1 {
     padding: 20px 0
 }
 
-.card-block {
-    padding: 1.25rem
-}
+/*.card-block {*/
+/*    padding: 1.25rem*/
+/*}*/
 
 .img-radius {
     border-radius: 5px
@@ -1069,6 +1070,7 @@ h6 {
 .profile-card .card-block p {
     line-height: 25px
 }
+
 
 @media only screen and (min-width: 1400px) {
     p {
@@ -1084,29 +1086,29 @@ h6 {
     border-bottom: 1px solid #e0e0e0
 }
 
-.m-b-20 {
-    margin-bottom: 20px
-}
+/*.m-b-20 {*/
+/*    margin-bottom: 20px*/
+/*}*/
 
-.p-b-5 {
-    padding-bottom: 5px !important
-}
+/*.p-b-5 {*/
+/*    padding-bottom: 5px !important*/
+/*}*/
 
-.card .card-block p {
-    line-height: 25px
-}
+/*.card .card-block p {*/
+/*    line-height: 25px*/
+/*}*/
 
-.m-b-10 {
-    margin-bottom: 10px
-}
+/*.m-b-10 {*/
+/*    margin-bottom: 10px*/
+/*}*/
 
 .text-muted {
     color: #919aa3 !important
 }
 
-.b-b-default {
-    border-bottom: 1px solid #e0e0e0
-}
+/*.b-b-default {*/
+/*    border-bottom: 1px solid #e0e0e0*/
+/*}*/
 
 .f-w-600 {
     font-weight: 600
@@ -1116,9 +1118,9 @@ h6 {
 /*    margin-bottom: 20px*/
 /*}*/
 
-.m-t-40 {
-    margin-top: 20px
-}
+/*.m-t-40 {*/
+/*    margin-top: 20px*/
+/*}*/
 
 /*.p-b-5 {*/
 /*    padding-bottom: 5px !important*/
@@ -1132,9 +1134,9 @@ h6 {
     margin-top: 20px
 }
 
-.col-xl-6 {
-    width: 60%;
-}
+/*.col-xl-6 {*/
+/*    width: 60%;*/
+/*}*/
 
 .profile-card .btn-primary {
     color: white;
@@ -1163,6 +1165,10 @@ h6 {
 /*!*--------------------------------------------------------------*/
 /*# UPDATE PROFILE*/
 /*--------------------------------------------------------------*!*/
+
+.profile-card .card-block label {
+    line-height: 25px
+}
 /*.padding .label-align {*/
 /*    font-family: "Raleway", sans-serif;*/
 /*}*/
@@ -1211,9 +1217,11 @@ h6 {
 }
 
 
-#page-content .padding {
-    margin-top: 15px;
+.padding {
+    margin-top: 130px;
     /*margin-bottom: 130px;*/
+    margin-bottom: 130px;
+    overflow: hidden;
 }
 
 /*!*--------------------------------------------------------------*/
@@ -1272,9 +1280,10 @@ h6 {
 }
 
 #home {
-    padding: 82px 125px;
+    /*padding: 82px 125px;*/
     overflow: hidden;
     margin-top: 41px;
+    margin-bottom: 113px;
 }
 
 
@@ -1552,10 +1561,11 @@ tr.space > td {
 /*    font-size: 14px;*/
 /*}*/
 
-/*.roomT {*/
-/*    white-space: pre;*/
-/*}*/
-
 .col-sm-10 {
     margin-right: 22px;
+}
+
+#map {
+    overflow: no-display;
+    position: sticky;
 }

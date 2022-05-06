@@ -17,11 +17,8 @@ public class AccommodationViewModel {
     private String lng;
 
     private List<RoomViewModel> rooms = new ArrayList<>();
-//    to change
     private String type;
 
-//    private String cancellationPolicy;
-//    private String paymentPolicy;
     private LocalTime checkInTime;
     private LocalTime checkOutTime;
 
@@ -108,24 +105,6 @@ public class AccommodationViewModel {
         this.id = id;
         return this;
     }
-//
-//    public String getCancellationPolicy() {
-//        return cancellationPolicy;
-//    }
-//
-//    public AccommodationViewModel setCancellationPolicy(String cancellationPolicy) {
-//        this.cancellationPolicy = cancellationPolicy;
-//        return this;
-//    }
-
-//    public String getPaymentPolicy() {
-//        return paymentPolicy;
-//    }
-//
-//    public AccommodationViewModel setPaymentPolicy(String paymentPolicy) {
-//        this.paymentPolicy = paymentPolicy;
-//        return this;
-//    }
 
     public LocalTime getCheckInTime() {
         return checkInTime;

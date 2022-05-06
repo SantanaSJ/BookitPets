@@ -27,14 +27,9 @@ public class AvailabilityBindingModel {
     @Valid
     private List<RoomBindingModel> rooms = new ArrayList<>();
 
-//    private String cancellationPolicy;
     private int category;
     private String city;
     private String address;
-
-//    @NotNull(message = "Number of people is required!")
-//    private Integer numberOfPeople;
-
 
     public AvailabilityBindingModel() {
     }
@@ -66,33 +61,6 @@ public class AvailabilityBindingModel {
         this.rooms = rooms;
         return this;
     }
-
-//    public Integer getNumberOfPeople() {
-//        return numberOfPeople;
-//    }
-//
-//    public AvailabilityBindingModel setNumberOfPeople(Integer numberOfPeople) {
-//        this.numberOfPeople = numberOfPeople;
-//        return this;
-//    }
-
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public BookingBindingModel setEmail(String email) {
-//        this.email = email;
-//        return this;
-//    }
-//
-//    public String getComments() {
-//        return comments;
-//    }
-//
-//    public BookingBindingModel setComments(String comments) {
-//        this.comments = comments;
-//        return this;
-//    }
 
     public Long getHotelId() {
         return hotelId;

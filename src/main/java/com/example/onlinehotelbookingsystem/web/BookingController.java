@@ -1,13 +1,18 @@
 package com.example.onlinehotelbookingsystem.web;
 
-import com.example.onlinehotelbookingsystem.web.responseMessages.RoomMessages;
 import com.example.onlinehotelbookingsystem.event.BookingCreatedEvent;
-import com.example.onlinehotelbookingsystem.model.binding.*;
+import com.example.onlinehotelbookingsystem.model.binding.AvailabilityBindingModel;
+import com.example.onlinehotelbookingsystem.model.binding.BookingBindingModel;
+import com.example.onlinehotelbookingsystem.model.binding.BookingUpdateBindingModel;
+import com.example.onlinehotelbookingsystem.model.binding.RoomBindingModel;
 import com.example.onlinehotelbookingsystem.model.service.*;
 import com.example.onlinehotelbookingsystem.model.view.AccommodationViewModel;
 import com.example.onlinehotelbookingsystem.model.view.SummaryBookingViewModel;
-import com.example.onlinehotelbookingsystem.service.*;
 import com.example.onlinehotelbookingsystem.security.CustomUser;
+import com.example.onlinehotelbookingsystem.service.AccommodationService;
+import com.example.onlinehotelbookingsystem.service.BookingService;
+import com.example.onlinehotelbookingsystem.service.UserService;
+import com.example.onlinehotelbookingsystem.web.responseMessages.RoomMessages;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -103,7 +107,6 @@ public class BookingController {
             rooms.get(i).setPrice(price);
         }
 
-//        TODO: map in the controller everywhere or check best practices
         AvailabilityServiceModel serviceModel = this.mapper.map(bindingModel, AvailabilityServiceModel.class);
         RoomMessages roomMessages = this.bookingService.checkAvailability(serviceModel);
 
@@ -124,7 +127,7 @@ public class BookingController {
 
     private boolean isRoomListEmpty(AvailabilityBindingModel bindingModel) {
 //         will return true if the list contains a 0
-//        bindingModel.getRooms().stream().map(RoomBindingModel::getNumberOfRooms).anyMatch(e -> e == 0);
+//        bindingModel.getRooms().stream().map(roomBindingModel -> roomBindingModel.getNumberOfRooms()).anyMatch(e -> e == 0);
 
         boolean flag = false;
         for (RoomBindingModel room : bindingModel.getRooms()) {
@@ -171,14 +174,9 @@ public class BookingController {
 
         CreateBookingServiceModel serviceModel = this.mapper.map(bookingBindingModel, CreateBookingServiceModel.class);
         Long bookingId = this.bookingService.createBooking(serviceModel, user.getUserId());
-
 //        publish event
         BookingCreatedEvent event = new BookingCreatedEvent(this, bookingId);
         this.eventPublisher.publishEvent(event);
-
-//        model.addAttribute("successfulBooking", new Messages("Booking created successfully"));
-
-//        when to use
         sessionStatus.setComplete();
         return "redirect:/bookings/details/" + bookingId;
     }

@@ -176,10 +176,6 @@ public class AdminController {
         return "admin-all-bookings";
     }
 
-//    @ModelAttribute("updateModel")
-//    public AdminBookingUpdateBindingModel bindingModel() {
-//        return new AdminBookingUpdateBindingModel();
-//    }
 
     //    BOOKING DETAILS
     @GetMapping("/admin/details/{id}")
@@ -273,7 +269,6 @@ public class AdminController {
     public String showHistoryDetails(@PathVariable("id") Long id, Model model) {
         SummaryBookingServiceModel serviceModel = this.bookingHistoryService.findById(id);
         SummaryBookingViewModel summaryBookingViewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
-//        this.mapper.map()
 
         model.addAttribute("viewModel", summaryBookingViewModel);
         return "history-details";

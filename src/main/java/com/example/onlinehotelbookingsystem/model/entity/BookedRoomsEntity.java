@@ -62,12 +62,4 @@ public class BookedRoomsEntity extends BaseEntity {
         return this;
     }
 
-//    public Integer getNumberOfPeople() {
-//        return numberOfPeople;
-//    }
-//
-//    public BookedRoomsEntity setNumberOfPeople(Integer numberOfPeople) {
-//        this.numberOfPeople = numberOfPeople;
-//        return this;
-//    }
 }

@@ -1,4 +1,5 @@
 package com.example.onlinehotelbookingsystem.config;
+
 import com.cloudinary.Cloudinary;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -6,15 +7,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 @Configuration
 public class ApplicationConfig {
 
     private final CloudinaryConfig cloudinaryConfig;
+    private final DataSource dataSource;
 
-    public ApplicationConfig(CloudinaryConfig cloudinaryConfig) {
+    public ApplicationConfig(CloudinaryConfig cloudinaryConfig, DataSource dataSource) {
         this.cloudinaryConfig = cloudinaryConfig;
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -39,9 +43,7 @@ public class ApplicationConfig {
 
     }
 
-//    @Bean
-//    public StripeConfigurationService stripeConfigurationService() {
-//        return new StripeConfigurationService();
-//    }
+
+
 
 }

@@ -40,13 +40,10 @@ public class BookingBindingModel {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkIn;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOut;
-//    private String petImageUrl;
-
-
     private List<RoomBindingModel> bookedRooms = new ArrayList<>();
-
 
     public String getFirstName() {
         return firstName;

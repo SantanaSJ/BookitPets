@@ -14,7 +14,7 @@
         <div class="booking-container update">
             <div class="row justify-content-center">
 
-                <div class="col-6">
+                <div class="col-sm">
                     <form th:action="@{/admin/manage/{id}(id=*{bookingId})}"
                           th:method="PATCH"
                           th:object="${bookingUpdateBindingModel}">
@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-sm">
                                     <label for="textarea" class="label-align fw-bold mt-3">Comments</label>
                                     <div class="col">
                                             <textarea
@@ -326,9 +326,9 @@
 
             fetch('http://localhost:8080/delete/' + bookingId, {
                 method: 'DELETE'
-            })
+            }).then(() => window.location = 'http://localhost:8080/admin/manage-all-bookings')
             console.log('deleted');
-            window.location = '/admin/manage-all-bookings';
+            // window.location = '/admin/manage-all-bookings';
         }
     })
 </script>

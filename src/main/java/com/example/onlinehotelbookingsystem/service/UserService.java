@@ -1,12 +1,12 @@
 package com.example.onlinehotelbookingsystem.service;
 
-import com.example.onlinehotelbookingsystem.model.entity.UserEntity;
-import com.example.onlinehotelbookingsystem.model.service.*;
-import com.example.onlinehotelbookingsystem.model.view.ProfileViewModel;
+import com.example.onlinehotelbookingsystem.model.service.AllUsersServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.ProfileServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.ProfileUpdateServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.UserRegistrationServiceModel;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface UserService {
 
@@ -33,4 +33,5 @@ public interface UserService {
     void deleteUser(String email);
 
     boolean isOwnerOfProfile(String currentUserEmail, Long id);
+
 }

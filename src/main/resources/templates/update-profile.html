@@ -10,16 +10,16 @@
 
 <section>
 
-    <div class="page-content page-container" id="page-content">
+<!--    <div class="page-content page-container" id="page-content">-->
         <div class="padding">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-xl-6 col-md-12">
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
 
-                    <div class="profile-card card user-card-full">
-                        <div class="row m-l-0 m-r-0">
+                    <div class="profile-card card">
+                        <div class="row">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
-                                <div class="card-block text-center text-white user-pic-update">
-                                    <div class="m-b-15">
+                                <div class="card-block text-center text-white user-pic">
+                                    <div>
                                         <img class="profile-image rounded-circle img-radius"
                                              th:src="${profileViewModel.profileImageUrl == null} ? 'https://img.icons8.com/bubbles/100/000000/user.png' : ${profileViewModel.profileImageUrl}"
                                              height="100"
@@ -29,7 +29,7 @@
 <!--                                    <p>User</p>-->
                                 </div>
                                 <div class="card-block text-center text-white pet-update">
-                                    <div class="m-b-15"><img class="dog-image rounded-circle"
+                                    <div><img class="dog-image rounded-circle"
                                                              th:src="${profileViewModel.petImageUrl == null} ? '/images/1915.jpg' : ${profileViewModel.petImageUrl}"
                                                              height="100"
                                                              width="100" alt="petImage"/>
@@ -48,10 +48,10 @@
                                             th:action="@{/users/profile/update/{id}(id=*{userId})}"
                                             th:method="PATCH"
                                             enctype="multipart/form-data">
-                                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Update Profile Information</h6>
+                                        <h6 class="mb-4 pb-2 b-b-default f-w-600">Update Profile Information</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="firstName" class="label-align">First Name<span
+                                                <label for="firstName" class="label-align f-w-600 mb-2">First Name<span
                                                         class="required">*</span></label>
                                                 <input
                                                         th:field="*{firstName}"
@@ -67,7 +67,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="lastName" class="label-align">Last Name<span
+                                                <label for="lastName" class="label-align f-w-600 mb-2">Last Name<span
                                                         class="required">*</span></label>
                                                 <input
                                                         th:field="*{lastName}"
@@ -84,7 +84,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="email" class="label-align">email<span
+                                                <label for="email" class="label-align f-w-600 mb-2 mt-3">Email<span
                                                         class="required">*</span></label>
                                                 <input th:field="*{email}" class="form-control" type="email" id="email"
                                                 />
@@ -96,7 +96,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="phone" class="label-align">Phone Number</label>
+                                                <label for="phone" class="label-align f-w-600 mb-2 mt-3">Phone Number</label>
 
                                                 <input type="tel"
                                                        th:field="*{phoneNumber}"
@@ -113,7 +113,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-9">
-                                                <label for="profileTitle" class="form-label ">Add a profile
+                                                <label for="profileTitle" class="form-label f-w-600 mb-2 mt-3">Add a profile
                                                     picture</label>
                                                 <input th:errorclass="is-invalid"
                                                        th:field="*{userImageTitle}"
@@ -142,10 +142,10 @@
                                         </div>
 
                                         <!-- ----------------------------------------------------------- -->
-                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Pet Information</h6>
+                                        <h6 class="mt-4 pb-2 b-b-default f-w-600">Pet Information</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="petName" class="label-align">Pet Name<span
+                                                <label for="petName" class="label-align f-w-600 mb-2 mt-3">Pet Name<span
                                                         class="required">*</span></label>
                                                 <input th:field="*{petName}" class="form-control" name="name" id="petName"
                                                        placeholder="ex. Lassie ..."
@@ -157,7 +157,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="petKg" class="label-align">Kilograms<span
+                                                <label for="petKg" class="label-align f-w-600 mb-2 mt-3">Kilograms<span
                                                         class="required">*</span></label>
                                                 <input th:field="*{petKilograms}" class="form-control" name="kg" id="petKg"
                                                        placeholder="ex. 45kg ..."
@@ -169,7 +169,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-9">
-                                                <label for="name" class="form-label ">Add an image of your pet</label>
+                                                <label for="name" class="form-label f-w-600 mb-2 mt-3">Add an image of your pet</label>
                                                 <input th:errorclass="is-invalid"
                                                        th:field="*{petImageTitle}"
                                                        class="form-control input"
@@ -205,7 +205,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 </section>
 

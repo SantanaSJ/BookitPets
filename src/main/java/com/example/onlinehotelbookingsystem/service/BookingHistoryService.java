@@ -17,4 +17,5 @@ public interface BookingHistoryService {
     Page<SummaryBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
     SummaryBookingServiceModel findById(Long id);
-}
+
+ }

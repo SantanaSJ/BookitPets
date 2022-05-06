@@ -21,8 +21,7 @@ public class AccommodationServiceModel {
 
     private List<RoomServiceModel> rooms = new ArrayList<>();
     private String type;
-//    private String cancellationPolicy;
-//    private String paymentPolicy;
+
     private LocalTime checkInTime;
     private LocalTime checkOutTime;
 
@@ -101,26 +100,6 @@ public class AccommodationServiceModel {
         this.id = id;
         return this;
     }
-
-
-//    public String getCancellationPolicy() {
-//        return cancellationPolicy;
-//    }
-//
-//    public AccommodationServiceModel setCancellationPolicy(String cancellationPolicy) {
-//        this.cancellationPolicy = cancellationPolicy;
-//        return this;
-//    }
-
-//    public String getPaymentPolicy() {
-//        return paymentPolicy;
-//    }
-//
-//    public AccommodationServiceModel setPaymentPolicy(String paymentPolicy) {
-//        this.paymentPolicy = paymentPolicy;
-//        return this;
-//    }
-
     public LocalTime getCheckInTime() {
         return checkInTime;
     }

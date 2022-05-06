@@ -4,7 +4,6 @@ import com.example.onlinehotelbookingsystem.model.entity.RoomEntity;
 import com.example.onlinehotelbookingsystem.model.service.RoomServiceModel;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RoomService {
 
@@ -12,8 +11,5 @@ public interface RoomService {
 
    RoomEntity findById(Long roomId);
 
-
-
-//    void addRooms(AccommodationViewModel accommodationViewModel);
 
 }

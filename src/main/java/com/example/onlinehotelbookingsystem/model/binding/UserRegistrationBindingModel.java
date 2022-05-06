@@ -3,11 +3,13 @@ package com.example.onlinehotelbookingsystem.model.binding;
 
 import com.example.onlinehotelbookingsystem.model.binding.validator.UniqueEmail;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 public class UserRegistrationBindingModel {
 
-//    TODO: validate first and last names with regex
     @NotBlank(message = "Please fill in first name!")
     @Size(min = 3, max = 20, message = "First name must be between 3 and 20 characters.")
     private String firstName;

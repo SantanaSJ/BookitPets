@@ -7,22 +7,19 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewBookingEvent {
+public class NewBookingEventListener {
 
     private final BookingService bookingService;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(NewBookingEvent.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(NewBookingEventListener.class);
 
-    public NewBookingEvent(BookingService bookingService) {
+    public NewBookingEventListener(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
     @EventListener(BookingCreatedEvent.class)
-    public void onBookingCreated(BookingCreatedEvent bookingCreatedEvent) {
+    public void onCreateBooking(BookingCreatedEvent bookingCreatedEvent) {
         LOGGER.info("Event triggered for booking {}", bookingCreatedEvent.getId());
-
-
-
         this.bookingService.countBookings(bookingCreatedEvent.getId());
     }
 }

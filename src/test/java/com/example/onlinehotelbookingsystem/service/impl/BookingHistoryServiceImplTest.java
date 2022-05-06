@@ -59,7 +59,7 @@ class BookingHistoryServiceImplTest {
         AccommodationEntity testAccommodationEntity = new AccommodationEntity();
         testAccommodationEntity
                 .setName(TEST_HOTEL_NAME)
-                .setType(new AccommodationTypeEntity().setType(AccommodationTypeEnum.HOTEL))
+                .setType(AccommodationTypeEnum.HOTEL)
                 .setCity(TEST_HOTEL_CITY)
                 .setAddress(TEST_HOTEL_ADDRESS)
                 .setPostalCode(TEST_HOTEL_PK)

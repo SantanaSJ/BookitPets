@@ -1,6 +1,5 @@
 package com.example.onlinehotelbookingsystem.model.view;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class RoomViewModel {

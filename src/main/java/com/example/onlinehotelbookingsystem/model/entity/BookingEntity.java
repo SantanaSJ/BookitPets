@@ -1,6 +1,5 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
-//import com.example.onlinehotelbookingsystem.config.LocalDateConverter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// for tomorrow: solve Instant -bookingTime, to correct BookingImpl with the new BookedRoomsEntity
 
 @Entity
 @Table(name = "bookings")
@@ -37,8 +35,7 @@ public class BookingEntity extends BaseEntity {
     private LocalDate checkIn;
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkOut;
-//    @Column(columnDefinition = "DATE")
-//    private LocalDate cancellationDate;
+
     private BigDecimal totalPrice;
     private long totalNights;
     private String comments;
@@ -46,13 +43,8 @@ public class BookingEntity extends BaseEntity {
     private String petName;
     private String email;
     private String phoneNumber;
-//    @Column(columnDefinition = "TIMESTAMP DEFAULT '0000-00-00 00:00:00'")
-//    private LocalDateTime cancelledOn;
     private int countBookings;
     private boolean hasDiscount;
-//    @Column(columnDefinition="tinyint(1) default 1")
-//    private boolean isCompleted;
-
     @OneToOne
     private PaymentEntity payment;
 

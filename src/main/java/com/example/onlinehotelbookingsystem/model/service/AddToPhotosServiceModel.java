@@ -11,9 +11,6 @@ public class AddToPhotosServiceModel {
 
     private MultipartFile file;
 
-//    not mapped with ServiceModel
-//    private AddPhotoBindingModel addPhotoBindingModel;
-
     public Long getUserId() {
         return userId;
     }
@@ -50,12 +47,4 @@ public class AddToPhotosServiceModel {
         return this;
     }
 
-    //    public AddPhotoServiceModel getAddPhotoServiceModel() {
-//        return addPhotoServiceModel;
-//    }
-//
-//    public AddToPhotosServiceModel setAddPhotoServiceModel(AddPhotoServiceModel addPhotoServiceModel) {
-//        this.addPhotoServiceModel = addPhotoServiceModel;
-//        return this;
-//    }
 }
