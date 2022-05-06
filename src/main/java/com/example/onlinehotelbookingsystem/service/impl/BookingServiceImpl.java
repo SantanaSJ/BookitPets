@@ -348,8 +348,8 @@ public class BookingServiceImpl implements BookingService {
 
         bookingHistoryEntity.setRoomsHistoryEntity(roomsHistoryList);
 
-        this.roomHistoryRepository.save(roomsHistoryEntity);
         this.bookingHistoryRepository.save(bookingHistoryEntity);
+        this.roomHistoryRepository.save(roomsHistoryEntity);
 
     }
 

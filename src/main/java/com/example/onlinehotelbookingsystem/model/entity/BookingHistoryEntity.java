@@ -34,9 +34,6 @@ public class BookingHistoryEntity extends BaseEntity {
 
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkOut;
-//    ??
-    private Long deletedBookingId;
-
     private BigDecimal totalPrice;
     private long totalNights;
     private String comments;
@@ -207,15 +204,6 @@ public class BookingHistoryEntity extends BaseEntity {
 
     public BookingHistoryEntity setRoomsHistoryEntity(List<RoomsHistoryEntity> roomsHistoryEntity) {
         this.roomsHistoryEntity = roomsHistoryEntity;
-        return this;
-    }
-
-    public Long getDeletedBookingId() {
-        return deletedBookingId;
-    }
-
-    public BookingHistoryEntity setDeletedBookingId(Long deletedBookingId) {
-        this.deletedBookingId = deletedBookingId;
         return this;
     }
 
