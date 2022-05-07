@@ -30,7 +30,7 @@ public class HotelRestController {
     }
 
     //called on http://localhost:8080/accommodations
-    @CrossOrigin
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/accommodations")
     public ResponseEntity<List<AccommodationViewModel>> accommodations() {
         List<AccommodationViewModel> allHotels = this.accommodationService.findAll();
