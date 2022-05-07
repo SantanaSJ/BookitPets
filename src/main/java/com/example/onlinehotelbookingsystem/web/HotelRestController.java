@@ -4,7 +4,10 @@ import com.example.onlinehotelbookingsystem.model.view.AccommodationViewModel;
 import com.example.onlinehotelbookingsystem.service.AccommodationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class HotelRestController {
     }
 
     //called on http://localhost:8080/accommodations
+    @CrossOrigin
     @GetMapping("/accommodations")
     public ResponseEntity<List<AccommodationViewModel>> accommodations() {
         List<AccommodationViewModel> allHotels = this.accommodationService.findAll();
