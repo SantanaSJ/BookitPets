@@ -16,7 +16,7 @@ public interface BookingHistoryRepository extends JpaRepository<BookingHistoryEn
     Optional<BookingHistoryEntity> findById(Long bookingId);
 
     //completed all
-//     @Query(value = "SELECT * FROM completed_bookings as b WHERE b.guest_id = :userId;", nativeQuery = true)
+//     @Query(value = "SELECT * FROM completed_bookings as b WHERE b.guest_id = :userId;", nativeQuery = true
     @Query(value = "SELECT b FROM BookingHistoryEntity as b WHERE b.guest.id = :userId")
     List<BookingHistoryEntity> findAllByGuestId(@Param("userId") Long userId);
 }

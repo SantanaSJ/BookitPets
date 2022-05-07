@@ -65,7 +65,7 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
 
     //    All Completed by userId
     @Override
-    public List<TitleBookingServiceModel> getAllPassedBookingsBy(Long userId) {
+    public List<TitleBookingServiceModel> findAllBookingsByUserId(Long userId) {
         List<BookingHistoryEntity> all = this.bookingHistoryRepository.findAllByGuestId(userId);
 
 //        repeated with mapToServiceModel -> check if I can make it more generic

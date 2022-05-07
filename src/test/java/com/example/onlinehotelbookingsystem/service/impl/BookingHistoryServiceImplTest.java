@@ -116,7 +116,7 @@ class BookingHistoryServiceImplTest {
     void getAllPassedBookingsByUserId_should_return_list_of_bookingHistoryEntity_when_entities_exist() {
         when(this.mockBookingHistoryRepository.findAllByGuestId(this.testUserEntity.getId())).thenReturn(this.bookingHistoryEntities);
 
-        this.bookingHistoryServiceToTest.getAllPassedBookingsBy(this.testUserEntity.getId());
+        this.bookingHistoryServiceToTest.findAllBookingsByUserId(this.testUserEntity.getId());
 
         assertEquals(1, this.bookingHistoryEntities.size());
 

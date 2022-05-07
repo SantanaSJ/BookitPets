@@ -10,7 +10,7 @@ public interface BookingHistoryService {
 
     SummaryBookingServiceModel findCompletedBookingBy(Long id);
 
-    List<TitleBookingServiceModel> getAllPassedBookingsBy(Long userId);
+    List<TitleBookingServiceModel> findAllBookingsByUserId(Long userId);
 
     boolean isOwnerHistory(String currentUserEmail, Long id);
 

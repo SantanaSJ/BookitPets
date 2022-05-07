@@ -32,7 +32,7 @@ public class BookingHistoryController {
 
     @GetMapping("/history")
     public String showAllHistory(@AuthenticationPrincipal CustomUser user, Model model) {
-        List<TitleBookingServiceModel> serviceModels = this.bookingHistoryService.getAllPassedBookingsBy(user.getUserId());
+        List<TitleBookingServiceModel> serviceModels = this.bookingHistoryService.findAllBookingsByUserId(user.getUserId());
 
         List<TitleBookingViewModel> viewModels = serviceModels
                 .stream()
