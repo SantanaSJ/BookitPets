@@ -7,7 +7,7 @@ function loadBookings() {
 
     let counter = 1;
     // "http://localhost:8080/all-bookings"
-    fetch("https://shielded-shelf-15284.herokuapp.com/all-bookings")
+    fetch("https://boiling-plains-21605.herokuapp.com/all-bookings")
         .then(response => response.json())
         .then(json => {
             if (json.length > 0) {
@@ -54,7 +54,7 @@ function loadBookings() {
             let bookingId = $(this).data('booking-id');
             console.log("Booking id to delete is " + bookingId);
 
-            fetch('https://shielded-shelf-15284.herokuapp.com/delete/' + bookingId, {
+            fetch('https://boiling-plains-21605.herokuapp.com/delete/' + bookingId, {
                 method: 'DELETE'
             }).then(_ => loadBookings())
             location.reload();
