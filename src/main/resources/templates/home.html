@@ -47,7 +47,13 @@
 
                                 function showAll() {
                                     // window.addEventListener('DOMContentLoaded', (event) => {
-                                    fetch('http://localhost:8080/accommodations')
+                                    fetch('http://localhost:8080/accommodations', {
+                                        method: 'GET',
+                                        headers: {
+                                            "Access-Control-Allow-Origin": "*",
+                                            "Content-Type": "text/plain"
+                                        }
+                                    })
                                         .then(response => {
                                             return response.json()
                                         })
