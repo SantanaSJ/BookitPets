@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class HotelRestController {
 
@@ -30,7 +31,7 @@ public class HotelRestController {
     }
 
     //called on http://localhost:8080/accommodations
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/accommodations")
     public ResponseEntity<List<AccommodationViewModel>> accommodations() {
         List<AccommodationViewModel> allHotels = this.accommodationService.findAll();
