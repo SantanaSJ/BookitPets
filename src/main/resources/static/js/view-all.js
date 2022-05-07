@@ -6,7 +6,8 @@ window.onload = (function () {
 function loadBookings() {
 
     let counter = 1;
-    fetch("http://localhost:8080/all-bookings")
+    // "http://localhost:8080/all-bookings"
+    fetch("https://shielded-shelf-15284.herokuapp.com/all-bookings")
         .then(response => response.json())
         .then(json => {
             if (json.length > 0) {
@@ -53,7 +54,7 @@ function loadBookings() {
             let bookingId = $(this).data('booking-id');
             console.log("Booking id to delete is " + bookingId);
 
-            fetch('http://localhost:8080/delete/' + bookingId, {
+            fetch('https://shielded-shelf-15284.herokuapp.com/delete/' + bookingId, {
                 method: 'DELETE'
             }).then(_ => loadBookings())
             location.reload();
