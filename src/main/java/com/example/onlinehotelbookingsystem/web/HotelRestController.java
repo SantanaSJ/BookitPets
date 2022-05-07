@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(allowedHeaders = "*")
+@CrossOrigin("http://localhost:8080/accommodations")
 @RestController
 public class HotelRestController {
 
