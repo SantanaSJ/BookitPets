@@ -47,12 +47,8 @@
 
                                 function showAll() {
                                     // window.addEventListener('DOMContentLoaded', (event) => {
-                                    fetch('https://shielded-shelf-15284.herokuapp.com/accommodations', {
-                                        method: 'GET',
-                                        headers: {
-                                            'Access-Control-Allow-Origin': '*',
-                                           }
-                                    })
+                                    // http://localhost:8080/accommodations
+                                    fetch('https://shielded-shelf-15284.herokuapp.com/accommodations')
                                         .then(response => {
                                             return response.json()
                                         })
