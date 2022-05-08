@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "rooms_history")
+@Table(name = "room_history")
 public class RoomsHistoryEntity extends BaseEntity {
 
     @ManyToOne

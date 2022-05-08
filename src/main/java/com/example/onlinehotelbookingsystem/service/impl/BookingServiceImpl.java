@@ -471,7 +471,7 @@ public class BookingServiceImpl implements BookingService {
         serviceModel.setRooms(roomServiceModels);
         serviceModel.setCategory(entity.getProperty().getCategory());
         serviceModel.setHotelName(entity.getProperty().getName());
-        serviceModel.setType(entity.getProperty().getType().name());
+        serviceModel.setType(entity.getProperty().getType().getType().name());
         serviceModel.setAddress(entity.getProperty().getAddress());
         serviceModel.setCity(entity.getProperty().getCity());
         serviceModel.setHotelImage(entity.getProperty().getImageUrl());

@@ -54,7 +54,7 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         serviceModel.setRooms(roomServiceModels);
         serviceModel.setCategory(entity.getProperty().getCategory());
         serviceModel.setHotelName(entity.getProperty().getName());
-        serviceModel.setType(entity.getProperty().getType().name());
+        serviceModel.setType(entity.getProperty().getType().getType().name());
         serviceModel.setAddress(entity.getProperty().getAddress());
         serviceModel.setCity(entity.getProperty().getCity());
         serviceModel.setHotelImage(entity.getProperty().getImageUrl());
@@ -68,7 +68,6 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
     public List<TitleBookingServiceModel> findAllBookingsByUserId(Long userId) {
         List<BookingHistoryEntity> all = this.bookingHistoryRepository.findAllByGuestId(userId);
 
-//        repeated with mapToServiceModel -> check if I can make it more generic
         List<TitleBookingServiceModel> collect = all
                 .stream()
                 .map(b -> {
@@ -138,7 +137,7 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         serviceModel.setRooms(roomServiceModels);
         serviceModel.setCategory(entity.getProperty().getCategory());
         serviceModel.setHotelName(entity.getProperty().getName());
-        serviceModel.setType(entity.getProperty().getType().name());
+        serviceModel.setType(entity.getProperty().getType().getType().name());
         serviceModel.setAddress(entity.getProperty().getAddress());
         serviceModel.setCity(entity.getProperty().getCity());
         serviceModel.setHotelImage(entity.getProperty().getImageUrl());

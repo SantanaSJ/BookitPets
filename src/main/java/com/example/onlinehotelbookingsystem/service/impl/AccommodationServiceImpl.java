@@ -9,6 +9,7 @@ import com.example.onlinehotelbookingsystem.model.view.AccommodationViewModel;
 import com.example.onlinehotelbookingsystem.repository.AccommodationRepository;
 import com.example.onlinehotelbookingsystem.repository.RoomRepository;
 import com.example.onlinehotelbookingsystem.service.AccommodationService;
+import com.example.onlinehotelbookingsystem.service.AccommodationTypeService;
 import com.example.onlinehotelbookingsystem.service.RoomService;
 import com.example.onlinehotelbookingsystem.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -23,13 +24,15 @@ import java.util.stream.Collectors;
 public class AccommodationServiceImpl implements AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
+    private final AccommodationTypeService accommodationTypeService;
     private final RoomRepository roomRepository;
     private final ModelMapper mapper;
     private final RoomService roomService;
 
-    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, RoomRepository roomRepository,
+    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, AccommodationTypeService accommodationTypeService, RoomRepository roomRepository,
                                     ModelMapper mapper, RoomService roomService) {
         this.accommodationRepository = accommodationRepository;
+        this.accommodationTypeService = accommodationTypeService;
         this.roomRepository = roomRepository;
         this.mapper = mapper;
         this.roomService = roomService;
@@ -55,7 +58,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                 .findById(id)
                 .map(a -> {
                     AccommodationServiceModel serviceModel = this.mapper.map(a, AccommodationServiceModel.class);
-                    serviceModel.setType(a.getType().name());
+                    serviceModel.setType(a.getType().getType().name());
                     List<RoomServiceModel> roomServiceModels = this.roomService.findByHotelId(id);
                     serviceModel.setRooms(roomServiceModels);
                     return serviceModel;
@@ -68,6 +71,7 @@ public class AccommodationServiceImpl implements AccommodationService {
     public void initHotels() {
 //        ?? &&
         if (this.accommodationRepository.count() == 0 && this.roomRepository.count() == 0) {
+
             AccommodationEntity accommodationEntity1 = new AccommodationEntity();
             accommodationEntity1
                     .setName("InterContinental Sofia")
@@ -76,7 +80,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://digital.ihg.com/is/image/ihg/intercontinental-sofia-5488872488-2x1?wid=1440&fit=fit,1")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Located in the heart of Sofia, InterContinental Sofia offers two restaurants,\n" +
@@ -116,7 +120,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://pix8.agoda.net/hotelImages/4843379/-1/f3fd0b7aa01da8aed8f4c6ab6cf7c007.jpg?ca=0&ce=1&s=1024x768")
                     .setPostalCode(1592)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("The modern 4-star Best Western Premier Sofia Airport Hotel is located in a new business district,\n" +
@@ -156,7 +160,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://q-xx.bstatic.com/xdata/images/hotel/840x460/59123177.jpg?k=637ee48140339b496ad0c4f25abc059a58e25b27851d0e0516601967878bc76e&o=")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Art Plaza Hotel is located in the city centre of Sofia. Vitosha boulevard pedestrian street with cafes and shops is a 1-minute walk away.\n" +
@@ -196,7 +200,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://q-xx.bstatic.com/xdata/images/hotel/840x460/56567025.jpg?k=fb78488aa6e14d2cabc47680fef6229f4f8649ec40ac2eb40aa1c53843b5334a&o=")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("The Ramada by Wyndham Sofia City Center is situated within walking distance to tourist sights and commercial areas of the city, offering comfortable rooms in a modern building.\n" +
@@ -227,7 +231,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://central-hotel.com/wp-content/uploads/2014/12/histori.jpg")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Central Hotel Sofia offers accommodation in the heart of Sofia. The hotel has an underground valet parking at a surcharge and a relax centre with a hot tub,\n" +
@@ -257,7 +261,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://pix8.agoda.net/hotelImages/261/261128/261128_1212021023008873354.jpg?ca=0&ce=1&s=1024x768")
                     .setPostalCode(1606)
-                    .setType(AccommodationTypeEnum.HOSTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOSTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Hostel Mostel Sofia is set in a renovated building from the 19th century, enjoying a quiet location in the centre of Sofia. A modern, shared kitchen is at guests’ disposal.\n" +
@@ -296,7 +300,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://cf.bstatic.com/xdata/images/hotel/max1280x900/240252483.jpg?k=3a9b61176e4c68be19f28d09b94087cda7b2cfc37b28fc0ebb5be145df58bafc&o=&hp=1")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Situated in Sofia, 300 m from the main shopping street Vitosha, Sofia Palace Hotel by HMG features accommodation with a restaurant, private parking, a fitness centre and a bar.\n" +
@@ -326,7 +330,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://q-xx.bstatic.com/xdata/images/hotel/840x460/272096959.jpg?k=9165a019634a9446e79adda58279427819bedf8a54c5a2e92fa189a23644d1fa&o=")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Budapest Hotel is within a 5-minute walk from the Central Train Station, in the very centre of Sofia. All rooms feature free Wi-Fi access. The metro station Luvov Most is within a 5-minute walk away.\n" +
@@ -356,7 +360,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://q-xx.bstatic.com/xdata/images/hotel/840x460/323358408.jpg?k=26e647a67ebb6dd51f6fcb0e42e422b99d63991c4fcde6b6225bcfd3407a8e18&o=")
                     .setPostalCode(1000)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Set a 5-minute walk from the Serdika underground railway station, the 5-star Grand Hotel Sofia is located right in the heart of Sofia, overlooking the City Garden.\n" +
@@ -386,7 +390,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                     .setCity("Sofia")
                     .setImageUrl("https://pix8.agoda.net/hotelImages/969/96972/96972_1112230202005330218.jpg?s=1024x768")
                     .setPostalCode(1784)
-                    .setType(AccommodationTypeEnum.HOTEL)
+                    .setType(this.accommodationTypeService.findByAccommodationType(AccommodationTypeEnum.HOTEL))
                     .setCheckInTime(LocalTime.of(15, 0))
                     .setCheckOutTime(LocalTime.of(12, 0))
                     .setDescription("Metropolitan Hotel Sofia provides free WiFi, free airport shuttle, upon request and availability and free private parking on site. The relax centre comes with a gym, a sauna and a steam bath.\n" +
@@ -439,7 +443,7 @@ public class AccommodationServiceImpl implements AccommodationService {
                 .stream()
                 .map(a -> {
                     AccommodationServiceModel map = this.mapper.map(a, AccommodationServiceModel.class);
-                    map.setType(a.getType().name());
+                    map.setType(a.getType().getType().name());
                     return map;
                 })
                 .collect(Collectors.toList());

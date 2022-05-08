@@ -1,7 +1,6 @@
 package com.example.onlinehotelbookingsystem.service.impl;
 
 import com.example.onlinehotelbookingsystem.model.entity.*;
-import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationTypeEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.PaymentStatusEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
 import com.example.onlinehotelbookingsystem.model.service.SummaryBookingServiceModel;
@@ -59,7 +58,7 @@ class BookingHistoryServiceImplTest {
         AccommodationEntity testAccommodationEntity = new AccommodationEntity();
         testAccommodationEntity
                 .setName(TEST_HOTEL_NAME)
-                .setType(AccommodationTypeEnum.HOTEL)
+                .setType(new AccommodationTypeEntity())
                 .setCity(TEST_HOTEL_CITY)
                 .setAddress(TEST_HOTEL_ADDRESS)
                 .setPostalCode(TEST_HOTEL_PK)

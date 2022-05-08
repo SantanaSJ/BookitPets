@@ -1,6 +1,7 @@
 package com.example.onlinehotelbookingsystem.service.impl;
 
 import com.example.onlinehotelbookingsystem.model.entity.AccommodationEntity;
+import com.example.onlinehotelbookingsystem.model.entity.AccommodationTypeEntity;
 import com.example.onlinehotelbookingsystem.model.entity.RoomEntity;
 import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationTypeEnum;
 import com.example.onlinehotelbookingsystem.model.service.AccommodationServiceModel;
@@ -9,6 +10,7 @@ import com.example.onlinehotelbookingsystem.repository.AccommodationRepository;
 import com.example.onlinehotelbookingsystem.repository.AccommodationTypeRepository;
 import com.example.onlinehotelbookingsystem.repository.RoomRepository;
 import com.example.onlinehotelbookingsystem.service.AccommodationService;
+import com.example.onlinehotelbookingsystem.service.AccommodationTypeService;
 import com.example.onlinehotelbookingsystem.service.RoomService;
 import com.example.onlinehotelbookingsystem.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +37,8 @@ class AccommodationServiceImplTest {
     @Mock
     RoomRepository mockRoomRepository;
 
+    AccommodationTypeService accommodationTypeService;
+
     @Mock
     AccommodationTypeRepository mockAccommodationTypeRepository;
 
@@ -56,7 +60,7 @@ class AccommodationServiceImplTest {
                 .setName(TEST_HOTEL_NAME)
                 .setCategory(TEST_HOTEL_CAT)
                 .setCity(TEST_HOTEL_CITY)
-                .setType(AccommodationTypeEnum.HOTEL)
+                .setType(new AccommodationTypeEntity().setType(AccommodationTypeEnum.HOTEL))
                 .setDescription(TEST_HOTEL_DESCRIPTION)
                 .setAddress(TEST_HOTEL_ADDRESS)
                 .setId(TEST_HOTEL_ID);
@@ -67,7 +71,7 @@ class AccommodationServiceImplTest {
                 .setAddress(TEST_HOTEL_ADDRESS_1)
                 .setCategory(TEST_HOTEL_CAT)
                 .setCity(TEST_HOTEL_CITY_1)
-                .setType(AccommodationTypeEnum.HOTEL)
+                .setType(new AccommodationTypeEntity().setType(AccommodationTypeEnum.HOTEL))
                 .setDescription(TEST_HOTEL_DESCRIPTION)
                 .setId(TEST_HOTEL_ID_1);
 
@@ -87,7 +91,7 @@ class AccommodationServiceImplTest {
         this.accommodationEntities.add(this.accommodationEntityTest2);
 
         this.roomServiceToTest = new RoomServiceImpl(this.mockRoomRepository, new ModelMapper());
-        this.accommodationServiceToTest = new AccommodationServiceImpl(this.mockAccommodationRepository, mockRoomRepository, new ModelMapper(), this.roomServiceToTest);
+        this.accommodationServiceToTest = new AccommodationServiceImpl(this.mockAccommodationRepository, accommodationTypeService, mockRoomRepository, new ModelMapper(), this.roomServiceToTest);
     }
 
 

@@ -8,6 +8,4 @@ public enum AccommodationTypeEnum {
     ROOM,
     OTHER;
 
-    AccommodationTypeEnum() {
-    }
 }

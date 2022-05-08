@@ -8,7 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "propertyTypes")
+@Table(name = "accommodationTypes")
 public class AccommodationTypeEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
