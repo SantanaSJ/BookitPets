@@ -52,7 +52,7 @@ public class StripeServiceImpl implements StripeService {
             chargeParams.put("amount", amount);
             chargeParams.put("currency", "eur");
             chargeParams.put("description", "Charge for " + email);
-            chargeParams.put("source", token); // ^ obtained with Stripe.js
+            chargeParams.put("source", token); //  obtained with Stripe.js
 
             //create a charge
             Charge charge = Charge.create(chargeParams);

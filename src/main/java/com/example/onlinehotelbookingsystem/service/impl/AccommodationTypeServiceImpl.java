@@ -16,11 +16,11 @@ public class AccommodationTypeServiceImpl implements AccommodationTypeService {
     }
 
 
-    @Override
-    public AccommodationTypeEntity findByAccommodationType(AccommodationTypeEnum typeEnum) {
-        AccommodationTypeEntity byType = this.accommodationTypeRepository.findByType(typeEnum);
-        return byType;
-    }
+//    @Override
+//    public AccommodationTypeEntity findByAccommodationType(AccommodationTypeEnum typeEnum) {
+//        AccommodationTypeEntity byType = this.accommodationTypeRepository.findByType(typeEnum);
+//        return byType;
+//    }
 
     @Override
     public void initAccommodationTypes() {

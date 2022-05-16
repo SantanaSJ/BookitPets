@@ -19,9 +19,6 @@ public class ProfileUpdateServiceModel {
     private String petImageTitle;
     private MultipartFile petImageFile;
 
-//    private AddUserImageBindingModel addUserImageBindingModel;
-//    private AddPetImageBindingModel addPetImageBindingModel;
-
     public String getFirstName() {
         return firstName;
     }
@@ -84,24 +81,6 @@ public class ProfileUpdateServiceModel {
         this.phoneNumber = phoneNumber;
         return this;
     }
-
-//    public AddPetImageBindingModel getAddPetImageBindingModel() {
-//        return addPetImageBindingModel;
-//    }
-//
-//    public ProfileUpdateServiceModel setAddPetImageBindingModel(AddPetImageBindingModel addPetImageBindingModel) {
-//        this.addPetImageBindingModel = addPetImageBindingModel;
-//        return this;
-//    }
-
-//    public AddUserImageBindingModel getAddUserImageBindingModel() {
-//        return addUserImageBindingModel;
-//    }
-//
-//    public ProfileUpdateServiceModel setAddUserImageBindingModel(AddUserImageBindingModel addUserImageBindingModel) {
-//        this.addUserImageBindingModel = addUserImageBindingModel;
-//        return this;
-//    }
 
     public String getProfileImageUrl() {
         return profileImageUrl;

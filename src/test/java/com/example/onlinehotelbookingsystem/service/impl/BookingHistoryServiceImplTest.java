@@ -1,11 +1,12 @@
 package com.example.onlinehotelbookingsystem.service.impl;
 
 import com.example.onlinehotelbookingsystem.model.entity.*;
+import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationTypeEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.PaymentStatusEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
 import com.example.onlinehotelbookingsystem.model.service.SummaryBookingServiceModel;
+import com.example.onlinehotelbookingsystem.model.service.TitleBookingServiceModel;
 import com.example.onlinehotelbookingsystem.repository.BookingHistoryRepository;
-import com.example.onlinehotelbookingsystem.security.CustomUser;
 import com.example.onlinehotelbookingsystem.service.BookingHistoryService;
 import com.example.onlinehotelbookingsystem.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,14 +30,9 @@ import static org.mockito.Mockito.when;
 class BookingHistoryServiceImplTest {
 
     @Mock
-    BookingHistoryRepository mockBookingHistoryRepository;
+    private BookingHistoryRepository mockBookingHistoryRepository;
 
-    private final CustomUser customUserDetails = new CustomUser
-            (TEST_USER_EMAIL, TEST_USER_PASSWORD, TEST_USER_ID, TEST_USER_FIRST_NAME,
-                    List.of(new SimpleGrantedAuthority("USER")));
-
-
-    BookingHistoryService bookingHistoryServiceToTest;
+    private BookingHistoryService bookingHistoryServiceToTest;
     private BookingHistoryEntity testBookingHistoryEntity;
     private UserEntity testUserEntity;
     private List<BookingHistoryEntity> bookingHistoryEntities;
@@ -58,7 +53,7 @@ class BookingHistoryServiceImplTest {
         AccommodationEntity testAccommodationEntity = new AccommodationEntity();
         testAccommodationEntity
                 .setName(TEST_HOTEL_NAME)
-                .setType(new AccommodationTypeEntity())
+                .setType(new AccommodationTypeEntity().setType(AccommodationTypeEnum.HOTEL))
                 .setCity(TEST_HOTEL_CITY)
                 .setAddress(TEST_HOTEL_ADDRESS)
                 .setPostalCode(TEST_HOTEL_PK)
@@ -97,12 +92,11 @@ class BookingHistoryServiceImplTest {
         SummaryBookingServiceModel byId = this.bookingHistoryServiceToTest.findById(TEST_BOOKING_HISTORY_ID);
 
         System.out.println();
-        assertNotNull(byId);
         assertEquals(TEST_BOOKING_HISTORY_ID, byId.getBookingId());
     }
 
     @Test
-    void isOwnerHistory_should_throw_exception_when_findById_returns_null() {
+    void isOwnerHistory_should_throw_exception_when_entity_with_given_id_does_not_exist() {
         when(this.mockBookingHistoryRepository
                 .findById(TEST_BOOKING_HISTORY_ID_1))
                 .thenThrow(new ObjectNotFoundException("Booking with id " + TEST_BOOKING_HISTORY_ID_1 + " not found!"));
@@ -112,12 +106,30 @@ class BookingHistoryServiceImplTest {
     }
 
     @Test
-    void getAllPassedBookingsByUserId_should_return_list_of_bookingHistoryEntity_when_entities_exist() {
+    void isOwnerHistory_should_return_true_when_hotel_with_given_id_exists_and_user_with_given_email_exist() {
+        when(this.mockBookingHistoryRepository
+                .findById(TEST_BOOKING_HISTORY_ID))
+                .thenReturn(Optional.of(this.testBookingHistoryEntity));
+
+        assertTrue(this.bookingHistoryServiceToTest.isOwnerHistory(TEST_USER_EMAIL, TEST_USER_ID));
+    }
+
+    @Test
+    void isOwnerHistory_should_return_false_when_hotel_with_given_id_exists_and_user_with_given_email_does_not_exist() {
+        when(this.mockBookingHistoryRepository
+                .findById(TEST_BOOKING_HISTORY_ID))
+                .thenReturn(Optional.of(this.testBookingHistoryEntity));
+
+        assertFalse(this.bookingHistoryServiceToTest.isOwnerHistory(TEST_USER_NON_EXISTING_EMAIL, TEST_USER_ID));
+    }
+
+    @Test
+    void findAllBookingsByUserId_should_return_a_list_of_bookingHistoryEntity_when_entities_exist() {
         when(this.mockBookingHistoryRepository.findAllByGuestId(this.testUserEntity.getId())).thenReturn(this.bookingHistoryEntities);
 
-        this.bookingHistoryServiceToTest.findAllBookingsByUserId(this.testUserEntity.getId());
+        List<TitleBookingServiceModel> allBookingsByUserId = this.bookingHistoryServiceToTest.findAllBookingsByUserId(this.testUserEntity.getId());
 
-        assertEquals(1, this.bookingHistoryEntities.size());
+        assertEquals(1, allBookingsByUserId.size());
 
     }
 
@@ -127,7 +139,7 @@ class BookingHistoryServiceImplTest {
                 .findById(this.testBookingHistoryEntity.getId()))
                 .thenReturn(Optional.of(this.testBookingHistoryEntity));
 
-        SummaryBookingServiceModel byId = this.bookingHistoryServiceToTest.findCompletedBookingBy(TEST_BOOKING_HISTORY_ID);
+        SummaryBookingServiceModel byId = this.bookingHistoryServiceToTest.findCompletedBookingBy(this.testBookingHistoryEntity.getId());
 
         assertNotNull(byId);
         assertEquals(TEST_BOOKING_HISTORY_ID, byId.getBookingId());
@@ -140,5 +152,7 @@ class BookingHistoryServiceImplTest {
 
         assertThrows(ObjectNotFoundException.class, () -> this.bookingHistoryServiceToTest.findById(TEST_BOOKING_HISTORY_ID_1));
     }
+
+
 
 }

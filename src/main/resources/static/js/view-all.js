@@ -7,7 +7,7 @@ function loadBookings() {
 
     let counter = 1;
     // "http://localhost:8080/all-bookings"
-    fetch("https://boiling-plains-21605.herokuapp.com/all-bookings")
+    fetch("https://pacific-spire-77723.herokuapp.com/all-bookings")
         .then(response => response.json())
         .then(json => {
             if (json.length > 0) {

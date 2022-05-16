@@ -1,6 +1,8 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,14 +27,17 @@ public class BookingEntity extends BaseEntity {
     private String firstName;
     private String lastName;
 
+    @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime bookingTime;
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime updated;
 
+    @CreationTimestamp
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkIn;
+    @CreationTimestamp
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkOut;
 

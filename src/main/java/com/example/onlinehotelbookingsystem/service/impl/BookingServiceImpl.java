@@ -108,38 +108,11 @@ public class BookingServiceImpl implements BookingService {
         return savedEntity.getId();
     }
 
-    private void setBookingCounter(BookingEntity bookingEntity) {
-        bookingCounter++;
-        bookingEntity.setCountBookings(bookingCounter);
-        bookingCounter = bookingEntity.getCountBookings();
-    }
-
-    private BookingEntity mapToBookingEntity(CreateBookingServiceModel serviceModel, UserEntity userEntity, AccommodationEntity acEntity) {
-        BookingEntity bookingEntity = new BookingEntity();
-
-        bookingEntity
-                .setCheckIn(serviceModel.getCheckIn())
-                .setCheckOut(serviceModel.getCheckOut())
-                .setComments(serviceModel.getComments())
-                .setEmail(serviceModel.getEmail())
-                .setPhoneNumber(serviceModel.getPhoneNumber())
-                .setPetKilograms(serviceModel.getPetKilograms())
-                .setPetName(serviceModel.getPetName())
-                .setBookingTime(LocalDateTime.now())
-                .setGuest(userEntity)
-                .setProperty(acEntity)
-                .setFirstName(serviceModel.getFirstName())
-                .setLastName(serviceModel.getLastName());
-
-        return bookingEntity;
-    }
-
     @Override
     public RoomMessages checkAvailability(AvailabilityServiceModel model) {
 
         RoomMessages roomMessages = new RoomMessages();
-//        convert to entity before checking?
-//        TODO: To correct - if 1 single is not available and 1 double is available??
+//        TODO:  if 1 single is not available and 1 double is available??
         for (RoomServiceModel room : model.getRooms()) {
             if (room.getNumberOfRooms() != 0) {
                 Integer n = this.bookingRepository.isRoomAvailableBetween(model.getCheckIn(), model.getCheckOut(),
@@ -158,7 +131,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<TitleBookingServiceModel> getAllActiveBookingsByCurrentUserId(Long id) {
+    public List<TitleBookingServiceModel> findAllActiveBookingsByCurrentUserId(Long id) {
 
         List<BookingEntity> entities = this.bookingRepository.findAllActiveBookingsBy(id);
 
@@ -203,15 +176,6 @@ public class BookingServiceImpl implements BookingService {
         System.out.println();
     }
 
-//    @Override
-//    public void delete(Long id) {
-//        this.bookingRepository.moveCancelledBookingToHistory(id);
-//        deleteCancelledBooking(id);
-//
-//        System.out.println();
-//    }
-
-
     public boolean isOwner(String currentUserEmail, Long bookingId) {
         BookingEntity bookingEntity = this.bookingRepository
                 .findById(bookingId)
@@ -250,27 +214,6 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private void applyDiscount(int totalNights, BookingEntity bookingEntity) {
-        int numberOfRooms = bookingEntity.getBookedRooms().size();
-        int count = totalNights * numberOfRooms;
-        BigDecimal sum = new BigDecimal(0);
-        for (BookedRoomsEntity bookedRoom : bookingEntity.getBookedRooms()) {
-            BigDecimal price = bookedRoom.getPrice();
-            sum = sum.add(price.multiply(BigDecimal.valueOf(totalNights)));
-        }
-        BigDecimal avg = sum.divide(BigDecimal.valueOf(count), RoundingMode.FLOOR);
-        bookingEntity.setTotalPrice(bookingEntity.getTotalPrice().subtract(avg));
-        System.out.println(bookingEntity.getTotalPrice());
-        bookingEntity.setCountBookings(0);
-        bookingEntity.setHasDiscount(true);
-        this.bookingRepository.save(bookingEntity);
-
-    }
-
-    //    ???
-    private boolean isDiscountApplicable(int countBookings, int totalNights1) {
-        return countBookings > 0 && totalNights1 > 1;
-    }
 
     @Override
     public Page<SummaryBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {
@@ -324,9 +267,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void setPaymentStatus(Long bookingId) {
-        BookingEntity bookingEntity = this.bookingRepository
-                .findById(bookingId)
-                .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + bookingId + "not found!"));
+        BookingEntity bookingEntity = getBooking(bookingId);
         PaymentEntity payment = bookingEntity.getPayment();
         payment.setStatusEnum(PAID);
     }
@@ -351,6 +292,54 @@ public class BookingServiceImpl implements BookingService {
         this.bookingHistoryRepository.save(bookingHistoryEntity);
         this.roomHistoryRepository.save(roomsHistoryEntity);
 
+    }
+
+    private void applyDiscount(int totalNights, BookingEntity bookingEntity) {
+        int numberOfRooms = bookingEntity.getBookedRooms().size();
+        int count = totalNights * numberOfRooms;
+        BigDecimal sum = new BigDecimal(0);
+        for (BookedRoomsEntity bookedRoom : bookingEntity.getBookedRooms()) {
+            BigDecimal price = bookedRoom.getPrice();
+            sum = sum.add(price.multiply(BigDecimal.valueOf(totalNights)));
+        }
+        BigDecimal avg = sum.divide(BigDecimal.valueOf(count), RoundingMode.FLOOR);
+        bookingEntity.setTotalPrice(bookingEntity.getTotalPrice().subtract(avg));
+        System.out.println(bookingEntity.getTotalPrice());
+        bookingEntity.setCountBookings(0);
+        bookingEntity.setHasDiscount(true);
+        this.bookingRepository.save(bookingEntity);
+
+    }
+
+    //    ???
+    private boolean isDiscountApplicable(int countBookings, int totalNights1) {
+        return countBookings > 0 && totalNights1 > 1;
+    }
+
+    private void setBookingCounter(BookingEntity bookingEntity) {
+        bookingCounter++;
+        bookingEntity.setCountBookings(bookingCounter);
+        bookingCounter = bookingEntity.getCountBookings();
+    }
+
+    private BookingEntity mapToBookingEntity(CreateBookingServiceModel serviceModel, UserEntity userEntity, AccommodationEntity acEntity) {
+        BookingEntity bookingEntity = new BookingEntity();
+
+        bookingEntity
+                .setCheckIn(serviceModel.getCheckIn())
+                .setCheckOut(serviceModel.getCheckOut())
+                .setComments(serviceModel.getComments())
+                .setEmail(serviceModel.getEmail())
+                .setPhoneNumber(serviceModel.getPhoneNumber())
+                .setPetKilograms(serviceModel.getPetKilograms())
+                .setPetName(serviceModel.getPetName())
+                .setBookingTime(LocalDateTime.now())
+                .setGuest(userEntity)
+                .setProperty(acEntity)
+                .setFirstName(serviceModel.getFirstName())
+                .setLastName(serviceModel.getLastName());
+
+        return bookingEntity;
     }
 
     private void setRoomHistoryList(BookingEntity bookingEntity, BookingHistoryEntity bookingHistoryEntity, List<RoomsHistoryEntity> roomsHistoryEntities, RoomsHistoryEntity roomsHistoryEntity) {
@@ -430,11 +419,6 @@ public class BookingServiceImpl implements BookingService {
                 .findById(bookingId)
                 .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + bookingId + " not found!"));
     }
-
-//    private void deleteCancelledBooking(Long id) {
-//        this.bookingRepository.deleteById(id);
-//        System.out.println();
-//    }
 
     private void deleteCompletedBookings() {
         this.bookingRepository.deleteAllCompleted();

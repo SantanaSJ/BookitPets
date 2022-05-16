@@ -34,7 +34,7 @@ public class BookingRestController {
     public ResponseEntity<List<TitleBookingViewModel>> getAllBookingsByCurrentUserId(@AuthenticationPrincipal CustomUser user)     {
 
         List<TitleBookingServiceModel> allBookings = this.bookingService
-                .getAllActiveBookingsByCurrentUserId(user.getUserId());
+                .findAllActiveBookingsByCurrentUserId(user.getUserId());
 
         List<TitleBookingViewModel> collect = allBookings
                 .stream()

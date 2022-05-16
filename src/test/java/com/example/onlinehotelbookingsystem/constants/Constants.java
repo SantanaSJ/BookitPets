@@ -61,9 +61,9 @@ public final class Constants {
     public static final String TEST_HOTEL_IMAGE_1 = "image_url2";
     public static final Long TEST_HOTEL_ID_1 = 2L;
 
-    public static final BigDecimal TEST_BOOKED_ROOMS_PRICE = BigDecimal.valueOf(100);
-    public static final Integer TEST_BOOKED_ROOMS_NUMBER_OF_ROOMS = 1;
-    public static final Long TEST_BOOKED_ROOMS_ID = 1L;
+    public static final BigDecimal TEST_BOOKED_ROOM_PRICE = BigDecimal.valueOf(100);
+    public static final Integer TEST_BOOKED_ROOM_NUMBER_OF_ROOMS = 1;
+    public static final Long TEST_BOOKED_ROOM_ID = 1L;
 
     public static final String TEST_ROOM_TYPE = "single";
     public static final BigDecimal TEST_ROOM_CURRENT_PRICE = BigDecimal.valueOf(100);
@@ -79,6 +79,15 @@ public final class Constants {
     public static final String TEST_ROOM_TYPE_1 = "double";
     public static final Long TEST_ROOM_ID_1 = 2L;
     public static final String TEST_SEARCH_TERM = "Tra";
+    public static final String TEST_URL = "some/image/url.jpeg";
+    public static final String TEST_USER_UPDATE_FIRST_NAME = "Michael";
+    public static final String TEST_USER_UPDATE_LAST_NAME = "Madsen";
+    public static final String TEST_USER_UPDATE_EMAIL = "mmadsen@abv.bg";
+    public static final String TEST_USER_UPDATE_PHONE = "0994433234";
+    public static final String TEST_USER_UPDATE_PET_NAME = "Tim";
+    public static final int TEST_USER_UPDATE_PET_KG = 98;
+    public static final String TEST_USER_UPDATE_ADD_IMAGE_TITLE = "updated user image title";
+    public static final String TEST_USER_UPDATE_ADD_PET_IMAGE_TITLE = "updated pet image title";
 
 
     private Constants() {

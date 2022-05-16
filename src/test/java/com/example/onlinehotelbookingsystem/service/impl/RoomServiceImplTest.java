@@ -61,24 +61,26 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void whenFindByHotelId_verifyThatListIsNotEmpty() {
+    void findByHotelId_should_return_empty_list_when_no_rooms_exist() {
+        this.roomEntities.clear();
+        when(this.mockRoomRepository.findByAccommodationEntity_Id(this.accommodationEntityTest.getId())).thenReturn(this.roomEntities);
+
+        List<RoomServiceModel> roomsByHotelId = this.roomService.findByHotelId(TEST_HOTEL_ID);
+        assertTrue(roomsByHotelId.isEmpty());
+
+    }
+
+    @Test
+    void findByHotelId_should_return_list_of_rooms_when_rooms_exist() {
         when(this.mockRoomRepository.findByAccommodationEntity_Id(this.accommodationEntityTest.getId())).thenReturn(this.roomEntities);
 
         List<RoomServiceModel> roomsByHotelId = this.roomService.findByHotelId(TEST_HOTEL_ID);
         assertFalse(roomsByHotelId.isEmpty());
-
         assertEquals(2, roomsByHotelId.size());
     }
 
     @Test
-    void whenFindByHotelId_verifyThatListIsEmptyWhenNoRooms() {
-        this.roomEntities.clear();
-        List<RoomServiceModel> roomsByHotelId = this.roomService.findByHotelId(TEST_HOTEL_ID);
-        assertTrue(roomsByHotelId.isEmpty());
-    }
-
-    @Test
-    void whenFindById_verifyThatIsNotNull() {
+    void findById_should_return_entity_when_entity_with_given_id_exists() {
         when(this.mockRoomRepository.findById(this.accommodationEntityTest.getId())).thenReturn(Optional.of(roomEntityTest1));
 
         RoomEntity roomById = this.roomService.findById(TEST_ROOM_ID);
@@ -87,7 +89,7 @@ class RoomServiceImplTest {
     }
 
     @Test
-    void whenFindByIdIsNotFound_verifyThatThrowsException() {
+    void findById_should_throw_exception_when_no_entity_with_given_id_exists() {
         when(this.mockRoomRepository.findById(TEST_ROOM_ID_1)).thenThrow(new ObjectNotFoundException("id not found!"));
         assertThrows(ObjectNotFoundException.class, () -> this.roomService.findById(TEST_ROOM_ID_1));
     }

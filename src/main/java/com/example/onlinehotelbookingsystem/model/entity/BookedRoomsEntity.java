@@ -1,9 +1,6 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -17,13 +14,12 @@ public class BookedRoomsEntity extends BaseEntity {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private BookingEntity booking;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private RoomEntity room;
 
     private BigDecimal price;
 //    ??
     private Integer numberOfRooms;
-//    private Integer numberOfPeople;
 
 
     public BookingEntity getBooking() {

@@ -39,7 +39,7 @@ public class AccommodationEntity extends BaseEntity {
 
     private LocalTime checkOutTime;
 
-    @OneToMany(mappedBy = "accommodationEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accommodationEntity", cascade = CascadeType.PERSIST)
     private List<RoomEntity> roomEntity;
 
     @ManyToOne(cascade = CascadeType.MERGE)

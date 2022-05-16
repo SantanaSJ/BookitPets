@@ -10,7 +10,6 @@ import com.example.onlinehotelbookingsystem.repository.AccommodationRepository;
 import com.example.onlinehotelbookingsystem.repository.AccommodationTypeRepository;
 import com.example.onlinehotelbookingsystem.repository.RoomRepository;
 import com.example.onlinehotelbookingsystem.service.AccommodationService;
-import com.example.onlinehotelbookingsystem.service.AccommodationTypeService;
 import com.example.onlinehotelbookingsystem.service.RoomService;
 import com.example.onlinehotelbookingsystem.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,15 +31,13 @@ import static org.mockito.Mockito.when;
 class AccommodationServiceImplTest {
 
     @Mock
-    AccommodationRepository mockAccommodationRepository;
+    private AccommodationRepository mockAccommodationRepository;
 
     @Mock
-    RoomRepository mockRoomRepository;
-
-    AccommodationTypeService accommodationTypeService;
+    private RoomRepository mockRoomRepository;
 
     @Mock
-    AccommodationTypeRepository mockAccommodationTypeRepository;
+    private AccommodationTypeRepository mockAccommodationTypeRepository;
 
     private AccommodationEntity accommodationEntityTest1, accommodationEntityTest2;
     private RoomEntity roomEntityToTest;
@@ -91,7 +88,7 @@ class AccommodationServiceImplTest {
         this.accommodationEntities.add(this.accommodationEntityTest2);
 
         this.roomServiceToTest = new RoomServiceImpl(this.mockRoomRepository, new ModelMapper());
-        this.accommodationServiceToTest = new AccommodationServiceImpl(this.mockAccommodationRepository, accommodationTypeService, mockRoomRepository, new ModelMapper(), this.roomServiceToTest);
+        this.accommodationServiceToTest = new AccommodationServiceImpl(this.mockAccommodationRepository, mockAccommodationTypeRepository, mockRoomRepository, new ModelMapper(), this.roomServiceToTest);
     }
 
 
@@ -118,9 +115,10 @@ class AccommodationServiceImplTest {
         when(this.mockAccommodationRepository.findById(TEST_HOTEL_ID_1)).thenReturn(Optional.of(this.accommodationEntityTest2));
         when(this.mockRoomRepository.findByAccommodationEntity_Id(TEST_HOTEL_ID_1)).thenReturn(this.roomEntities);
 
-        AccommodationServiceModel byId = this.accommodationServiceToTest.findById(TEST_HOTEL_ID_1);
+        AccommodationServiceModel byId = this.accommodationServiceToTest.findById(this.accommodationEntityTest2.getId());
         System.out.println();
         assertNotNull(byId);
+        assertEquals(this.accommodationEntityTest2.getName(), byId.getName());
     }
 
     @Test
@@ -130,7 +128,7 @@ class AccommodationServiceImplTest {
 
     @Test
     void findById_should_throw_exception_when_hotel_with_given_id_not_exists() {
-        when(this.mockAccommodationRepository.findById(1L)).thenThrow(new ObjectNotFoundException("id not found!"));
+        when(this.mockAccommodationRepository.findById(TEST_HOTEL_ID)).thenThrow(new ObjectNotFoundException("id not found!"));
         assertThrows(ObjectNotFoundException.class, () -> this.accommodationServiceToTest.findById(1L));
     }
 }

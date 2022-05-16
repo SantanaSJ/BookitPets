@@ -46,12 +46,6 @@ public class    ProfileUpdateBindingModel {
     @ValidateMultipartForm
     private MultipartFile petImageFile;
 
-//    @Valid
-//    private AddPetImageBindingModel addPetImageBindingModel;
-
-//    @Valid
-//    private AddUserImageBindingModel addUserImageBindingModel;
-
     @NotNull(message = "Please provide pet kilograms.")
     @Positive
     private Integer petKilograms;
@@ -137,25 +131,6 @@ public class    ProfileUpdateBindingModel {
         this.petImageUrl = petImageUrl;
         return this;
     }
-
-//    public AddPetImageBindingModel getAddPetImageBindingModel() {
-//        return addPetImageBindingModel;
-//    }
-//
-//    public ProfileUpdateBindingModel setAddPetImageBindingModel(AddPetImageBindingModel addPetImageBindingModel) {
-//        this.addPetImageBindingModel = addPetImageBindingModel;
-//        return this;
-//    }
-
-//    public AddUserImageBindingModel getAddUserImageBindingModel() {
-//        return addUserImageBindingModel;
-//    }
-//
-//    public ProfileUpdateBindingModel setAddUserImageBindingModel(AddUserImageBindingModel addUserImageBindingModel) {
-//        this.addUserImageBindingModel = addUserImageBindingModel;
-//        return this;
-//    }
-
 
     public String getUserImageTitle() {
         return userImageTitle;

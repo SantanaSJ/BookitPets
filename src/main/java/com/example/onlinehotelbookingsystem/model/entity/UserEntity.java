@@ -40,7 +40,7 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "guest")
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
     private List<BookingEntity> bookings;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)

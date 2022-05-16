@@ -34,36 +34,10 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         BookingHistoryEntity bookingHistoryEntity = this.bookingHistoryRepository
                 .findById(id).orElseThrow(() -> new ObjectNotFoundException("Booking with id " + id + " not found!"));
 
-//     TODO:   repeated to check how to make it more generic
-        return mapToServiceModel(bookingHistoryEntity);
+        return mapToTSummaryBookingServiceModel(bookingHistoryEntity);
     }
 
-    private SummaryBookingServiceModel mapToServiceModel(BookingHistoryEntity entity) {
-        SummaryBookingServiceModel serviceModel = this.mapper.map(entity, SummaryBookingServiceModel.class);
-        serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
-        List<RoomsHistoryEntity> bookedRooms = entity.getRoomsHistoryEntity();
-        List<RoomServiceModel> roomServiceModels = bookedRooms
-                .stream()
-                .map(b -> {
-                    RoomServiceModel roomServiceModel = this.mapper.map(b, RoomServiceModel.class);
-                    roomServiceModel.setType(b.getRoom().getRoomType());
-                    return roomServiceModel;
-                })
-                .collect(Collectors.toList());
-
-        serviceModel.setRooms(roomServiceModels);
-        serviceModel.setCategory(entity.getProperty().getCategory());
-        serviceModel.setHotelName(entity.getProperty().getName());
-        serviceModel.setType(entity.getProperty().getType().getType().name());
-        serviceModel.setAddress(entity.getProperty().getAddress());
-        serviceModel.setCity(entity.getProperty().getCity());
-        serviceModel.setHotelImage(entity.getProperty().getImageUrl());
-        serviceModel.setBookingId(entity.getId());
-        serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
-        return serviceModel;
-    }
-
-    //    All Completed by userId
+      //    All Completed by userId
     @Override
     public List<TitleBookingServiceModel> findAllBookingsByUserId(Long userId) {
         List<BookingHistoryEntity> all = this.bookingHistoryRepository.findAllByGuestId(userId);
@@ -118,7 +92,6 @@ public class BookingHistoryServiceImpl implements BookingHistoryService {
         SummaryBookingServiceModel serviceModel = mapToTSummaryBookingServiceModel(bookingHistoryEntity);
         return serviceModel;
     }
-
 
     private SummaryBookingServiceModel mapToTSummaryBookingServiceModel(BookingHistoryEntity entity) {
         SummaryBookingServiceModel serviceModel = this.mapper.map(entity, SummaryBookingServiceModel.class);

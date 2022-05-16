@@ -12,7 +12,7 @@ public interface BookingService {
 
     RoomMessages checkAvailability(AvailabilityServiceModel dto);
 
-    List<TitleBookingServiceModel> getAllActiveBookingsByCurrentUserId(Long userId);
+    List<TitleBookingServiceModel> findAllActiveBookingsByCurrentUserId(Long userId);
 
     void update(BookingUpdateServiceModel updateServiceModel);
 

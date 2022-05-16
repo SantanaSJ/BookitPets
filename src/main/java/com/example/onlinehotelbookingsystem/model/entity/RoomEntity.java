@@ -1,7 +1,9 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
@@ -9,8 +11,8 @@ import java.math.BigDecimal;
 public class RoomEntity extends BaseEntity {
 
 //    tests
-    @JoinColumn(nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @JoinColumn(nullable = false)
+    @ManyToOne()
     private AccommodationEntity accommodationEntity;
 
     @Column(nullable = false)

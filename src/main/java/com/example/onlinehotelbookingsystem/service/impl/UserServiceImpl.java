@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
     private void initializeUsers() {
         if (this.userRepository.count() == 0) {
+            List<UserRoleEntity> all = this.userRoleRepository.findAll();
 
             UserRoleEntity adminRole = this.userRoleRepository.findByRole(UserRoleEnum.ADMIN);
             UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
@@ -126,6 +127,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerAndLogin(UserRegistrationServiceModel serviceModel) {
+        List<UserRoleEntity> all = this.userRoleRepository.findAll();
+        System.out.println();
         UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
 
         UserEntity user = this.mapper.map(serviceModel, UserEntity.class);
