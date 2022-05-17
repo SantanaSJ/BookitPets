@@ -37,7 +37,7 @@
 
 <!--        <dependency>-->
 <!--            <groupId>org.liquibase</groupId>-->
-<!--            <artifactId>liquibase-core</artifactId>-->
+<!--            <artifactId>liquibase-maven-plugin</artifactId>-->
 <!--            <version>3.4.1</version>-->
 <!--        </dependency>-->
 
@@ -144,15 +144,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.5.6</version>
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                <version>3.0.0-M6</version>-->
+<!--                <groupId>org.liquibase</groupId>-->
+<!--                <artifactId>liquibase-maven-plugin</artifactId>-->
+<!--                <version>3.4.1</version>-->
 <!--                <configuration>-->
-<!--                <systemProperties>-->
-<!--                <property>-->
-<!--                    <name>propertyName</name>-->
-<!--                    <value>propertyValue</value>-->
-<!--                </property>-->
+<!--                    <propertyFile>src/main/resources/db/liquibase.properties</propertyFile>-->
+<!--                </configuration>-->
 
             </plugin>
         </plugins>
