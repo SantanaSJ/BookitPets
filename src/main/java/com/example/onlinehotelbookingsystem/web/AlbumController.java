@@ -49,8 +49,10 @@ public class AlbumController {
         ProfileServiceModel serviceModel = this.userService.findById(id);
         ProfileViewModel viewModel = this.mapper.map(serviceModel, ProfileViewModel.class);
         model
-                .addAttribute("userName", viewModel.getFirstName())
-                .addAttribute("petName", viewModel.getPetName());
+//                .addAttribute("userName", viewModel.getFirstName())
+//                .addAttribute("petName", viewModel.getPetName())
+                .addAttribute("pageTitle",
+                        String.format("%s and %s's photo album", viewModel.getFirstName(), viewModel.getPetName()));
 
         if (viewModels.isEmpty()) {
             model.addAttribute("noContent", new Message("Nothing to show. Go make some memories!"));
