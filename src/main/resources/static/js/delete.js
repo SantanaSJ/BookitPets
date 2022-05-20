@@ -4,10 +4,10 @@ $('#delete').click(function () {
         console.log("Booking id to delete is " + bookingId);
         //https://pacific-spire-77723.herokuapp.com/delete/
         //http://localhost:8080/delete/
-        fetch('http://localhost:8080/delete/' + bookingId, {
+        fetch('https://pacific-spire-77723.herokuapp.com/delete/' + bookingId, {
             method: 'DELETE'
         //    http://localhost:8080/view-all
-        }).then(() => window.location = 'http://localhost:8080/view-all')
+        }).then(() => window.location = 'https://pacific-spire-77723.herokuapp.com/view-all')
         console.log('deleted');
         // window.location = 'http://localhost:8080/view-all';
     }

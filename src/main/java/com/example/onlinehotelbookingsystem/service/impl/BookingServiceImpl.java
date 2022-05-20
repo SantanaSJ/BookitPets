@@ -508,6 +508,7 @@ public class BookingServiceImpl implements BookingService {
         serviceModel.setBookingId(entity.getId());
         serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
         serviceModel.setLat(entity.getProperty().getLat());
+        serviceModel.setLastUpdated(entity.getUpdated());
         serviceModel.setLng(entity.getProperty().getLng());
 
         return serviceModel;
