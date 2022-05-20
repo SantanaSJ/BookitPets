@@ -7,6 +7,7 @@ import com.example.onlinehotelbookingsystem.service.StripeService;
 import com.example.onlinehotelbookingsystem.web.responseMessages.StripeResponseMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +33,11 @@ public class PaymentController {
         this.mapper = mapper;
     }
 
+
+    @PreAuthorize("isOwner(#id)")
     @GetMapping("/payment/{id}")
     public String chargePage(Model model, @PathVariable("id") Long id) {
-        SummaryBookingServiceModel serviceModel = this.bookingService.findById(id);
+        SummaryBookingServiceModel serviceModel = this.bookingService.findActiveBookingById(id);
         SummaryBookingViewModel bookingViewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
         long totalNights = bookingViewModel.getTotalNights();
 

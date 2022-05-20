@@ -1,0 +1,267 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<!--AOS LIBRARY-->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+<main>
+    <section>
+        <div class="booking-container">
+            <div class="row">
+                <div class="col-sm-3 p-0 summary">
+                    <!--                    SUMMARY                   -->
+                    <div class="card-header">
+                        Booking Summary
+                    </div>
+                    <div class="summary-body p-3">
+                        <div>
+                            <span class="fw-bold">Hotel Name:</span>
+                            <p th:text="${bindingModel.hotelName}">Interhotel Continental</p>
+                        </div>
+                        <div>
+                            <div class="fw-bold">Category:</div>
+                            <span class="col"
+                                  th:each="star : ${#numbers.sequence(1, bindingModel.category)}">
+                                <i class='bx bxs-star'>
+                                </i>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="fw-bold">City:</span>
+                            <p th:text="${bindingModel.city}">Sofia</p>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Address:</span>
+                            <p th:text="${bindingModel.address}">Center</p>
+                        </div>
+
+                        <div>
+                            <span class="fw-bold">Check in:</span>
+                            <p th:text="${#temporals.format(bindingModel.checkIn, 'dd-MM-yyyy')}">18.02.2022</p>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Check out:</span>
+                            <p th:text="${#temporals.format(bindingModel.checkOut, 'dd-MM-yyyy')}">19.02.2022</p>
+                        </div>
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Room type</th>
+                                    <th scope="col">Price per room</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="e, rowStat : ${bindingModel.rooms}">
+                                <span th:if="${e.numberOfRooms != 0}">
+                                <th scope="row" th:text="${rowStat.count}" type="number" name="index"></th>
+                                <td th:text="|${rowStat.current.type} x ${rowStat.current.numberOfRooms}|"
+                                    name="type"></td>
+                                <td th:text="${rowStat.current.price}" name="price"></td>
+                                </span>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!--                    CREATE                   -->
+                <div class="col booking">
+                    <form class=""
+                          th:object="${bookingBindingModel}"
+                          th:action="@{/create-booking}"
+                          th:method="POST">
+
+                        <div class="card-header">
+                            Please provide the following details
+                        </div>
+                        <div class="main-body p-3">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <!-------------------------------------------------------------------->
+                                    <input class="form-control" name="hotelId" id="hotelId" type="hidden"
+                                           th:value="${bindingModel.hotelId}">
+                                    <input class="form-control" name="checkIn" id="checkIn" type="date"
+                                           hidden="hidden " th:value="${bindingModel.checkIn}">
+                                    <input class="form-control" name="checkOut" id="checkOut" type="hidden"
+                                           th:value="${bindingModel.checkOut}">
+                                    <!------------------------------------------------------------------->
+                                    <label for="first-name" class="label-align fw-bold">First Name<span
+                                            class="required">*</span></label>
+                                    <input th:field="*{firstName}"
+                                           type="text"
+                                           class="form-control"
+                                           name="first-name"
+                                           id="first-name"
+                                           placeholder="ex. John ..."
+                                           required
+                                           minlength="3"
+                                           maxlength="20">
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('firstName')}"
+                                               th:errors="*{firstName}"
+                                               id="first-nameError"
+                                               class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="lastName" class="label-align fw-bold">Last Name<span
+                                            class="required">*</span></label>
+                                    <input
+                                            th:field="*{lastName}"
+                                            type="text"
+                                            class="form-control"
+                                            name="name"
+                                            placeholder="ex. John ..."
+                                            id="lastName"
+                                            required
+                                            minlength="3"
+                                            maxlength="20"/>
+                                    <div class="col-auto">
+                                        <small
+                                                th:if="${#fields.hasErrors('lastName')}"
+                                                th:errors="*{lastName}"
+                                                id="last-nameError"
+                                                class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="email" class="label-align mt-3 fw-bold">Email<span
+                                            class="required">*</span></label>
+                                    <input
+                                            th:field="*{email}"
+                                            class="form-control"
+                                            type="email"
+                                            id="email"
+                                            required/>
+                                    <div class="col-auto">
+                                        <small
+                                                th:if="${#fields.hasErrors('email')}"
+                                                th:errors="*{email}"
+                                                id="email-Error"
+                                                class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="phoneNumber" class="label-align mt-3 fw-bold">Phone number<span
+                                            class="required">*</span></label>
+                                    <input
+                                            th:field="*{phoneNumber}"
+                                            class="form-control"
+                                            type="tel"
+                                            name="phoneNumber"
+                                            id="phoneNumber"
+                                            required/>
+                                    <div class="col-auto">
+                                        <small
+                                                th:if="${#fields.hasErrors('phoneNumber')}"
+                                                th:errors="*{phoneNumber}"
+                                                id="phoneNumber-Error"
+                                                class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="petName" class="label-align mt-3 fw-bold">Pet Name<span
+                                            class="required">*</span></label>
+                                    <input
+                                            th:field="*{petName}"
+                                            class="form-control"
+                                            name="name"
+                                            placeholder="ex. Lassie ..."
+                                            id="petName"
+                                            required
+                                            minlength="3"
+                                            maxlength="10"/>
+                                    <div class="col-auto">
+                                        <small
+                                                th:if="${#fields.hasErrors('petName')}"
+                                                th:errors="*{petName}"
+                                                class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="pet-kg" class="label-align mt-3 fw-bold">Kilograms<span
+                                            class="required">*</span></label>
+                                    <input
+                                            th:field="*{petKilograms}"
+                                            class="form-control"
+                                            name="name"
+                                            placeholder="ex. 45kg ..."
+                                            id="pet-kg"
+                                            required
+                                            min="1"/>
+                                    <div class="col-auto">
+                                        <small
+                                                th:if="${#fields.hasErrors('petKilograms')}"
+                                                th:errors="*{petKilograms}"
+                                                class="text-light form-text bg-danger rounded">xxx</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="textarea" class="label-align mt-3 fw-bold">Comments</label>
+                                    <div class="col-md-6 col-sm-6">
+                                            <textarea
+                                                    th:field="${bookingBindingModel.comments}"
+                                                    class="form-control"
+                                                    rows="1" id="textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="ln_solid booking">
+                            <div class="form-group">
+                                <div class="p-4 text-center">
+                                    <button type='submit' class="btn btn-primary">Book</button>
+                                </div>
+                                <div class="row justify-content-center">
+
+                                    <!--/*@thymesVar id="successfulBooking" type=""*/-->
+                                    <div th:if="${successfulBooking}"
+                                         class="alert alert-success alert-dismissible fade show"
+                                         role="alert">
+                                        <strong>Success:</strong> <span th:text="${successfulBooking}">Success</span>
+                                        <button type="button" class="close" data-bs-dismiss="alert"
+                                                aria-label="Close">
+                                        </button>
+                                        <span><a th:href="@{/view-all}"
+                                                 class="btn btn-sm btn-primary ml-2 mr-2"><i
+                                                class="fas fa-list-ol"></i> View all bookings</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+<!--End #main-->
+
+<script src="/js/aos.js"></script>
+
+<!--======= Footer =======-->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+</body>
+</html>

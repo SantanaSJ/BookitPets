@@ -6,7 +6,6 @@ import com.example.onlinehotelbookingsystem.model.service.BookingUpdateServiceMo
 import com.example.onlinehotelbookingsystem.model.service.SummaryBookingServiceModel;
 import com.example.onlinehotelbookingsystem.model.view.AllUsersViewModel;
 import com.example.onlinehotelbookingsystem.model.view.SummaryBookingViewModel;
-import com.example.onlinehotelbookingsystem.service.BookingHistoryService;
 import com.example.onlinehotelbookingsystem.service.BookingService;
 import com.example.onlinehotelbookingsystem.service.StatsService;
 import com.example.onlinehotelbookingsystem.service.UserService;
@@ -14,6 +13,7 @@ import com.example.onlinehotelbookingsystem.web.responseMessages.Message;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,15 +32,14 @@ public class AdminController {
     private final UserService userService;
     private final ModelMapper mapper;
     private final BookingService bookingService;
-    private final BookingHistoryService bookingHistoryService;
+//    private final BookingHistoryService bookingHistoryService;
 
     public AdminController(StatsService statsService, UserService userService,
-                           ModelMapper mapper, BookingService bookingService, BookingHistoryService bookingHistoryService) {
+                           ModelMapper mapper, BookingService bookingService) {
         this.statsService = statsService;
         this.userService = userService;
         this.mapper = mapper;
         this.bookingService = bookingService;
-        this.bookingHistoryService = bookingHistoryService;
     }
 
 
@@ -93,11 +92,6 @@ public class AdminController {
         return "admin-manage-users";
     }
 
-    private AllUsersViewModel mapToViewModelUsers(AllUsersServiceModel allUsersServiceModel) {
-//        AllUsersViewModel allUsersViewModel = new AllUsersViewModel();
-        AllUsersViewModel usersViewModel = this.mapper.map(allUsersServiceModel, AllUsersViewModel.class);
-        return usersViewModel;
-    }
 
     //    ADD ADMIN
     @PatchMapping("/admin/manage-users/add-admin")
@@ -144,12 +138,12 @@ public class AdminController {
         return paginated;
     }
 
+//    all active bookings
     @GetMapping("/admin/bookings/page/{pageNo}")
     public String findPaginated(@PathVariable("pageNo") int pageNo, Model model,
                                 @RequestParam(value = "sortField", defaultValue = "firstName") String sortField,
                                 @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir) {
 //        bad request
-
         int pageSize = 5;
 
 //        pageNo, pageSize, sortField, sortDir
@@ -177,19 +171,19 @@ public class AdminController {
     }
 
 
-    //    BOOKING DETAILS
+    //    BOOKING DETAILS active
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/details/{id}")
     public String showBookingDetails(@PathVariable("id") Long id, Model model) {
-        SummaryBookingServiceModel serviceModel = this.bookingService.findById(id);
-//        no view Model, binding model instead
-//        SummaryBookingViewModel summaryBookingViewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
+        SummaryBookingServiceModel serviceModel = this.bookingService.findActiveBookingById(id);
         SummaryBookingViewModel summaryBookingViewModel = mapToViewModel(serviceModel);
 
         model.addAttribute("summaryBookingViewModel", summaryBookingViewModel);
         return "admin-booking-details";
     }
 
-    //    MANAGE BOOKINGS
+    //    Update active BOOKING
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/manage/{id}")
     public String showUpdate(@PathVariable Long id, Model model,
                              @ModelAttribute("summaryBookingViewModel") SummaryBookingViewModel summaryBookingViewModel) {
@@ -203,7 +197,7 @@ public class AdminController {
     }
 
     @PatchMapping("/admin/manage/{id}")
-    public String manageBooking(@PathVariable Long id, @Valid BookingUpdateBindingModel bookingUpdateBindingModel,
+    public String updateBooking(@PathVariable Long id, @Valid BookingUpdateBindingModel bookingUpdateBindingModel,
                                 BindingResult br, RedirectAttributes rAtt, SessionStatus sessionStatus) {
         if (br.hasErrors()) {
             rAtt
@@ -218,12 +212,6 @@ public class AdminController {
         return "redirect:/admin/details/" + id;
     }
 
-    private SummaryBookingViewModel mapToViewModel(SummaryBookingServiceModel serviceModel) {
-        SummaryBookingViewModel viewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
-
-        return viewModel;
-    }
-
 //BOOKINGS HISTORY
 
     @GetMapping("/admin/bookings-history")
@@ -232,16 +220,15 @@ public class AdminController {
         return paginated;
     }
 
+//    all passed bookings
     @GetMapping("/admin/bookings-history/page/{pageNo}")
     public String findPaginatedHistory(@PathVariable("pageNo") int pageNo, Model model,
                                        @RequestParam(value = "sortField", defaultValue = "firstName") String sortField,
                                        @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir) {
-//        bad request
-
         int pageSize = 5;
 
 //        pageNo, pageSize, sortField, sortDir
-        Page<SummaryBookingServiceModel> paginated = this.bookingHistoryService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<SummaryBookingServiceModel> paginated = this.bookingService.findPaginatedPassedBookings(pageNo, pageSize, sortField, sortDir);
         Page<SummaryBookingViewModel> viewModelPage = paginated.map(this::mapToViewModel);
         List<SummaryBookingViewModel> content = viewModelPage.getContent();
 
@@ -264,13 +251,27 @@ public class AdminController {
         return "admin-bookings-history";
     }
 
-    //    HISTORY DETAILS
+    //    passed booking by id/ DETAILS
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/history-details/{id}")
     public String showHistoryDetails(@PathVariable("id") Long id, Model model) {
-        SummaryBookingServiceModel serviceModel = this.bookingHistoryService.findById(id);
+        SummaryBookingServiceModel serviceModel = this.bookingService.findPassedBookingById(id);
         SummaryBookingViewModel summaryBookingViewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
 
         model.addAttribute("viewModel", summaryBookingViewModel);
         return "history-details";
     }
+
+    private AllUsersViewModel mapToViewModelUsers(AllUsersServiceModel allUsersServiceModel) {
+//        AllUsersViewModel allUsersViewModel = new AllUsersViewModel();
+        AllUsersViewModel usersViewModel = this.mapper.map(allUsersServiceModel, AllUsersViewModel.class);
+        return usersViewModel;
+    }
+    private SummaryBookingViewModel mapToViewModel(SummaryBookingServiceModel serviceModel) {
+        SummaryBookingViewModel viewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
+
+        return viewModel;
+    }
+
+
 }

@@ -1,7 +1,5 @@
 package com.example.onlinehotelbookingsystem.config;
 
-import com.example.onlinehotelbookingsystem.repository.UserRepository;
-import com.example.onlinehotelbookingsystem.service.BookingHistoryService;
 import com.example.onlinehotelbookingsystem.service.BookingService;
 import com.example.onlinehotelbookingsystem.service.PhotoService;
 import com.example.onlinehotelbookingsystem.service.UserService;
@@ -27,8 +25,8 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Bean
     public AppMethodSecurityExpressionHandler createExpressionHandler
-            (BookingService bookingService, BookingHistoryService bookingHistoryService,
+            (BookingService bookingService,
              UserService userService, PhotoService photoService) {
-        return new AppMethodSecurityExpressionHandler(bookingService, bookingHistoryService, userService, photoService);
+        return new AppMethodSecurityExpressionHandler(bookingService, userService, photoService);
     }
 }

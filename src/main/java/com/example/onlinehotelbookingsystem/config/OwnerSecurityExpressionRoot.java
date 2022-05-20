@@ -1,25 +1,17 @@
 package com.example.onlinehotelbookingsystem.config;
 
-import com.example.onlinehotelbookingsystem.model.entity.UserEntity;
-import com.example.onlinehotelbookingsystem.model.service.ProfileServiceModel;
-import com.example.onlinehotelbookingsystem.repository.UserRepository;
-import com.example.onlinehotelbookingsystem.repository.UserRoleRepository;
-import com.example.onlinehotelbookingsystem.service.BookingHistoryService;
 import com.example.onlinehotelbookingsystem.service.BookingService;
 import com.example.onlinehotelbookingsystem.service.PhotoService;
 import com.example.onlinehotelbookingsystem.service.UserService;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Optional;
 
 public class OwnerSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
 
     private BookingService bookingService;
-    private BookingHistoryService bookingHistoryService;
+//    private BookingHistoryService bookingHistoryService;
     private UserService userService;
     private PhotoService photoService;
     private Object filterObject;
@@ -41,7 +33,7 @@ public class OwnerSecurityExpressionRoot extends SecurityExpressionRoot implemen
     public boolean isOwnerHistory(Long id) {
         String email = currentUserEmail();
         if (email != null) {
-            return this.bookingHistoryService.isOwnerHistory(currentUserEmail(), id);
+            return this.bookingService.isOwnerHistory(currentUserEmail(), id);
         }
         return false;
     }
@@ -84,9 +76,9 @@ public class OwnerSecurityExpressionRoot extends SecurityExpressionRoot implemen
         this.bookingService = bookingService;
     }
 
-    public void setBookingHistoryService(BookingHistoryService bookingHistoryService) {
-        this.bookingHistoryService = bookingHistoryService;
-    }
+//    public void setBookingHistoryService(BookingHistoryService bookingHistoryService) {
+//        this.bookingHistoryService = bookingHistoryService;
+//    }
 
     public void setPhotoService(PhotoService photoService) {
         this.photoService = photoService;

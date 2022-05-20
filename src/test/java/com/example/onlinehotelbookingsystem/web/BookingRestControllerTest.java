@@ -17,6 +17,8 @@ import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -66,12 +68,6 @@ class BookingRestControllerTest {
     @BeforeEach
     public void setUp() {
         this.testUser = getTestUser();
-//        UserEntity testUser1 = getTestUser();
-//        AccommodationEntity accommodationEntity = getAccommodationEntity();
-//        AccommodationEntity accommodationEntity1 = getAccommodationEntity();
-//        BookingEntity testBookingEntity = getBookingEntity(accommodationEntity, testUser, TEST_BOOKING_ID);
-//        BookingEntity bookingEntity1 = getBookingEntity(accommodationEntity1, testUser1, TEST_BOOKING_ID1);
-        System.out.println();
     }
 
     @AfterEach
@@ -84,7 +80,7 @@ class BookingRestControllerTest {
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void when_all_bookings_is_accessed_by_authorized_user_return_status_200() throws Exception {
         this.testAccommodationEntity = getAccommodationEntity();
-        this.testBookingEntity = getBookingEntity(this.testAccommodationEntity, testUser, TEST_BOOKING_ID);
+        this.testBookingEntity = getBookingEntity();
 
         this.bookingEntityList = List.of(this.testBookingEntity);
 
@@ -99,7 +95,7 @@ class BookingRestControllerTest {
 
     @Test
     void when_all_bookings_is_accessed_by_unauthenticated_user_return_login_form() throws Exception {
-        this.testBookingEntity = getBookingEntity(this.testAccommodationEntity, testUser, TEST_BOOKING_ID);
+        this.testBookingEntity = getBookingEntity();
 
         this.bookingEntityList = List.of(this.testBookingEntity);
 
@@ -113,31 +109,34 @@ class BookingRestControllerTest {
 
     }
 
-    private BookingEntity getBookingEntity(AccommodationEntity accommodationEntity, UserEntity userEntity, Long id) {
+    private BookingEntity getBookingEntity() {
 
-        RoomEntity roomEntity = getRoomEntity(accommodationEntity);
-        PaymentEntity paymentEntity = getPaymentEntity();
-
-        BookingEntity bookingEntity = new BookingEntity();
+        RoomEntity roomEntity = getRoomEntity();
 
         List<BookedRoomsEntity> bookedRoomsEntities = new ArrayList<>();
         BookedRoomsEntity bookedRooms = new BookedRoomsEntity();
-
         bookedRooms
-                .setNumberOfRooms(TEST_BOOKED_ROOM_NUMBER_OF_ROOMS)
-                .setBooking(bookingEntity)
+                .setNumberOfRooms(1)
+                .setBooking(this.testBookingEntity)
                 .setPrice(TEST_BOOKED_ROOM_PRICE)
                 .setRoom(roomEntity)
+                .setNumberOfRooms(TEST_BOOKED_ROOM_NUMBER_OF_ROOMS)
                 .setId(TEST_BOOKED_ROOM_ID);
         bookedRoomsEntities.add(bookedRooms);
         this.bookedRoomsRepository.save(bookedRooms);
 
-        bookingEntity
-                .setGuest(userEntity)
-                .setProperty(accommodationEntity)
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setStatusEnum(PaymentStatusEnum.UNPAID);
+        this.paymentRepository.save(paymentEntity);
+
+
+        this.testBookingEntity = new BookingEntity();
+        this.testBookingEntity
+                .setGuest(this.testUser)
+                .setProperty(this.testAccommodationEntity)
                 .setFirstName(TEST_USER_FIRST_NAME)
                 .setLastName(TEST_USER_LAST_NAME)
-                .setTotalPrice(TEST_BOOKING_PRICE)
+                .setTotalPrice(BigDecimal.valueOf(200))
                 .setPhoneNumber(TEST_USER_PHONE)
                 .setEmail(TEST_USER_EMAIL)
                 .setPetKilograms(TEST_USER_PET_KG)
@@ -146,29 +145,27 @@ class BookingRestControllerTest {
                 .setCheckOut(TEST_VALID_CHECKOUT)
                 .setTotalNights(TEST_BOOKING_NIGHTS)
                 .setBookedRooms(bookedRoomsEntities)
-                .setBookingTime(TEST_BOOKING_TIME)
+                .setBookingTime(LocalDateTime.now())
                 .setPayment(paymentEntity)
-                .setId(id);
-        this.bookingRepository.save(bookingEntity);
+                .setId(TEST_BOOKING_ID);
+        this.bookingRepository.save(this.testBookingEntity);
 
-
-
-
-        return bookingEntity;
+        return this.testBookingEntity;
     }
 
-    private PaymentEntity getPaymentEntity() {
-        PaymentEntity paymentEntity = new PaymentEntity();
-        paymentEntity.setStatusEnum(PaymentStatusEnum.UNPAID);
-        this.paymentRepository.save(paymentEntity);
-        return paymentEntity;
-    }
 
-    private RoomEntity getRoomEntity(AccommodationEntity accommodationEntity) {
+//    private PaymentEntity getPaymentEntity() {
+//        PaymentEntity paymentEntity = new PaymentEntity();
+//        paymentEntity.setStatusEnum(PaymentStatusEnum.UNPAID);
+//        this.paymentRepository.save(paymentEntity);
+//        return paymentEntity;
+//    }
+
+    private RoomEntity getRoomEntity() {
         RoomEntity roomEntity = new RoomEntity();
         roomEntity
                 .setRoomType(TEST_ROOM_TYPE)
-                .setAccommodationEntity(accommodationEntity)
+                .setAccommodationEntity(this.testAccommodationEntity)
                 .setCurrentPrice(TEST_ROOM_CURRENT_PRICE)
                 .setDescription(TEST_ROOM_DESCRIPTION)
                 .setId(TEST_ROOM_ID);
@@ -221,9 +218,6 @@ class BookingRestControllerTest {
         this.accommodationTypeRepository.save(accommodationTypeEntity);
         return accommodationTypeEntity;
     }
-
-
-
 
 
 }

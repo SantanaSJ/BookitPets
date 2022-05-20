@@ -5,7 +5,7 @@ import com.example.onlinehotelbookingsystem.model.service.TitleBookingServiceMod
 import com.example.onlinehotelbookingsystem.model.view.SummaryBookingViewModel;
 import com.example.onlinehotelbookingsystem.model.view.TitleBookingViewModel;
 import com.example.onlinehotelbookingsystem.security.CustomUser;
-import com.example.onlinehotelbookingsystem.service.BookingHistoryService;
+import com.example.onlinehotelbookingsystem.service.BookingService;
 import com.example.onlinehotelbookingsystem.web.responseMessages.Message;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,19 +20,20 @@ import java.util.stream.Collectors;
 
 @Controller
 public class BookingHistoryController {
-    private final BookingHistoryService bookingHistoryService;
+
+    private final BookingService bookingService;
     private final ModelMapper mapper;
 
 
-    public BookingHistoryController(BookingHistoryService bookingHistoryService, ModelMapper mapper) {
-        this.bookingHistoryService = bookingHistoryService;
+    public BookingHistoryController(BookingService bookingService, ModelMapper mapper) {
+        this.bookingService = bookingService;
         this.mapper = mapper;
     }
 
 
     @GetMapping("/history")
     public String showAllHistory(@AuthenticationPrincipal CustomUser user, Model model) {
-        List<TitleBookingServiceModel> serviceModels = this.bookingHistoryService.findAllBookingsByUserId(user.getUserId());
+        List<TitleBookingServiceModel> serviceModels = this.bookingService.findAllPassedBookingsByUserId(user.getUserId());
 
         List<TitleBookingViewModel> viewModels = serviceModels
                 .stream()
@@ -50,7 +51,7 @@ public class BookingHistoryController {
     @PreAuthorize("isOwnerHistory(#id) or hasRole('ADMIN')")
     @GetMapping("/history/details/{id}")
     public String showHistoryDetails(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal CustomUser user) {
-        SummaryBookingServiceModel serviceModel = this.bookingHistoryService.findCompletedBookingBy(id);
+        SummaryBookingServiceModel serviceModel = this.bookingService.findPassedBookingById(id);
         SummaryBookingViewModel viewModel = this.mapper.map(serviceModel, SummaryBookingViewModel.class);
 
         model.addAttribute("viewModel", viewModel);

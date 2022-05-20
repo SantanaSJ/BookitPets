@@ -39,6 +39,7 @@ public class SummaryBookingViewModel {
     private long totalNights;
     private LocalDateTime lastUpdated;
     private boolean isCancelled;
+    private boolean isCompleted;
     private boolean hasDiscount;
     private String paymentStatus;
 
@@ -290,6 +291,15 @@ public class SummaryBookingViewModel {
 
     public SummaryBookingViewModel setLng(String lng) {
         this.lng = lng;
+        return this;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public SummaryBookingViewModel setCompleted(boolean completed) {
+        isCompleted = completed;
         return this;
     }
 }

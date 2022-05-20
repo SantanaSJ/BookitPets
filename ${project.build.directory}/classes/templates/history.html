@@ -1,0 +1,79 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+
+
+<section class="all">
+    <div class="row justify-content-center">
+        <div class="col-xl-11">
+            <div>
+                <div class="card-header fw-bold">
+                    View History of Bookings
+                </div>
+
+                <div>
+                    <div class="table-responsive-sm">
+                        <table class="table table-hover users">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First name</th>
+                                <th scope="col">Last name</th>
+                                <th scope="col">Hotel name</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Check in</th>
+                                <th scope="col">Check out</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="table-container">
+
+                            <tr th:each="b : ${viewModels}">
+                                <th scope="row" th:text="*{b.bookingId}">1</th>
+                                <td th:text="*{b.firstName}">x</td>
+                                <td th:text="*{b.lastName}">x</td>
+                                <td th:text="*{b.hotelName}">x</td>
+                                <td th:text="*{b.city}">x</td>
+                                <td th:text="${#temporals.format(b.checkIn, 'dd-MM-yyyy')}">x</td>
+                                <td th:text="${#temporals.format(b.checkOut, 'dd-MM-yyyy')}">x</td>
+                                <td th:text="${b.isCancelled() ? 'Cancelled' : 'Completed'}">x</td>
+                                <!--                                <td th:if ="*{b.isCompleted() == true}" th:text="Completed">x</td>-->
+                                <!--                                <td th:if ="*{b.isCompleted() == false}" th:text="Active">x</td>-->
+
+                                <td>
+                                    <form th:action="@{/history/details/{id}(id=*{b.bookingId})}"
+                                          th:method="GET">
+                                        <button class="btn btn-primary update-btn m-2">Details
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <th:block th:if="${noContent}">
+                            <h5>
+                                <span th:text="${noContent.getMessage()}"></span>
+                            </h5>
+                        </th:block>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+
+
+</body>
+</html>

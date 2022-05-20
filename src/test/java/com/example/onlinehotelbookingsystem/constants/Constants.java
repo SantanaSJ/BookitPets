@@ -32,6 +32,7 @@ public final class Constants {
 
     public static final LocalDate TEST_VALID_CHECKIN = LocalDate.of(2022, 7, 1);
     public static final LocalDate TEST_VALID_CHECKOUT = LocalDate.of(2022, 7, 2);
+    public static final Long TEST_INVALID_BOOKING_ID = 12L;
 
 
 
@@ -88,6 +89,8 @@ public final class Constants {
     public static final int TEST_USER_UPDATE_PET_KG = 98;
     public static final String TEST_USER_UPDATE_ADD_IMAGE_TITLE = "updated user image title";
     public static final String TEST_USER_UPDATE_ADD_PET_IMAGE_TITLE = "updated pet image title";
+    public static final Long TEST_CANCELLED_BOOKING_ID = 3L;
+    public static final Long TEST_COMPLETED_BOOKING_ID = 4L;
 
 
     private Constants() {

@@ -69,7 +69,6 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public void initHotels() {
-//        ?? &&
         if (this.accommodationRepository.count() == 0 && this.roomRepository.count() == 0) {
 
             AccommodationEntity accommodationEntity1 = new AccommodationEntity();

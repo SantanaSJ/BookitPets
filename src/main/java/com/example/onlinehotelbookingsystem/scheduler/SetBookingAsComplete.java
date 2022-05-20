@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class MoveCompletedBookings {
+public class SetBookingAsComplete {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MoveCompletedBookings.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SetBookingAsComplete.class);
 
     private final BookingService bookingService;
 
-    public MoveCompletedBookings(BookingService bookingService) {
+    public SetBookingAsComplete(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
     //    @Scheduled(cron = "* 0 22 * * 7")
     @Scheduled(cron = "0 30 12 * * *")
     private void moveCompletedBookings() {
-        this.bookingService.moveCompletedBookingsToHistory();
-        LOGGER.info("Moved successfully at {}", LocalDateTime.now());
+        this.bookingService.setBookingAsComplete();
+        LOGGER.info("Set successfully at {}", LocalDateTime.now());
     }
 }

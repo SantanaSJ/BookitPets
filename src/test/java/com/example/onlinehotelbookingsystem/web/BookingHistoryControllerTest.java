@@ -45,27 +45,26 @@ class BookingHistoryControllerTest {
     private AccommodationRepository accommodationRepository;
 
     @Autowired
-    private BookingHistoryRepository bookingHistoryRepository;
+    private BookingRepository bookingRepository;
 
     @Autowired
     private PaymentRepository paymentRepository;
 
     private UserEntity testUser;
     private AccommodationEntity testAccommodationEntity;
-    private BookingHistoryEntity testBookingHistoryEntity;
+    private BookingEntity testBookingHistoryEntity;
 
     @BeforeEach
     public void setUp() {
         this.testUser = getTestUser();
         this.testAccommodationEntity = getAccommodationEntity();
-        this.testBookingHistoryEntity = getBookingHistoryEntity();
     }
 
 
 
     @AfterEach
     public void tearDown() {
-        this.bookingHistoryRepository.deleteAll();
+        this.bookingRepository.deleteAll();
         this.userRepository.deleteAll();
 //        this.userRoleRepository.deleteAll();
     }
@@ -74,7 +73,6 @@ class BookingHistoryControllerTest {
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void when_history_is_accessed_by_authenticated_user_expect_status_200() throws Exception {
-        List<UserRoleEntity> all = this.userRoleRepository.findAll();
         System.out.println();
         this.mockMvc
                 .perform(get("/history"))
@@ -85,30 +83,33 @@ class BookingHistoryControllerTest {
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void when_history_is_empty_return_emptyList() throws Exception {
-        this.bookingHistoryRepository.deleteAll();
+        this.bookingRepository.deleteAll();
 
         this.mockMvc
                 .perform(get("/history"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("history"));
 
-        assertEquals(0, this.bookingHistoryRepository.count());
+        assertEquals(0, this.bookingRepository.count());
     }
 
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void when_history_is_not_empty_return_list_with_history_bookings() throws Exception {
+        this.testBookingHistoryEntity = getBookingHistoryEntity();
         this.mockMvc
                 .perform(get("/history"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("history"));
 
-        assertEquals(1, this.bookingHistoryRepository.count());
+        assertEquals(1, this.bookingRepository.count());
     }
 
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void when_history_details_is_accessed_return_status_200() throws Exception {
+        this.testBookingHistoryEntity = getBookingHistoryEntity();
+
         this.mockMvc
                 .perform(get("/history/details/" + this.testBookingHistoryEntity.getId()))
                 .andExpect(status().isOk())
@@ -157,9 +158,9 @@ class BookingHistoryControllerTest {
         return accommodationTypeEntity;
     }
 
-    private BookingHistoryEntity getBookingHistoryEntity() {
+    private BookingEntity getBookingHistoryEntity() {
 
-        BookingHistoryEntity bookingHistoryEntity = new BookingHistoryEntity();
+        BookingEntity bookingHistoryEntity = new BookingEntity();
         bookingHistoryEntity
                 .setBookingTime(LocalDateTime.now())
                 .setCancelled(true)
@@ -172,9 +173,9 @@ class BookingHistoryControllerTest {
                 .setLastName(TEST_USER_LAST_NAME)
                 .setProperty(this.testAccommodationEntity)
                 .setPayment(getPaymentEntity())
-                .setId(TEST_BOOKING_HISTORY_ID);
+                .setId(TEST_CANCELLED_BOOKING_ID);
 
-        return this.bookingHistoryRepository.save(bookingHistoryEntity);
+        return this.bookingRepository.save(bookingHistoryEntity);
 
     }
 

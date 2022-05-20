@@ -36,14 +36,13 @@ public class BookingServiceImpl implements BookingService {
     private final AccommodationRepository accommodationRepository;
     private final RoomService roomService;
     private final PaymentRepository paymentRepository;
-    private final BookingHistoryRepository bookingHistoryRepository;
-    private final RoomHistoryRepository roomHistoryRepository;
+//    private final BookingHistoryRepository bookingHistoryRepository;
+//    private final RoomHistoryRepository roomHistoryRepository;
 
     public BookingServiceImpl(ModelMapper mapper, BookingRepository bookingRepository,
                               BookedRoomsRepository bookedRoomsRepository, UserRepository userRepository,
                               AccommodationRepository accommodationRepository,
-                              RoomService roomService, PaymentRepository paymentRepository,
-                              BookingHistoryRepository bookingHistoryRepository, RoomHistoryRepository roomHistoryRepository) {
+                              RoomService roomService, PaymentRepository paymentRepository) {
         this.mapper = mapper;
         this.bookingRepository = bookingRepository;
         this.bookedRoomsRepository = bookedRoomsRepository;
@@ -51,8 +50,8 @@ public class BookingServiceImpl implements BookingService {
         this.accommodationRepository = accommodationRepository;
         this.roomService = roomService;
         this.paymentRepository = paymentRepository;
-        this.bookingHistoryRepository = bookingHistoryRepository;
-        this.roomHistoryRepository = roomHistoryRepository;
+//        this.bookingHistoryRepository = bookingHistoryRepository;
+//        this.roomHistoryRepository = roomHistoryRepository;
     }
 
     @Override
@@ -69,7 +68,6 @@ public class BookingServiceImpl implements BookingService {
 //        BookingEntity bookingEntity = this.mapper.map(serviceModel, BookingEntity.class);
 
         BookingEntity bookingEntity = mapToBookingEntity(serviceModel, userEntity, accommodationEntity);
-
 
         List<BookedRoomsEntity> list = new ArrayList<>();
         BigDecimal total = new BigDecimal(0);
@@ -140,8 +138,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void update(BookingUpdateServiceModel updateServiceModel) {
-        BookingEntity bookingEntity = this.bookingRepository.findById(updateServiceModel.getId()).orElseThrow(() ->
-                new ObjectNotFoundException("Booking with id " + updateServiceModel.getId() + " not found!"));
+        BookingEntity bookingEntity = getActiveBooking(updateServiceModel.getId());
 
         //mapToEntity
         bookingEntity
@@ -157,28 +154,28 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public SummaryBookingServiceModel findById(Long bookingId) {
-        BookingEntity bookingEntity = getBooking(bookingId);
+    public SummaryBookingServiceModel findActiveBookingById(Long bookingId) {
+        BookingEntity bookingEntity = getActiveBooking(bookingId);
         SummaryBookingServiceModel serviceModel = mapToTSummaryBookingServiceModel(bookingEntity);
         return serviceModel;
     }
 
     @Override
     public BookingUpdateServiceModel findBookingUpdateServiceById(Long bookingId) {
-        BookingEntity bookingEntity = getBooking(bookingId);
+        BookingEntity bookingEntity = getActiveBooking(bookingId);
         BookingUpdateServiceModel serviceModel = this.mapper.map(bookingEntity, BookingUpdateServiceModel.class);
         return serviceModel;
     }
 
-    @Override
-    public void delete(Long id) {
-        this.bookingRepository.deleteById(id);
-        System.out.println();
-    }
+//    @Override
+//    public void delete(Long id) {
+//        this.bookingRepository.deleteById(id);
+//        System.out.println();
+//    }
 
     public boolean isOwner(String currentUserEmail, Long bookingId) {
         BookingEntity bookingEntity = this.bookingRepository
-                .findById(bookingId)
+                .findActiveBookingById(bookingId)
                 .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + bookingId + " not found!"));
 
         String email = bookingEntity.getGuest().getEmail();
@@ -198,10 +195,7 @@ public class BookingServiceImpl implements BookingService {
     //    to change - count after completed
     @Override
     public void countBookings(Long id) {
-        BookingEntity bookingEntity = this.bookingRepository
-                .findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + id + " not found!"));
-
+        BookingEntity bookingEntity = getActiveBooking(id);
 //        bookingEntity.setCountBookings(bookingEntity.incrementBookings());
         int countBookings = bookingEntity.getCountBookings();
         int totalNights = (int) bookingEntity.getTotalNights();
@@ -225,74 +219,121 @@ public class BookingServiceImpl implements BookingService {
                         : Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BookingEntity> page = this.bookingRepository.findAll(pageable);
-        Page<SummaryBookingServiceModel> map = page.map(this::mapToTSummaryBookingServiceModel);
+        Page<BookingEntity> page = this.bookingRepository.findAllActive(pageable);
+        Page<SummaryBookingServiceModel> map = page.map(entity -> mapToTSummaryBookingServiceModel(entity));
         return map;
     }
 
     @Override
-    public void moveCompletedBookingsToHistory() {
+    public void setBookingAsComplete() {
 //        this.bookingRepository.moveCompletedBookingsToHistory();
-        List<BookingEntity> bookingEntities = this.bookingRepository.findAll();
+        List<BookingEntity> bookingEntities = this.bookingRepository.findAllActiveBookingsWithCheckOutToday();
 
         for (BookingEntity bookingEntity : bookingEntities) {
-            if (bookingEntity.getCheckOut().equals(LocalDate.now())) {
-                BookingHistoryEntity bookingHistoryEntity = setBookingHistoryEntity(bookingEntity);
-                bookingHistoryEntity
-                        .setCancelled(false)
-                        .setCompleted(true);
+            bookingEntity.setCompleted(true);
+//            if (bookingEntity.getCheckOut().equals(LocalDate.now())) {
+//                BookingHistoryEntity bookingHistoryEntity = setBookingHistoryEntity(bookingEntity);
+//                bookingHistoryEntity
+//                        .setCancelled(false)
+//                        .setCompleted(true);
+//
+//                RoomsHistoryEntity roomsHistoryEntity = new RoomsHistoryEntity();
+//                List<RoomsHistoryEntity> roomsHistoryList = new ArrayList<>();
+//                setRoomHistoryList(bookingEntity, bookingHistoryEntity, roomsHistoryList, roomsHistoryEntity);
+//
+//                this.roomHistoryRepository.save(roomsHistoryEntity);
+//                this.bookingHistoryRepository.save(bookingHistoryEntity);
 
-                RoomsHistoryEntity roomsHistoryEntity = new RoomsHistoryEntity();
-                List<RoomsHistoryEntity> roomsHistoryList = new ArrayList<>();
-                setRoomHistoryList(bookingEntity, bookingHistoryEntity, roomsHistoryList, roomsHistoryEntity);
+//                deleteCompletedBookings();
+            this.bookingRepository.save(bookingEntity);
 
-                this.roomHistoryRepository.save(roomsHistoryEntity);
-                this.bookingHistoryRepository.save(bookingHistoryEntity);
-
-                deleteCompletedBookings();
-            }
         }
-
-
     }
 
-    @Override
-    public BookingServiceModel findBookingById(Long id) {
-
-        BookingEntity entity = getBooking(id);
-        BookingServiceModel serviceModel = this.mapper.map(entity, BookingServiceModel.class);
-        serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
-        return serviceModel;
-    }
+//    @Override
+//    public BookingServiceModel findBookingById(Long id) {
+//
+//        BookingEntity entity = getActiveBooking(id);
+//        BookingServiceModel serviceModel = this.mapper.map(entity, BookingServiceModel.class);
+//        serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
+//        return serviceModel;
+//    }
 
     @Override
     public void setPaymentStatus(Long bookingId) {
-        BookingEntity bookingEntity = getBooking(bookingId);
+        BookingEntity bookingEntity = getActiveBooking(bookingId);
         PaymentEntity payment = bookingEntity.getPayment();
         payment.setStatusEnum(PAID);
     }
 
     @Override
-    public void moveCancelledBookingToHistory(Long id) {
-        BookingEntity bookingEntity = this.bookingRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + id + " not found!"));
-
-        BookingHistoryEntity bookingHistoryEntity = setBookingHistoryEntity(bookingEntity);
-        bookingHistoryEntity
+    public void setBookingAsCancelled(Long id) {
+        BookingEntity bookingEntity = getActiveBooking(id);
+        bookingEntity
                 .setCancelled(true)
-                .setCompleted(false);
+                .setCancelledOn(LocalDateTime.now());
+        this.bookingRepository.save(bookingEntity);
 
-        List<RoomsHistoryEntity> roomsHistoryList = new ArrayList<>();
-        RoomsHistoryEntity roomsHistoryEntity = new RoomsHistoryEntity();
-
-        setRoomHistoryList(bookingEntity, bookingHistoryEntity, roomsHistoryList, roomsHistoryEntity);
-
-        bookingHistoryEntity.setRoomsHistoryEntity(roomsHistoryList);
-
-        this.bookingHistoryRepository.save(bookingHistoryEntity);
-        this.roomHistoryRepository.save(roomsHistoryEntity);
+//        BookingHistoryEntity bookingHistoryEntity = setBookingHistoryEntity(bookingEntity);
+//        bookingHistoryEntity
+//                .setCancelled(true)
+//                .setCompleted(false);
+//
+//        List<RoomsHistoryEntity> roomsHistoryList = new ArrayList<>();
+//        RoomsHistoryEntity roomsHistoryEntity = new RoomsHistoryEntity();
+//
+//        setRoomHistoryList(bookingEntity, bookingHistoryEntity, roomsHistoryList, roomsHistoryEntity);
+//
+//        bookingHistoryEntity.setRoomsHistoryEntity(roomsHistoryList);
+//
+//        this.bookingHistoryRepository.save(bookingHistoryEntity);
+//        this.roomHistoryRepository.save(roomsHistoryEntity);
 
     }
+
+    @Override
+    public boolean isOwnerHistory(String currentUserEmail, Long id) {
+
+        BookingEntity bookingEntity = this.bookingRepository
+                .findPassedBookingById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + id + " not found!"));
+        String email = bookingEntity.getGuest().getEmail();
+        if (email.equals(currentUserEmail)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Page<SummaryBookingServiceModel> findPaginatedPassedBookings(int pageNo, int pageSize, String sortField, String sortDir) {
+        Sort sort =
+                sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+                        ? Sort.by(sortField).ascending()
+                        : Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BookingEntity> page = this.bookingRepository.findAllCompletedAndCancelledBookings(pageable);
+        Page<SummaryBookingServiceModel> map = page.map(this::mapToTSummaryBookingServiceModel);
+        return map;
+
+    }
+
+    @Override
+    public SummaryBookingServiceModel findPassedBookingById(Long id) {
+        BookingEntity bookingEntity = this.bookingRepository.findPassedBookingById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + id + " not found!"));
+        SummaryBookingServiceModel summaryBookingServiceModel = mapToTSummaryBookingServiceModel(bookingEntity);
+        return summaryBookingServiceModel;
+
+    }
+
+    @Override
+    public List<TitleBookingServiceModel> findAllPassedBookingsByUserId(Long userId) {
+        List<BookingEntity> all = this.bookingRepository.findAllCompleteAndCancelledBookingsByUserId(userId);
+        List<TitleBookingServiceModel> serviceModels = mapToTitleServiceModel(all);
+        return serviceModels;
+    }
+
 
     private void applyDiscount(int totalNights, BookingEntity bookingEntity) {
         int numberOfRooms = bookingEntity.getBookedRooms().size();
@@ -304,6 +345,7 @@ public class BookingServiceImpl implements BookingService {
         }
         BigDecimal avg = sum.divide(BigDecimal.valueOf(count), RoundingMode.FLOOR);
         bookingEntity.setTotalPrice(bookingEntity.getTotalPrice().subtract(avg));
+
         System.out.println(bookingEntity.getTotalPrice());
         bookingEntity.setCountBookings(0);
         bookingEntity.setHasDiscount(true);
@@ -337,46 +379,48 @@ public class BookingServiceImpl implements BookingService {
                 .setGuest(userEntity)
                 .setProperty(acEntity)
                 .setFirstName(serviceModel.getFirstName())
-                .setLastName(serviceModel.getLastName());
+                .setLastName(serviceModel.getLastName())
+                .setCancelled(false)
+                .setCompleted(false);
 
         return bookingEntity;
     }
 
-    private void setRoomHistoryList(BookingEntity bookingEntity, BookingHistoryEntity bookingHistoryEntity, List<RoomsHistoryEntity> roomsHistoryEntities, RoomsHistoryEntity roomsHistoryEntity) {
-        for (BookedRoomsEntity bookedRoom : bookingEntity.getBookedRooms()) {
-            roomsHistoryEntity
-                    .setPrice(bookedRoom.getPrice())
-                    .setBookingHistory(bookingHistoryEntity)
-                    .setRoom(bookedRoom.getRoom())
-                    .setNumberOfRooms(bookedRoom.getNumberOfRooms());
-            roomsHistoryEntities.add(roomsHistoryEntity);
-        }
-    }
+//    private void setRoomHistoryList(BookingEntity bookingEntity, BookingHistoryEntity bookingHistoryEntity, List<RoomsHistoryEntity> roomsHistoryEntities, RoomsHistoryEntity roomsHistoryEntity) {
+//        for (BookedRoomsEntity bookedRoom : bookingEntity.getBookedRooms()) {
+//            roomsHistoryEntity
+//                    .setPrice(bookedRoom.getPrice())
+//                    .setBookingHistory(bookingHistoryEntity)
+//                    .setRoom(bookedRoom.getRoom())
+//                    .setNumberOfRooms(bookedRoom.getNumberOfRooms());
+//            roomsHistoryEntities.add(roomsHistoryEntity);
+//        }
+//    }
 
-    private BookingHistoryEntity setBookingHistoryEntity(BookingEntity bookingEntity) {
-        BookingHistoryEntity bookingHistoryEntity = new BookingHistoryEntity();
-        bookingHistoryEntity
-                .setPayment(bookingEntity.getPayment())
-                .setBookingTime(bookingEntity.getBookingTime())
-                .setCheckOut(bookingEntity.getCheckOut())
-                .setCheckIn(bookingEntity.getCheckIn())
-                .setTotalNights(bookingEntity.getTotalNights())
-                .setPetName(bookingEntity.getPetName())
-                .setEmail(bookingEntity.getEmail())
-                .setPetKilograms(bookingEntity.getPetKilograms())
-                .setPhoneNumber(bookingEntity.getPhoneNumber())
-                .setTotalPrice(bookingEntity.getTotalPrice())
-                .setLastName(bookingEntity.getLastName())
-                .setFirstName(bookingEntity.getFirstName())
-                .setProperty(bookingEntity.getProperty())
-                .setGuest(bookingEntity.getGuest())
-                .setCancelledOn(LocalDateTime.now())
-                .setLat(bookingEntity.getProperty().getLat())
-                .setLng(bookingEntity.getProperty().getLng())
-                .setComments(bookingHistoryEntity.getComments())
-                .setUpdated(bookingEntity.getUpdated());
-        return bookingHistoryEntity;
-    }
+//    private BookingHistoryEntity setBookingHistoryEntity(BookingEntity bookingEntity) {
+//        BookingHistoryEntity bookingHistoryEntity = new BookingHistoryEntity();
+//        bookingHistoryEntity
+//                .setPayment(bookingEntity.getPayment())
+//                .setBookingTime(bookingEntity.getBookingTime())
+//                .setCheckOut(bookingEntity.getCheckOut())
+//                .setCheckIn(bookingEntity.getCheckIn())
+//                .setTotalNights(bookingEntity.getTotalNights())
+//                .setPetName(bookingEntity.getPetName())
+//                .setEmail(bookingEntity.getEmail())
+//                .setPetKilograms(bookingEntity.getPetKilograms())
+//                .setPhoneNumber(bookingEntity.getPhoneNumber())
+//                .setTotalPrice(bookingEntity.getTotalPrice())
+//                .setLastName(bookingEntity.getLastName())
+//                .setFirstName(bookingEntity.getFirstName())
+//                .setProperty(bookingEntity.getProperty())
+//                .setGuest(bookingEntity.getGuest())
+//                .setCancelledOn(LocalDateTime.now())
+//                .setLat(bookingEntity.getProperty().getLat())
+//                .setLng(bookingEntity.getProperty().getLng())
+//                .setComments(bookingHistoryEntity.getComments())
+//                .setUpdated(bookingEntity.getUpdated());
+//        return bookingHistoryEntity;
+//    }
 
     private BookedRoomsEntity getBookedRoomsEntity(BookingEntity bookingEntity, RoomServiceModel bookedRoom) {
         RoomEntity roomEntity = this.roomService.findById(bookedRoom.getRoomId());
@@ -414,15 +458,17 @@ public class BookingServiceImpl implements BookingService {
         return paymentEntity;
     }
 
-    private BookingEntity getBooking(Long bookingId) {
-        return this.bookingRepository
-                .findById(bookingId)
+    private BookingEntity getActiveBooking(Long bookingId) {
+
+        BookingEntity bookingEntity = this.bookingRepository
+                .findActiveBookingById(bookingId)
                 .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + bookingId + " not found!"));
+        return bookingEntity;
     }
 
-    private void deleteCompletedBookings() {
-        this.bookingRepository.deleteAllCompleted();
-    }
+//    private void deleteCompletedBookings() {
+//        this.bookingRepository.deleteAllCompleted();
+//    }
 
     private List<TitleBookingServiceModel> mapToTitleServiceModel(List<BookingEntity> entities) {
         List<TitleBookingServiceModel> list = entities

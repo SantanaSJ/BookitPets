@@ -108,8 +108,7 @@ class BookingControllerTest {
 
 
     @Test
-// because I got Unable to create SecurityContext using @org.springframework.security.test.context.support.WithUserDetails
-// https://stackoverflow.com/questions/42466954/spring-security-junit-withuserdetails-for-user-created-in-before
+
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @WithMockUser(username = TEST_USER_EMAIL, password = TEST_USER_PASSWORD, roles = "USER")
     void when_create_booking_is_opened_from_authorized_user_expect_status_200() throws Exception {
@@ -151,7 +150,7 @@ class BookingControllerTest {
         this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
 
-        Mockito.when(this.bookingRepository.findById(this.testBookingEntity.getId()))
+        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
                 .thenReturn(Optional.of(this.testBookingEntity));
 
         this.mockMvc
@@ -164,7 +163,7 @@ class BookingControllerTest {
     @WithMockUser(value = TEST_USER_NON_EXISTING_EMAIL)
     void when_booking_details_are_opened_by_unauthorized_user_expect_status_403() throws Exception {
         this.testBookingEntity = getBookingEntity();
-        Mockito.when(this.bookingRepository.findById(this.testBookingEntity.getId()))
+        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
                 .thenReturn(Optional.of(this.testBookingEntity));
         this.mockMvc
                 .perform(get("/bookings/details/" + this.testBookingEntity.getId()))
@@ -176,7 +175,7 @@ class BookingControllerTest {
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void when_update_booking_form_is_opened_by_authorized_user_show_update() throws Exception {
         this.testBookingEntity = getBookingEntity();
-        Mockito.when(this.bookingRepository.findById(this.testBookingEntity.getId()))
+        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
                     .thenReturn(Optional.of(this.testBookingEntity));
         this.mockMvc
                 .perform(get("/bookings/update/" + this.testBookingEntity.getId()))
@@ -187,7 +186,7 @@ class BookingControllerTest {
     @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
     void when_invalid_params_entered_in_update_booking_form_redirect_with_errors() throws Exception {
        this.testBookingEntity = getBookingEntity();
-       Mockito.when(this.bookingRepository.findById(this.testBookingEntity.getId()))
+       Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
                .thenReturn(Optional.of(this.testBookingEntity));
 
         BindingResult bindingResult = (BindingResult) this.mockMvc
@@ -216,7 +215,7 @@ class BookingControllerTest {
     @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
     void when_valid_params_entered_in_update_booking_form_update_user_info() throws Exception {
         this.testBookingEntity = getBookingEntity();
-        Mockito.when(this.bookingRepository.findById(this.testBookingEntity.getId()))
+        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
                 .thenReturn(Optional.of(this.testBookingEntity));
         this.mockMvc
                 .perform(patch("/bookings/update/" + this.testBookingEntity.getId())
@@ -231,7 +230,7 @@ class BookingControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bookings/details/" + this.testBookingEntity.getId()));
 
-        Optional<BookingEntity> newReservation = this.bookingRepository.findById(this.testBookingEntity.getId());
+        Optional<BookingEntity> newReservation = this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId());
         assertTrue(newReservation.isPresent());
         BookingEntity bookingEntity = newReservation.get();
         assertEquals(TEST_USER_FIRST_NAME, bookingEntity.getFirstName());

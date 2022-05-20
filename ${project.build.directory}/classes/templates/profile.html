@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/navbar::navbar"></header>
+<!-- End Header -->
+
+<main>
+
+
+    <div>
+        <div class="padding" th:object="${profileViewModel}">
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
+                    <div class="profile-card card">
+                        <div class="row">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white user-pic">
+                                    <div>
+                                        <img class="profile-image rounded-circle img-radius"
+                                             th:src="*{getProfileImageUrl() == null} ? 'https://img.icons8.com/bubbles/100/000000/user.png' : *{getProfileImageUrl()}"
+                                             height="100"
+                                             width="100" alt="profile picture"/>
+                                    </div>
+                                    <h6 class="f-w-600 mt-3" th:text=" *{firstName}">Name</h6>
+                                    <p>User</p>
+                                </div>
+                                <div class="card-block text-center text-white">
+                                    <div>
+                                        <img class="dog-image rounded-circle"
+                                                             th:src="*{getPetImageUrl() == null} ? '/images/1915.jpg' : *{getPetImageUrl()}"
+                                                             height="100"
+                                                             width="100" alt="pet profile"/>
+                                    </div>
+                                    <h6 class="f-w-600 mt-3" th:text=" *{petName}">Name</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+
+                                <div class="card-block">
+                                    <h6 class="mb-4 pb-2 b-b-default f-w-600">Profile Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">First Name</p>
+                                            <h6 class="text-muted f-w-400" th:text=" *{firstName}">Silvia</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">Last Name</p>
+                                            <h6 class="text-muted f-w-400" th:text=" *{lastName}">Santana</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">Email</p>
+                                            <h6 class="text-muted f-w-400" th:text=" *{email}">sisi@abv.bg</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">Phone number</p>
+                                            <h6 class="text-muted f-w-400" th:text=" *{phoneNumber}">
+                                                087435783</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">Joined</p>
+                                            <h6 class="text-muted f-w-400"
+                                                th:text="|${#temporals.format(profileViewModel.joined, 'dd-MM-yyyy HH:mm')}hrs|">
+                                                20.12.2020</h6>
+                                        </div>
+                                    </div>
+
+                                    <!-- ----------------------------------------------------------- -->
+                                    <h6 class="mt-4 pb-2 b-b-default f-w-600">Pet Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">Pet Name</p>
+                                            <h6 class="text-muted f-w-400" th:text=" *{petName}">Bren</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2 f-w-600">Pet kilograms</p>
+                                            <h6 class="text-muted f-w-400" th:text="*{petKilograms}">35</h6>
+                                        </div>
+
+                                    </div>
+                                    <form
+                                            th:method="GET"
+                                            th:action="@{/users/profile/update/{id}(id=*{userId})}">
+                                        <div class="col-md-6 offset-md-3 p-5">
+                                            <button type='submit' class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--        ======================================================================================================-->
+    <!--        <div class="d-flex justify-content-center">-->
+    <!--            <div class="card shadow mb-4">-->
+    <!--                &lt;!&ndash; Card Header &ndash;&gt;-->
+    <!--                <div-->
+    <!--                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">-->
+    <!--                    <h6 class="m-0 font-weight-bold">Profile</h6>-->
+    <!--                </div>-->
+    <!--                &lt;!&ndash; Card Body &ndash;&gt;-->
+    <!--                <div class="card-body">-->
+
+    <!--                    <div class="container justify-content-center">-->
+    <!--                        <div class="card p-4">-->
+    <!--                            <form-->
+    <!--                                    th:object="${profileViewModel}"-->
+    <!--                                    th:action="@{/users/profile/update/{id}(id=${session.currentUserId})}"-->
+    <!--                                    th:method="PATCH"-->
+    <!--                                    class="card-info d-flex flex-column justify-content-center align-items-center">-->
+    <!--                                <span class="image">-->
+    <!--                                    <img src="https://i.imgur.com/wvxPV9S.png" height="100"-->
+    <!--                                         width="100"/>-->
+    <!--                                </span>-->
+    <!--                                <div class="row">-->
+    <!--                                    <div class="col">First Name:</div>-->
+    <!--                                    <div class="col" th:text=" *{firstName}"></div>-->
+    <!--                                </div>-->
+    <!--                                <div class="row">-->
+    <!--                                <div class="col">Last Name:</div>-->
+    <!--                                <div class="col" th:text="*{lastName}"></div>-->
+    <!--                                </div>-->
+
+    <!--                                <div th:class="card-text"><span th:text="|Email:*{email}|"></span></div>-->
+    <!--                                <div th:class="card-text"><span th:text="|Pet Name:*{petName}|"></span></div>-->
+    <!--                                <div th:class="card-text"><span th:text="|Pet kilograms:*{petKilograms}|"></span></div>-->
+
+    <!--                                <div th:class="card-text"><span> <img class="dog-image rounded-circle"-->
+    <!--                                                                      th:src="*{getPetImageUrl() == null} ? '/images/1915.jpg' : *{getPetImageUrl()}"-->
+    <!--                                                                      height="100"-->
+    <!--                                                                      width="100"/></span></div>-->
+
+    <!--                                <div th:class="card-text"><span-->
+    <!--                                        th:text="|Joined: ${#temporals.format(profileViewModel.joined, 'dd-MM-yyyy HH:mm')}hrs|"></span>-->
+    <!--                                </div>-->
+    <!--                                <div class="col-md-6 offset-md-3">-->
+    <!--                                    <button type='submit' class="btn btn-primary">Update</button>-->
+    <!--                                </div>-->
+    <!--                            </form>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--        </div>-->
+    </section>
+
+
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- End Footer -->
+
+<!--<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i-->
+<!--        class="bi bi-arrow-up-short"></i></a>-->
+<!--<div id="preloader"></div>-->
+
+<!-- Vendor JS Files -->
+<!--<script src="/toDelete/assets/vendor/aos/aos.js"></script>-->
+<!--<script src="/toDelete/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+<!--<script src="/toDelete/assets/vendor/glightbox/js/glightbox.min.js"></script>-->
+<!--<script src="/toDelete/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>-->
+<!--<script src="/toDelete/assets/vendor/swiper/swiper-bundle.min.js"></script>-->
+
+<!-- Template Main JS File -->
+<!--<script src="/toDelete/assets/js/main.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>-->
+
+</body>
+
+</html>

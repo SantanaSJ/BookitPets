@@ -16,11 +16,11 @@ public interface BookingService {
 
     void update(BookingUpdateServiceModel updateServiceModel);
 
-    SummaryBookingServiceModel findById(Long bookingId);
+    SummaryBookingServiceModel findActiveBookingById(Long bookingId);
 
     BookingUpdateServiceModel findBookingUpdateServiceById(Long bookingId);
 
-    void delete(Long id);
+//    void delete(Long id);
 
     boolean isOwner(String userEmail, Long bookingId);
 
@@ -28,13 +28,22 @@ public interface BookingService {
 
     Page<SummaryBookingServiceModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
-    void moveCompletedBookingsToHistory();
+    void setBookingAsComplete();
 
-    BookingServiceModel findBookingById(Long id);
+//    BookingServiceModel findBookingById(Long id);
 
     void setPaymentStatus(Long bookingId);
 
-    void moveCancelledBookingToHistory(Long id);
+    void setBookingAsCancelled(Long id);
 
 
+    Page<SummaryBookingServiceModel> findPaginatedPassedBookings(int pageNo, int pageSize, String sortField, String sortDir);
+
+    SummaryBookingServiceModel findPassedBookingById(Long id);
+
+    List<TitleBookingServiceModel> findAllPassedBookingsByUserId(Long userId);
+
+    boolean isOwnerHistory(String currentUserEmail, Long id);
+
+//    SummaryBookingServiceModel findCompletedBookingBy(Long id);
 }

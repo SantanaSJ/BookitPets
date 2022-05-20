@@ -38,6 +38,7 @@ public class SummaryBookingServiceModel {
     private LocalDateTime lastUpdated;
     private String paymentStatus;
     private boolean isCancelled;
+    private boolean isCompleted;
     private boolean hasDiscount;
 
     public String getFirstName() {
@@ -283,6 +284,15 @@ public class SummaryBookingServiceModel {
 
     public SummaryBookingServiceModel setLng(String lng) {
         this.lng = lng;
+        return this;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public SummaryBookingServiceModel setCompleted(boolean completed) {
+        isCompleted = completed;
         return this;
     }
 }

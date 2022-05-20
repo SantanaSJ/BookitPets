@@ -48,9 +48,9 @@ public class BookingRestController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteBooking(@PathVariable("id") Long id) {
 
-        this.bookingService.moveCancelledBookingToHistory(id);
+        this.bookingService.setBookingAsCancelled(id);
 
-        this.bookingService.delete(id);
+//        this.bookingService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

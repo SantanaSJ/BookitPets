@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class AvailabilityBindingModel {
     private Long hotelId;
     private String hotelName;
 
-    @Future
+    @FutureOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Check in date is required!")
     private LocalDate checkIn;

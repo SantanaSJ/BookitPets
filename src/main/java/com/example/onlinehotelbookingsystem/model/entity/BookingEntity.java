@@ -1,8 +1,6 @@
 package com.example.onlinehotelbookingsystem.model.entity;
 
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,17 +25,15 @@ public class BookingEntity extends BaseEntity {
     private String firstName;
     private String lastName;
 
-    @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime bookingTime;
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime updated;
 
-    @CreationTimestamp
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkIn;
-    @CreationTimestamp
+
     @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate checkOut;
 
@@ -52,6 +48,10 @@ public class BookingEntity extends BaseEntity {
     private boolean hasDiscount;
     @OneToOne
     private PaymentEntity payment;
+    private boolean isCompleted;
+    private boolean isCancelled;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime cancelledOn;
 
 
     public BookingEntity() {
@@ -157,6 +157,11 @@ public class BookingEntity extends BaseEntity {
         return this;
     }
 
+    @PrePersist
+    public void setDateNow() {
+        this.bookingTime = LocalDateTime.now();
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -230,5 +235,30 @@ public class BookingEntity extends BaseEntity {
         return this;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
 
+    public BookingEntity setCompleted(boolean completed) {
+        isCompleted = completed;
+        return this;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public BookingEntity setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
+        return this;
+    }
+
+    public LocalDateTime getCancelledOn() {
+        return cancelledOn;
+    }
+
+    public BookingEntity setCancelledOn(LocalDateTime cancelledOn) {
+        this.cancelledOn = cancelledOn;
+        return this;
+    }
 }

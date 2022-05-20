@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
@@ -52,7 +50,7 @@ public class BookingController {
 
 //    open booking form
     @GetMapping("/booking-form/accommodation/{id}")
-    public String bookingForm(HttpServletRequest request, Model model, HttpSession session, @PathVariable Long id) {
+    public String bookingForm(Model model, @PathVariable Long id) {
 //        Cookie[] cookies = request.getCookies();
 //        long id = 0;
 //        for (Cookie cookie : cookies) {
@@ -125,24 +123,9 @@ public class BookingController {
         return "redirect:/booking-form/accommodation/" + bindingModel.getHotelId();
     }
 
-    private boolean isRoomListEmpty(AvailabilityBindingModel bindingModel) {
-//         will return true if the list contains a 0
-//        bindingModel.getRooms().stream().map(roomBindingModel -> roomBindingModel.getNumberOfRooms()).anyMatch(e -> e == 0);
-
-        boolean flag = false;
-        for (RoomBindingModel room : bindingModel.getRooms()) {
-            if (room.getNumberOfRooms() == 0) {
-                flag = true;
-            } else {
-                flag = false;
-                break;
-            }
-        }
-        return flag;
-    }
 
     @GetMapping("/create-booking")
-    public String showCreateBookingForm(Model model, @AuthenticationPrincipal CustomUser user) {
+    public String openCreateBookingForm(Model model, @AuthenticationPrincipal CustomUser user) {
 
         ProfileServiceModel profileServiceModel = this.userService.findById(user.getUserId());
         BookingBindingModel bookingBindingModel = this.mapper.map(profileServiceModel, BookingBindingModel.class);
@@ -187,10 +170,11 @@ public class BookingController {
         System.out.println();
         return new SummaryBookingViewModel();
     }
+
     @PreAuthorize("isOwner(#id) or hasRole('ADMIN')")
     @GetMapping("/bookings/details/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model, @AuthenticationPrincipal CustomUser user) {
-        SummaryBookingServiceModel bookingServiceModel = this.bookingService.findById(id);
+        SummaryBookingServiceModel bookingServiceModel = this.bookingService.findActiveBookingById(id);
 
         SummaryBookingViewModel summaryBookingViewModel = this.mapper.map(bookingServiceModel, SummaryBookingViewModel.class);
         model.addAttribute("summaryBookingViewModel", summaryBookingViewModel);
@@ -238,6 +222,22 @@ public class BookingController {
     public String viewAllBookings(@AuthenticationPrincipal CustomUser user) {
         System.out.println();
         return "view-all";
+    }
+
+    private boolean isRoomListEmpty(AvailabilityBindingModel bindingModel) {
+//         will return true if the list contains a 0
+//        bindingModel.getRooms().stream().map(roomBindingModel -> roomBindingModel.getNumberOfRooms()).anyMatch(e -> e == 0);
+
+        boolean flag = false;
+        for (RoomBindingModel room : bindingModel.getRooms()) {
+            if (room.getNumberOfRooms() == 0) {
+                flag = true;
+            } else {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 
 

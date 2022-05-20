@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "cloudinary",
+      "type": "com.example.onlinehotelbookingsystem.config.CloudinaryConfig",
+      "sourceType": "com.example.onlinehotelbookingsystem.config.CloudinaryConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "cloudinary.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.example.onlinehotelbookingsystem.config.CloudinaryConfig"
+    },
+    {
+      "name": "cloudinary.api-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.example.onlinehotelbookingsystem.config.CloudinaryConfig"
+    },
+    {
+      "name": "cloudinary.cloud-name",
+      "type": "java.lang.String",
+      "sourceType": "com.example.onlinehotelbookingsystem.config.CloudinaryConfig"
+    },
+    {
+      "name": "stripe.keys.public",
+      "type": "java.lang.String",
+      "description": "Description for stripe.keys.public."
+    },
+    {
+      "name": "stripe.keys.secret",
+      "type": "java.lang.String",
+      "description": "Description for stripe.keys.secret."
+    }
+  ],
+  "hints": []
+}

@@ -1,10 +1,13 @@
 package com.example.onlinehotelbookingsystem.model.binding;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class RoomBindingModel {
     private Long id;
 
+
+    @NotNull
     private Integer numberOfRooms;
     private String type;
     private BigDecimal price;
