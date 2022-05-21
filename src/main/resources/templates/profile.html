@@ -65,7 +65,7 @@
                                         <div class="col-sm-6">
                                             <p class="mb-2 f-w-600">Joined</p>
                                             <h6 class="text-muted f-w-400"
-                                                th:text="|${#temporals.format(profileViewModel.joined, 'dd-MM-yyyy HH:mm')}hrs|">
+                                                th:text="|${#temporals.format(profileViewModel.joined, 'dd-MM-yyyy, HH:mm')}hrs|">
                                                 20.12.2020</h6>
                                         </div>
                                     </div>
@@ -81,7 +81,6 @@
                                             <p class="mb-2 f-w-600">Pet kilograms</p>
                                             <h6 class="text-muted f-w-400" th:text="*{petKilograms}">35</h6>
                                         </div>
-
                                     </div>
                                     <form
                                             th:method="GET"
@@ -99,61 +98,6 @@
             </div>
         </div>
     </div>
-
-
-    <!--        ======================================================================================================-->
-    <!--        <div class="d-flex justify-content-center">-->
-    <!--            <div class="card shadow mb-4">-->
-    <!--                &lt;!&ndash; Card Header &ndash;&gt;-->
-    <!--                <div-->
-    <!--                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">-->
-    <!--                    <h6 class="m-0 font-weight-bold">Profile</h6>-->
-    <!--                </div>-->
-    <!--                &lt;!&ndash; Card Body &ndash;&gt;-->
-    <!--                <div class="card-body">-->
-
-    <!--                    <div class="container justify-content-center">-->
-    <!--                        <div class="card p-4">-->
-    <!--                            <form-->
-    <!--                                    th:object="${profileViewModel}"-->
-    <!--                                    th:action="@{/users/profile/update/{id}(id=${session.currentUserId})}"-->
-    <!--                                    th:method="PATCH"-->
-    <!--                                    class="card-info d-flex flex-column justify-content-center align-items-center">-->
-    <!--                                <span class="image">-->
-    <!--                                    <img src="https://i.imgur.com/wvxPV9S.png" height="100"-->
-    <!--                                         width="100"/>-->
-    <!--                                </span>-->
-    <!--                                <div class="row">-->
-    <!--                                    <div class="col">First Name:</div>-->
-    <!--                                    <div class="col" th:text=" *{firstName}"></div>-->
-    <!--                                </div>-->
-    <!--                                <div class="row">-->
-    <!--                                <div class="col">Last Name:</div>-->
-    <!--                                <div class="col" th:text="*{lastName}"></div>-->
-    <!--                                </div>-->
-
-    <!--                                <div th:class="card-text"><span th:text="|Email:*{email}|"></span></div>-->
-    <!--                                <div th:class="card-text"><span th:text="|Pet Name:*{petName}|"></span></div>-->
-    <!--                                <div th:class="card-text"><span th:text="|Pet kilograms:*{petKilograms}|"></span></div>-->
-
-    <!--                                <div th:class="card-text"><span> <img class="dog-image rounded-circle"-->
-    <!--                                                                      th:src="*{getPetImageUrl() == null} ? '/images/1915.jpg' : *{getPetImageUrl()}"-->
-    <!--                                                                      height="100"-->
-    <!--                                                                      width="100"/></span></div>-->
-
-    <!--                                <div th:class="card-text"><span-->
-    <!--                                        th:text="|Joined: ${#temporals.format(profileViewModel.joined, 'dd-MM-yyyy HH:mm')}hrs|"></span>-->
-    <!--                                </div>-->
-    <!--                                <div class="col-md-6 offset-md-3">-->
-    <!--                                    <button type='submit' class="btn btn-primary">Update</button>-->
-    <!--                                </div>-->
-    <!--                            </form>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-
-    <!--        </div>-->
     </section>
 
 
@@ -163,22 +107,6 @@
 <!-- ======= Footer ======= -->
 <footer th:replace="fragments/footer::footer"></footer>
 <!-- End Footer -->
-
-<!--<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i-->
-<!--        class="bi bi-arrow-up-short"></i></a>-->
-<!--<div id="preloader"></div>-->
-
-<!-- Vendor JS Files -->
-<!--<script src="/toDelete/assets/vendor/aos/aos.js"></script>-->
-<!--<script src="/toDelete/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
-<!--<script src="/toDelete/assets/vendor/glightbox/js/glightbox.min.js"></script>-->
-<!--<script src="/toDelete/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>-->
-<!--<script src="/toDelete/assets/vendor/swiper/swiper-bundle.min.js"></script>-->
-
-<!-- Template Main JS File -->
-<!--<script src="/toDelete/assets/js/main.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>-->
 
 </body>
 

@@ -47,7 +47,7 @@
                             <small>
                                 <span class="fw-bold">Booking created at:</span>
                                 <span class="text-muted"
-                                      th:text="${#temporals.format(summaryBookingViewModel.createdAt, 'dd-MM-yyyy, HH:mm hrs')}">35</span>
+                                      th:text="${#temporals.format(summaryBookingViewModel.createdAt, 'dd-MM-yyyy, HH:mm')}  + 'hrs'">35</span>
                             </small>
 
                         </div>
