@@ -44,8 +44,12 @@
                             <span class="text-muted" th:text="*{getPetKilograms()}">35</span>
                         </div>
                         <div class="mb-4">
-                            <span class="fw-bold"><small>Booking created at:</small></span>
-                            <span class="text-muted" th:text="*{getCreatedAt()}">35</span>
+                            <small>
+                                <span class="fw-bold">Booking created at:</span>
+                                <span class="text-muted"
+                                      th:text="${#temporals.format(summaryBookingViewModel.createdAt, 'dd-MM-yyyy, HH:mmh')}">35</span>
+                            </small>
+
                         </div>
 
                     </div>
@@ -83,7 +87,7 @@
                         <div class="mt-3">
                             <span class="fw-bold">Check in:</span>
                             <span class="text-muted"
-                                  th:text="${#temporals.format(summaryBookingViewModel.checkIn, 'dd-MM-yyyy')}">>12.12.2022</span>
+                                  th:text="${#temporals.format(summaryBookingViewModel.checkIn, 'dd-MM-yyyy')}">12.12.2022</span>
                         </div>
                         <div class="mb-2">
                             <span class="fw-bold">Check out:</span>
