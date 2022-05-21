@@ -192,7 +192,6 @@ public class BookingServiceImpl implements BookingService {
 //        }
     }
 
-    //    to change - count after completed
     @Override
     public void countBookings(Long id) {
         BookingEntity bookingEntity = getActiveBooking(id);
@@ -375,13 +374,13 @@ public class BookingServiceImpl implements BookingService {
                 .setPhoneNumber(serviceModel.getPhoneNumber())
                 .setPetKilograms(serviceModel.getPetKilograms())
                 .setPetName(serviceModel.getPetName())
-                .setBookingTime(LocalDateTime.now())
-                .setGuest(userEntity)
                 .setProperty(acEntity)
                 .setFirstName(serviceModel.getFirstName())
                 .setLastName(serviceModel.getLastName())
                 .setCancelled(false)
-                .setCompleted(false);
+                .setCompleted(false)
+                .setGuest(userEntity);
+//                .setDateNow();
 
         return bookingEntity;
     }
