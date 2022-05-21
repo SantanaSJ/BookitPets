@@ -23,6 +23,7 @@ public class SummaryBookingViewModel {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private LocalDateTime cancelledOn;
+    private LocalDateTime createdAt;
 
     private List<RoomViewModel> rooms;
 
@@ -300,6 +301,15 @@ public class SummaryBookingViewModel {
 
     public SummaryBookingViewModel setCompleted(boolean completed) {
         isCompleted = completed;
+        return this;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public SummaryBookingViewModel setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }

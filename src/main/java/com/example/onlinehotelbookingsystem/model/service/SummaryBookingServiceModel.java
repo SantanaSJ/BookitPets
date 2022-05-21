@@ -22,6 +22,7 @@ public class SummaryBookingServiceModel {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private LocalDateTime cancelledOn;
+    private LocalDateTime createdAt;
     private List<RoomServiceModel> rooms;
 
     private int category;
@@ -293,6 +294,15 @@ public class SummaryBookingServiceModel {
 
     public SummaryBookingServiceModel setCompleted(boolean completed) {
         isCompleted = completed;
+        return this;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public SummaryBookingServiceModel setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }
