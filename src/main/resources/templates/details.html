@@ -44,8 +44,12 @@
                             <span class="text-muted" th:text="*{getPetKilograms()}">35</span>
                         </div>
                         <div class="mb-4">
-                            <span class="fw-bold"><small>Booking created at:</small></span>
-                            <span class="text-muted" style="font-size:small" th:text="${#temporals.format(summaryBookingViewModel.createdAt, 'dd-MM-yyyy')}">35</span>
+                            <small>
+                                <span class="fw-bold">Booking created at:</span>
+                                <span class="text-muted"
+                                      th:text="${#temporals.format(summaryBookingViewModel.createdAt, 'dd-MM-yyyy HH:mm')}">35</span>
+                            </small>
+
                         </div>
 
                     </div>
