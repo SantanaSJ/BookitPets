@@ -15,7 +15,8 @@
         <div class="d-flex justify-content-center">
             <div class="col-5 text-center mt-5">
                 <div class="mt-5 album-title">
-                    <h2 th:text="|${userName} and ${petName}''s photo album|">Sisi & Bren's photo album</h2>
+<!--                    th:text="|${userName} and ${petName}''s photo album|"-->
+                    <h2 th:text="${pageTitle}">Sisi & Bren's photo album</h2>
                 </div>
             </div>
         </div>
@@ -42,37 +43,17 @@
                         <img th:src="*{p.url}" class="card-img-top" height="250" width="100" alt="..." src="">
                         <div class="card-body">
                             <p th:text="*{p.notes}" class="card-text">Some quick example text to build on the card title
-                                and
-                                make up the bulk of the card's content.</p>
+                                and make up the bulk of the card's content.</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <!--                        <form th:action="@{/bookings/delete/{id}(id=*{bookingId})}">-->
-                        <button type='submit' class="btn delete-btn btn-danger" id="delete">
-                            Delete
-                        </button>
-                        <!--                        </form>-->
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        &lt;!&ndash;                        <form th:action="@{/bookings/delete/{id}(id=*{bookingId})}">&ndash;&gt;-->
+<!--                        <button type='submit' class="btn delete-btn btn-danger" id="delete">-->
+<!--                            Delete-->
+<!--                        </button>-->
+<!--                        &lt;!&ndash;                        </form>&ndash;&gt;-->
+<!--                    </div>-->
                 </div>
-
-
-                <!--                    <div class="card" style="width: 18rem; margin: 25px;">-->
-                <!--                        <img src="/images/dog2.jpg" class="card-img-top" alt="...">-->
-                <!--                        <div class="card-body">-->
-                <!--                            <p class="card-text">Some quick example text to build on the card title and make up the bulk-->
-                <!--                                of the-->
-                <!--                                card's content.</p>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-
-                <!--                    <div class="card" style="width: 18rem; margin: 25px">-->
-                <!--                        <img src="/images/dog2.jpg" class="card-img-top" alt="...">-->
-                <!--                        <div class="card-body">-->
-                <!--                            <p class="card-text">Some quick example text to build on the card title and make up the bulk-->
-                <!--                                of the-->
-                <!--                                card's content.</p>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
             </div>
         </div>
     </section>
