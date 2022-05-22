@@ -409,7 +409,7 @@ section {
     background: #74bdcf;
 }
 
-.services .icon-box:hover h4 a, .services .icon-box:hover p, .services .icon-box:hover h3 {
+.services .icon-box:hover h4 a, .services .icon-box:hover p, .services .icon-box:hover h5 {
     color: #fff;
 }
 
@@ -515,7 +515,7 @@ section {
 }
 
 #register .reg-info {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 
 /*!*--------------------------------------------------------------*/
