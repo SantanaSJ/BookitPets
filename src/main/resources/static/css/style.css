@@ -47,39 +47,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*!*--------------------------------------------------------------*/
-/* # Back to top button*/
-/*--------------------------------------------------------------*!*/
-/*.back-to-top {*/
-/*    position: fixed;*/
-/*    visibility: hidden;*/
-/*    opacity: 0;*/
-/*    right: 15px;*/
-/*    bottom: 15px;*/
-/*    z-index: 996;*/
-/*    background: #5ca3b4;*/
-/*    width: 40px;*/
-/*    height: 40px;*/
-/*    transition: all 0.4s;*/
-/*}*/
-
-/*.back-to-top i {*/
-/*    font-size: 28px;*/
-/*    color: #fff;*/
-/*    line-height: 0;*/
-/*}*/
-
-/*.back-to-top:hover {*/
-/*    background-color: #2f93a9;*/
-/*    color: #fff;*/
-/*}*/
-
-/*.back-to-top.active {*/
-/*    visibility: visible;*/
-/*    opacity: 1;*/
-/*}*/
-
-
-/*!*--------------------------------------------------------------*/
 /* # Header*/
 /*--------------------------------------------------------------*!*/
 /*#header {*/
@@ -109,21 +76,15 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.3s linear;
 }
 
-
 /*#header .logo img {*/
 /*    max-height: 40px;*/
 /*}*/
 
-/*!*.scrolled-offset {*!*/
-/*!*    margin-top: 70px;*!*/
-/*!*}*!*/
 
 /*!*--------------------------------------------------------------*/
 /* # Navigation Menu*/
 /*--------------------------------------------------------------*!*/
-/*!***/
-/** Desktop Navigation*/
-/**!*/
+
 .navbar {
     padding: 0;
 }
@@ -136,15 +97,6 @@ h1, h2, h3, h4, h5, h6 {
     /*list-style: none;*/
     align-items: center;
 }
-
-/*.navbar li {*/
-/*    position: relative;*/
-/*}*/
-
-/*.navbar > ul > li {*/
-/*    margin-left: 5px;*/
-/*}*/
-
 .navbar a, .navbar a:focus {
     display: flex;
     align-items: center;
@@ -156,16 +108,10 @@ h1, h2, h3, h4, h5, h6 {
     white-space: nowrap;
 }
 
-/*.navbar a i, .navbar a:focus i {*/
-/*    font-size: 12px;*/
-/*    line-height: 0;*/
-/*    margin-left: 5px;*/
-/*}*/
-
 /*COLOUR */
 .navbar a:hover, .navbar .navbar .navbar li:hover > a {
     background: #333b3f;
-    border-radius: 0px;
+    border-radius: 0;
     color: white;
 }
 
@@ -238,20 +184,8 @@ h1, h2, h3, h4, h5, h6 {
     /*border-color: #5ca3b4;*/
 }
 
-/*@media (min-width: 1024px) {*/
-/*    #welcome {*/
-/*        background-attachment: fixed;*/
-/*    }*/
-/*}*/
-
-/*@media (max-width: 768px) {*/
-/*    #welcome {*/
-/*        text-align: center;*/
-/*    }*/
-/*}*/
-
 #welcome .container {
-    padding-top: 0px;
+    padding-top: 0;
 }
 
 #welcome h1 {
@@ -326,7 +260,7 @@ section {
 
 .search .box {
     padding: 50px 30px;
-    box-shadow: 0px 2px 15px rgb(92, 163, 180);
+    box-shadow: 0 2px 15px rgb(92, 163, 180);
     transition: all ease-in-out 0.3s;
 }
 
@@ -348,7 +282,7 @@ section {
 
 .dog-photos .box {
     padding: 50px 30px;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     transition: all ease-in-out 0.3s;
     /* background-image: url("dog2.jpg"); */
 }
@@ -408,7 +342,7 @@ section {
     text-align: center;
     padding: 80px 20px;
     transition: all ease-in-out 0.3s;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 .services .icon-box .icon {
@@ -475,7 +409,7 @@ section {
     background: #74bdcf;
 }
 
-.services .icon-box:hover h4 a, .services .icon-box:hover p {
+.services .icon-box:hover h4 a, .services .icon-box:hover p, .services .icon-box:hover h3 {
     color: #fff;
 }
 
