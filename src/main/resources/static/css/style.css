@@ -412,6 +412,9 @@ section {
 .services .icon-box:hover h4 a, .services .icon-box:hover p, .services .icon-box:hover h5 {
     color: #fff;
 }
+.services .icon-box:hover h5 {
+    text-decoration: underline;
+}
 
 /*!*--------------------------------------------------------------*/
 /* # Footer*/
