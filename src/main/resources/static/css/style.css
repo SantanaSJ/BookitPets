@@ -1138,6 +1138,7 @@ tr.space > td {
 #submitButton {
     background-color: #5ca3b4;
     color: white;
+    border: none;
 }
 
 #submitButton:hover {
