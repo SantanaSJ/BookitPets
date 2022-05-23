@@ -20,6 +20,30 @@
     <section>
 
         <div class="booking-container">
+            <div th:if="${messages}"
+                 class="alert alert-danger alert-dismissible fade show"
+                 role="alert">
+                <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span>
+                </strong>
+                <span th:text="${#strings.listJoin(messages.getNoRoomsMessage, ' ')}">Rooms</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close">
+                    <!--                                        <span aria-hidden="true">&times;</span>-->
+                </button>
+            </div>
+
+
+            <div th:if="${successMessage}"
+                 class="alert alert-success alert-dismissible fade show"
+                 role="alert">
+                <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span></strong>
+                <span th:text="${#strings.listJoin(successMessage.getSuccessMessage, ' ')}">Rooms</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close">
+                    <!--                                        <span aria-hidden="true">&times;</span>-->
+                </button>
+            </div>
+
             <div class="row">
                 <div class="col-sm-3 p-0 summary " th:object="${accommodationViewModel}">
                     <div class="card-header">
@@ -59,30 +83,6 @@
                     </div>
                 </div>
                 <!--------------------------------- AVAILABILITY----------------------------->
-
-                <div th:if="${messages}"
-                     class="alert alert-danger alert-dismissible fade show"
-                     role="alert">
-                    <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span>
-                    </strong>
-                    <span th:text="${#strings.listJoin(messages.getNoRoomsMessage, ' ')}">Rooms</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close">
-                        <!--                                        <span aria-hidden="true">&times;</span>-->
-                    </button>
-                </div>
-
-
-                <div th:if="${successMessage}"
-                     class="alert alert-success alert-dismissible fade show"
-                     role="alert">
-                    <strong><span><i class='bx bx-calendar-exclamation bx-tada'></i></span></strong>
-                    <span th:text="${#strings.listJoin(successMessage.getSuccessMessage, ' ')}">Rooms</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close">
-                        <!--                                        <span aria-hidden="true">&times;</span>-->
-                    </button>
-                </div>
 
                 <div class="col booking">
                     <form class="" th:action="@{/room-availability}" th:method="GET" th:object="${bindingModel}">
