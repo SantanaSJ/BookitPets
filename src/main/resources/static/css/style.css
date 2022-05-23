@@ -97,6 +97,7 @@ h1, h2, h3, h4, h5, h6 {
     /*list-style: none;*/
     align-items: center;
 }
+
 .navbar a, .navbar a:focus {
     display: flex;
     align-items: center;
@@ -412,6 +413,7 @@ section {
 .services .icon-box:hover h4 a, .services .icon-box:hover p, .services .icon-box:hover h5 {
     color: #fff;
 }
+
 /*!*--------------------------------------------------------------*/
 /* # Footer*/
 /*--------------------------------------------------------------*!*/
@@ -455,6 +457,7 @@ section {
     font-size: 13px;
     color: #fff;
 }
+
 /*!*--------------------------------------------------------------*/
 /* # REGISTER*/
 /*--------------------------------------------------------------*!*/
@@ -690,6 +693,7 @@ h1 {
 
     /*padding: 2px;*/
 }
+
 /*!*--------------------------------------------------------------*/
 /* # PROFILE*/
 /*--------------------------------------------------------------*!*/
@@ -707,6 +711,7 @@ h1 {
 .pet-update {
     margin-top: 200px;
 }
+
 .user-profile {
     border-radius: 5px 0 0 5px
 }
@@ -892,8 +897,8 @@ h6 {
 #home {
     /*padding: 82px 125px;*/
     overflow: hidden;
-    /*margin-top: 41px;*/
-    margin-bottom: 113px;
+    margin-top: 127px;
+    margin-bottom: 157px;
 }
 
 
@@ -1128,6 +1133,15 @@ tr.space > td {
 
 .container .col-md-6 .fw-bold {
     font-size: 15px;
+}
+
+#submitButton {
+    background-color: #5ca3b4;
+    color: white;
+}
+
+#submitButton:hover {
+    background-color: #3f93a8;
 }
 
 /*!*--------------------------------------------------------------*/
