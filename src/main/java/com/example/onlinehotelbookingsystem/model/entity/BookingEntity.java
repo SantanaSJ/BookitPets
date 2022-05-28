@@ -157,17 +157,17 @@ public class BookingEntity extends BaseEntity {
         return this;
     }
 
-//    !
-    @PrePersist
-    public void beforeCreated() {
-        setBookingTime(LocalDateTime.now());
-    }
-
-//    !
-    @PostPersist
-    public void onUpdate() {
-        setUpdated(LocalDateTime.now());
-    }
+////    !
+//    @PrePersist
+//    public void beforeCreated() {
+//        setBookingTime(LocalDateTime.now());
+//    }
+//
+////    !
+//    @PostPersist
+//    public void onUpdate() {
+//        setUpdated(LocalDateTime.now());
+//    }
 
     public String getFirstName() {
         return firstName;
