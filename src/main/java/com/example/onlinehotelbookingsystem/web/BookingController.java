@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
@@ -142,7 +143,7 @@ public class BookingController {
     public String createBooking(@Valid BookingBindingModel bookingBindingModel,
                                 BindingResult br, RedirectAttributes rAtt,
                                 @ModelAttribute("bindingModel") AvailabilityBindingModel bindingModel,
-                                SessionStatus sessionStatus,
+                                SessionStatus sessionStatus, HttpSession httpSession,
                                 @AuthenticationPrincipal CustomUser user, Model model) {
 
         if (br.hasErrors()) {
@@ -161,7 +162,7 @@ public class BookingController {
         BookingCreatedEvent event = new BookingCreatedEvent(this, bookingId);
         this.eventPublisher.publishEvent(event);
         sessionStatus.setComplete();
-        return "redirect:/bookings/details/" + bookingId;
+            return "redirect:/bookings/details/" + bookingId;
     }
 
     //    Booking Summary
