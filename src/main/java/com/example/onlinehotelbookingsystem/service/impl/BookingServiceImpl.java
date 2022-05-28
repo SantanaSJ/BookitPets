@@ -65,8 +65,6 @@ public class BookingServiceImpl implements BookingService {
 
 
 //manual mapping because hotelId is mapped to entity id and overrides entity id
-//        BookingEntity bookingEntity = this.mapper.map(serviceModel, BookingEntity.class);
-
         BookingEntity bookingEntity = mapToBookingEntity(serviceModel, userEntity, accommodationEntity);
 
         List<BookedRoomsEntity> list = new ArrayList<>();
@@ -509,7 +507,7 @@ public class BookingServiceImpl implements BookingService {
         serviceModel.setPaymentStatus(entity.getPayment().getStatusEnum().name());
         serviceModel.setLat(entity.getProperty().getLat());
         serviceModel.setLastUpdated(entity.getUpdated());
-        serviceModel.setCreatedAt(entity.getBookingTime());
+        serviceModel.setBookingTime(entity.getBookingTime());
         serviceModel.setLng(entity.getProperty().getLng());
 
         return serviceModel;

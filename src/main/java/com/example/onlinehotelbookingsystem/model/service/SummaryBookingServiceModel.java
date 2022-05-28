@@ -22,7 +22,7 @@ public class SummaryBookingServiceModel {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private LocalDateTime cancelledOn;
-    private LocalDateTime createdAt;
+    private LocalDateTime bookingTime;
     private List<RoomServiceModel> rooms;
 
     private int category;
@@ -297,12 +297,12 @@ public class SummaryBookingServiceModel {
         return this;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getBookingTime() {
+        return bookingTime;
     }
 
-    public SummaryBookingServiceModel setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public SummaryBookingServiceModel setBookingTime(LocalDateTime bookingTime) {
+        this.bookingTime = bookingTime;
         return this;
     }
 }
