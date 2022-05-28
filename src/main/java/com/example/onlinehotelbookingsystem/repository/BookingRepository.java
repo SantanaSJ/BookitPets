@@ -51,13 +51,13 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     @Query(value = "SELECT b FROM BookingEntity as b WHERE b.guest.id = :userId AND (b.isCancelled = false AND b.isCompleted = false)")
     List<BookingEntity> findAllActiveBookingsBy(@Param("userId") Long userId);
 
-    @Query("SELECT b FROM BookingEntity as b WHERE b.checkOut = CURRENT_DATE")
+    @Query("SELECT b FROM BookingEntity as b WHERE b.checkOut <= CURRENT_DATE AND b.isCancelled = false")
     List<BookingEntity> findAllActiveBookingsWithCheckOutToday();
 
     //user
     //all passed bookings /ok
 //    @Query("SELECT b from BookingEntity as b WHERE b.id = :userId AND (b.isCancelled = true OR b.isCompleted = true)")
-//    TODO: to check how to write this in jpql
+//    TODO: to check how to write this in jpq
     @Query(value = "SELECT * from bookings as b WHERE b.guest_id = :userId AND (b.is_completed = true OR b.is_cancelled = true)", nativeQuery = true)
     List<BookingEntity> findAllCompleteAndCancelledBookingsByUserId(@Param("userId") Long userId);
 

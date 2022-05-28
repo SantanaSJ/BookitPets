@@ -12,10 +12,10 @@
 <main id="main">
 
     <section id="home">
-        <div class="px-1 px-sm-5 mx-auto mt-5">
+        <div class="px-1 px-sm-5 mx-auto mb-5">
             <form autocomplete="off">
                 <div class="d-flex justify-content-center">
-                    <div class="col-sm-9 col-12 px-0 mb-2">
+                    <div class="col-sm-6 mb-2">
                         <div class="search">
                             <div class="d-flex justify-content-center">
                                 <img class="paws" src="/images/giphy.gif"/>
@@ -33,8 +33,7 @@
                 </div>
             </form>
         </div>
-    </section>
-    <section>
+<!--     <section>-->
         <div class="row justify-content-center">
             <div class="col-xl-11">
 
@@ -56,19 +55,19 @@
                                         .then((data) => {
                                             console.dir(data)
 
-                                            let output = '<h2 style="padding-left: 27px"> Search Results </h2>'
+                                            let output = '<h2 style="padding-left: 12px"> Search Results </h2>'
 
                                             data.forEach(function (hotel) {
                                                 // console.dir(hotel)
                                                 output += `
-                                    <div class="hotel py-4 px-2 pb-4 border-bottom">
+                                    <div class="hotel pb-4 border-bottom">
                                         <div class="row justify-content-center">
-                                            <div class="col-lg-3 px-4">
+                                            <div class="col-sm-3">
                                                 <img src= ${hotel.imageUrl}
                                                     height="200" width="250" alt="" class="hotel-img rounded">
                                             </div>
-                                            <div class="col-lg-2">
-                                                <div class="d-md-flex align-items-md-center">
+                                            <div class="col-sm-2">
+                                                <div>
                                                     <div class="fw-bold">${hotel.name}</div>
                                                 </div>
                                                 <small class="rating text-muted">Category: ${hotel.category}</small>
@@ -83,7 +82,7 @@
                                                  <small class="col fw-light text-muted">${hotel.type}</small>
                                                  </div>
                                           </div>
-                                           <div class="col-lg-4">
+                                           <div class="col-sm-4">
                                            <style>
                                            .col-lg-4 {
                                            margin-right: 14px;
@@ -96,7 +95,7 @@
                                               <small class="text-muted">${hotel.description}</small>
 
                                            </div>
-                                            <div class="col-lg-3 px-0" id="map" data-hotel-lat='${hotel.lat}' data-hotel-lng='${hotel.lng}'>
+                                            <div class="col-sm-3 id="map" data-hotel-lat='${hotel.lat}' data-hotel-lng='${hotel.lng}'>
 <!--                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=InterContinental+Sofia,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>-->
                                             <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=Best+Western+Premier+Sofia+Airport+Hotel,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>
                                             </div>

@@ -148,7 +148,7 @@
                         <span class="fw-bold">Booking last updated:</span>
                         <p th:text="*{lastUpdated == null}
                             ? 'No updates made yet!'
-                            : ${#temporals.format(summaryBookingViewModel.lastUpdated, 'dd-MM-yyyy HH:mm')} + 'hrs'">
+                            : ${#temporals.format(summaryBookingViewModel.lastUpdated, 'dd-MM-yyyy, HH:mm')} + 'hrs'">
                             19.02.2020</p>
                     </div>
                 </div>
