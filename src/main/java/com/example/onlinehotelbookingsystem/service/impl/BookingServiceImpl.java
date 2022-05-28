@@ -377,7 +377,7 @@ public class BookingServiceImpl implements BookingService {
                 .setLastName(serviceModel.getLastName())
                 .setCancelled(false)
                 .setCompleted(false)
-                .setBookingTime(LocalDateTime.now())
+//                .setBookingTime(LocalDateTime.now())
                 .setGuest(userEntity);
 //                .setDateNow();
 
