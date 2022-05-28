@@ -157,11 +157,11 @@ public class BookingEntity extends BaseEntity {
         return this;
     }
 
-////    !
-//    @PrePersist
-//    public void beforeCreated() {
-//        setBookingTime(LocalDateTime.now());
-//    }
+//    !
+    @PrePersist
+    public void beforeCreated() {
+        setBookingTime(LocalDateTime.now());
+    }
 //
 ////    !
 //    @PostPersist
