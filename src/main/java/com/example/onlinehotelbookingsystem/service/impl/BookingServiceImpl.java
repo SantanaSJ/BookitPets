@@ -378,9 +378,10 @@ public class BookingServiceImpl implements BookingService {
                 .setCancelled(false)
                 .setCompleted(false)
                 .setGuest(userEntity)
-                .setDateNow();
-    //                .setBookingTime(LocalDateTime.now())
-                ;
+                .setBookingTime(LocalDateTime.now())
+
+//                .setDateNow();
+        ;
 //
 
         return bookingEntity;
