@@ -20,7 +20,7 @@ public class SetBookingAsComplete {
     }
 
     //    @Scheduled(cron = "* 0 22 * * 7")
-    @Scheduled(cron = "00 05 23 * * *")
+    @Scheduled(cron = "00 35 17 * * *")
     private void moveCompletedBookings() {
         this.bookingService.setBookingAsComplete();
         LOGGER.info("Set successfully at {}", LocalDateTime.now());

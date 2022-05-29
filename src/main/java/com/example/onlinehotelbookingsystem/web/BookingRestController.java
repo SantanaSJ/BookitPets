@@ -5,7 +5,6 @@ import com.example.onlinehotelbookingsystem.model.view.TitleBookingViewModel;
 import com.example.onlinehotelbookingsystem.security.CustomUser;
 import com.example.onlinehotelbookingsystem.service.BookingService;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,12 +20,10 @@ import java.util.stream.Collectors;
 public class BookingRestController {
     private final BookingService bookingService;
     private final ModelMapper mapper;
-    private final ApplicationEventPublisher eventPublisher;
 
-    public BookingRestController(BookingService bookingService, ModelMapper mapper, ApplicationEventPublisher eventPublisher) {
+    public BookingRestController(BookingService bookingService, ModelMapper mapper) {
         this.bookingService = bookingService;
         this.mapper = mapper;
-        this.eventPublisher = eventPublisher;
     }
 
     @GetMapping("/all-bookings")
