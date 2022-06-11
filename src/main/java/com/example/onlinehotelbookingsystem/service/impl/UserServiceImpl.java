@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
                     .setPetName("Tobi")
                     .setPetKilograms(20)
 //                    .setPetImageUrl("https://i.insider.com/5484d9d1eab8ea3017b17e29?width=1000&format=jpeg&auto=webp")
-                    .setPhoneNumber("11231")
+                    .setPhoneNumber("0887654311")
                     .setJoined(LocalDateTime.now());
 //                    .setActive(true);
 
