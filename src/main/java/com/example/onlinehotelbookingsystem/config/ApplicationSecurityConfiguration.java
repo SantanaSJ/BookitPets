@@ -57,7 +57,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .usernameParameter("email")
                 .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                 .defaultSuccessUrl("/", true)
-                .failureForwardUrl("/users/login-error")
+                .failureForwardUrl("/users/login")
                 .and()
                 .logout()
                 .logoutUrl("/users/logout")
