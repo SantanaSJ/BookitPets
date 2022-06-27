@@ -34,14 +34,9 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public void upload(AddToPhotosServiceModel toAlbumServiceModel) {
-        UserEntity user = this.userRepository
-                .findById(toAlbumServiceModel.getUserId())
-                .orElseThrow(() -> new ObjectNotFoundException("User with id " + toAlbumServiceModel.getUserId() + "not found!"));
+        UserEntity userEntity = getUserEntity(toAlbumServiceModel);
 
-        PhotoEntity photoEntity = new PhotoEntity();
-        photoEntity
-                .setNotes(toAlbumServiceModel.getNotes())
-                .setUser(user);
+        PhotoEntity photoEntity = getPhotoEntity(toAlbumServiceModel, userEntity);
 
 
         MultipartFile file = toAlbumServiceModel.getFile();
@@ -53,6 +48,20 @@ public class PhotoServiceImpl implements PhotoService {
             e.printStackTrace();
         }
         this.photoRepository.save(photoEntity);
+    }
+
+    private PhotoEntity getPhotoEntity(AddToPhotosServiceModel toAlbumServiceModel, UserEntity user) {
+        PhotoEntity photoEntity = new PhotoEntity();
+        photoEntity
+                .setNotes(toAlbumServiceModel.getNotes())
+                .setUser(user);
+        return photoEntity;
+    }
+
+    private UserEntity getUserEntity(AddToPhotosServiceModel toAlbumServiceModel) {
+        return this.userRepository
+                    .findById(toAlbumServiceModel.getUserId())
+                    .orElseThrow(() -> new ObjectNotFoundException("User with id " + toAlbumServiceModel.getUserId() + "not found!"));
     }
 
     @Override

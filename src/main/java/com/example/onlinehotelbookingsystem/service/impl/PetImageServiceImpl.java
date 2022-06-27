@@ -10,7 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Service
-public class PetImageServiceImpl implements PetImageService {
+public class PetImageServiceImpl implements PetImageService
+{
     private final CloudinaryService cloudinaryService;
     private final PetImageRepository petImageRepository;
 

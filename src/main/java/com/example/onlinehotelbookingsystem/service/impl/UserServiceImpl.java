@@ -127,8 +127,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerAndLogin(UserRegistrationServiceModel serviceModel) {
-        List<UserRoleEntity> all = this.userRoleRepository.findAll();
-        System.out.println();
         UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
 
         UserEntity user = this.mapper.map(serviceModel, UserEntity.class);

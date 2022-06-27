@@ -108,7 +108,6 @@ public class BookingServiceImpl implements BookingService {
     public RoomMessages checkAvailability(AvailabilityServiceModel model) {
 
         RoomMessages roomMessages = new RoomMessages();
-//        TODO:  if 1 single is not available and 1 double is available??
         for (RoomServiceModel room : model.getRooms()) {
             if (room.getNumberOfRooms() != 0) {
                 Integer n = this.bookingRepository.isRoomAvailableBetween(model.getCheckIn(), model.getCheckOut(),
@@ -321,7 +320,6 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ObjectNotFoundException("Booking with id " + id + " not found!"));
         SummaryBookingServiceModel summaryBookingServiceModel = mapToTSummaryBookingServiceModel(bookingEntity);
         return summaryBookingServiceModel;
-
     }
 
     @Override
@@ -349,6 +347,7 @@ public class BookingServiceImpl implements BookingService {
         this.bookingRepository.save(bookingEntity);
 
     }
+
 
     //    ???
     private boolean isDiscountApplicable(int countBookings, int totalNights1) {
@@ -386,42 +385,6 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingEntity;
     }
-
-//    private void setRoomHistoryList(BookingEntity bookingEntity, BookingHistoryEntity bookingHistoryEntity, List<RoomsHistoryEntity> roomsHistoryEntities, RoomsHistoryEntity roomsHistoryEntity) {
-//        for (BookedRoomsEntity bookedRoom : bookingEntity.getBookedRooms()) {
-//            roomsHistoryEntity
-//                    .setPrice(bookedRoom.getPrice())
-//                    .setBookingHistory(bookingHistoryEntity)
-//                    .setRoom(bookedRoom.getRoom())
-//                    .setNumberOfRooms(bookedRoom.getNumberOfRooms());
-//            roomsHistoryEntities.add(roomsHistoryEntity);
-//        }
-//    }
-
-//    private BookingHistoryEntity setBookingHistoryEntity(BookingEntity bookingEntity) {
-//        BookingHistoryEntity bookingHistoryEntity = new BookingHistoryEntity();
-//        bookingHistoryEntity
-//                .setPayment(bookingEntity.getPayment())
-//                .setBookingTime(bookingEntity.getBookingTime())
-//                .setCheckOut(bookingEntity.getCheckOut())
-//                .setCheckIn(bookingEntity.getCheckIn())
-//                .setTotalNights(bookingEntity.getTotalNights())
-//                .setPetName(bookingEntity.getPetName())
-//                .setEmail(bookingEntity.getEmail())
-//                .setPetKilograms(bookingEntity.getPetKilograms())
-//                .setPhoneNumber(bookingEntity.getPhoneNumber())
-//                .setTotalPrice(bookingEntity.getTotalPrice())
-//                .setLastName(bookingEntity.getLastName())
-//                .setFirstName(bookingEntity.getFirstName())
-//                .setProperty(bookingEntity.getProperty())
-//                .setGuest(bookingEntity.getGuest())
-//                .setCancelledOn(LocalDateTime.now())
-//                .setLat(bookingEntity.getProperty().getLat())
-//                .setLng(bookingEntity.getProperty().getLng())
-//                .setComments(bookingHistoryEntity.getComments())
-//                .setUpdated(bookingEntity.getUpdated());
-//        return bookingHistoryEntity;
-//    }
 
     private BookedRoomsEntity getBookedRoomsEntity(BookingEntity bookingEntity, RoomServiceModel bookedRoom) {
         RoomEntity roomEntity = this.roomService.findById(bookedRoom.getRoomId());
