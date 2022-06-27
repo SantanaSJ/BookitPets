@@ -65,7 +65,7 @@ public class AuthenticationController {
         attributes.addFlashAttribute("bad_credentials", true);
         attributes.addFlashAttribute("email", email);
 
-        return "redirect:login";
+        return "redirect:/users/login";
     }
 
     @ModelAttribute("userModel")
