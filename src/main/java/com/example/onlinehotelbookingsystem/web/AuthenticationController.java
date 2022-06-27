@@ -61,7 +61,6 @@ public class AuthenticationController {
     public String failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                                       String email, RedirectAttributes attributes) {
 
-
         attributes.addFlashAttribute("bad_credentials", true);
         attributes.addFlashAttribute("email", email);
 
