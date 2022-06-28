@@ -12,12 +12,6 @@ a {
     color: white;
     text-decoration: none;
 }
-
-/*a:hover {*/
-/*    color: #5ca3b4;*/
-/*    text-decoration: none;*/
-/*    }*/
-
 h1, h2, h3, h4, h5, h6 {
     font-family: "Raleway", sans-serif;
 }
@@ -30,9 +24,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .main-body {
     box-shadow: 0px 2px 15px rgb(177 209 216);
-    /*background: #afd0d9;*/
-    /*background: linear-gradient(to right, #add4de, #cae0e6)*/
-    /*background-color: #bedbe27a;*/
 }
 
 .booking-container {
@@ -49,17 +40,6 @@ h1, h2, h3, h4, h5, h6 {
 /*!*--------------------------------------------------------------*/
 /* # Header*/
 /*--------------------------------------------------------------*!*/
-/*#header {*/
-/*    background: #252525;*/
-/*    transition: all 0.5s;*/
-/*    z-index: 997;*/
-/*    !*height: 70px;*!*/
-/*}*/
-
-/*#header.fixed-top {*/
-/*    background: #252525;*/
-/*}*/
-
 #header .logo {
     font-size: 30px;
     margin-left: 55px;
@@ -68,6 +48,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1;
     font-weight: 700;
     letter-spacing: 2px;
+    text-decoration: none;
     /*text-transform: uppercase;*/
 
 }
@@ -89,7 +70,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
 }
 
-/*RESPONSIVE MENU POSITION - NOW - CENTER*/
 .navbar ul {
     /*margin: 0;*/
     /*padding: 0;*/
@@ -163,6 +143,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #eee;
     margin-bottom: 30px;
     font-size: 24px;
+}
+
+#welcome p {
+    color: #eee;
 }
 
 #welcome .btn-get-started {
