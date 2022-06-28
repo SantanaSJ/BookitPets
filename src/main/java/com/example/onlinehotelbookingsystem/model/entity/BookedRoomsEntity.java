@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 public class BookedRoomsEntity extends BaseEntity {
 
 //when create booking
-//because without this I was getting an error
-// object references an unsaved transient instance - save the transient instance before flushing
+//error object references an unsaved transient instance - save the transient instance before flushing
 //cascde type all from parent didnt solve the problem
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private BookingEntity booking;

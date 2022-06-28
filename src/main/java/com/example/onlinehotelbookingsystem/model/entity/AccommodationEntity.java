@@ -36,7 +36,6 @@ public class AccommodationEntity extends BaseEntity {
 
     private LocalTime checkInTime;
 
-
     private LocalTime checkOutTime;
 
     @OneToMany(mappedBy = "accommodationEntity", cascade = CascadeType.PERSIST)
