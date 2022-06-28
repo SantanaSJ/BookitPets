@@ -1,5 +1,5 @@
 <h1>BookItPets <span align="right">
-  <img src="https://github.com/SantanaSJ/OBS/blob/main/5140527.png" alt="custom image" style="height:39px"/></span></h1> 
+  <img src="https://github.com/SantanaSJ/OBS-HEROKU/blob/master/5140527.png" alt="custom image" style="height:39px"/></span></h1> 
 
 Basic Online Booking System
 
