@@ -56,7 +56,7 @@ function loadBookings() {
             console.log("Booking id to delete is " + bookingId);
 
             //https://pacific-spire-77723.herokuapp.com
-            fetch('http://localhost:8080/delete/' + bookingId, {
+            fetch('https://bookitpets.herokuapp.com/delete/' + bookingId, {
                 method: 'DELETE'
             }).then(_ => loadBookings())
             location.reload();

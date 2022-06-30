@@ -16,11 +16,13 @@ public class AvailabilityBindingModel {
     private String hotelName;
 
     @FutureOrPresent
+    //    type mismatch error
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Check in date is required!")
     private LocalDate checkIn;
 
     @Future
+//    type mismatch error
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Check out date is required!")
     private LocalDate checkOut;
