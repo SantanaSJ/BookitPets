@@ -76,8 +76,7 @@ public class BookingController {
         return new AvailabilityBindingModel();
     }
 
-    //    TODO: handle requestParam exception when required=true
-//    https://stackoverflow.com/questions/37746428/java-spring-how-to-handle-missing-required-request-parameters
+
     @GetMapping("/room-availability")
     public String checkAvailability(@Valid AvailabilityBindingModel bindingModel, BindingResult br,
                                     RedirectAttributes rAtt, Model model,

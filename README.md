@@ -21,7 +21,7 @@ Basic web based online booking system for pet friendly hotels.</br> The project 
  
 
 ## Functionalities
-In order to use the system, the user needs to be logged it.
+In order to use the system, the user needs to be logged in.
 
 *	Basic search option
 *	Check room availability and rates
