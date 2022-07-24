@@ -152,7 +152,7 @@
 
                                             <tr th:each="room, rowStat : ${accommodationViewModel.getRooms()}">
                                                 <th scope="row" th:text="${rowStat.count}" name="index"></th>
-                                                <td th:text="${rowStat.current.type}" name="type"></td>
+                                                <td th:text="${rowStat.current.type}" name="type" id="roomType"></td>
                                                 <td th:text="${rowStat.current.description}" name="description"></td>
 
                                                 <!--                                        GET HOTEL ID -->

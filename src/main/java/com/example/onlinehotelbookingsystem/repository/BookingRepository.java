@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 
+//    available rooms
     @Query
             (value = "SELECT count(br.id)" +
                     "FROM bookings as b" +

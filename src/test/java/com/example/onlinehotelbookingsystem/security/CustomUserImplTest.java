@@ -59,7 +59,7 @@ public class CustomUserImplTest {
 
     @Test
     void test_user_found() {
-//        Arrange
+//       Arrange
         Optional<UserEntity> userByEmail = this.mockUserRepository.findByEmail(testUser.getEmail());
         Mockito.when(userByEmail).thenReturn(Optional.of(this.testUser));
 //        Act

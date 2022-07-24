@@ -38,7 +38,7 @@ public class BookingRestController {
                 .map(b -> this.mapper.map(b, TitleBookingViewModel.class))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(collect);
+             return ResponseEntity.ok(collect);
     }
 
     @PreAuthorize("isOwner(#id) or hasRole('ADMIN')")
