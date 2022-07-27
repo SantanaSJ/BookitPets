@@ -85,12 +85,17 @@
                                         <p class="reg-info"><small style="font-size: 10px">(You can update later in
                                             profile)</small></p></label>
                                     <div class="col-md-6 mb-3">
-                                        <input type="text"
+                                        <input type="number"
                                                th:field="*{petKilograms}"
                                                id="pet-kg"
                                                class="form-control"
                                                name="pet-kg"
                                                placeholder="Pet kg">
+                                    </div>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('petName')}" th:errors="*{petKilograms}"
+                                               id="pet-kgError"
+                                               class="text-light form-text bg-danger rounded">Pet kg must be positive number</small>
                                     </div>
                                 </div>
                                 <div class="form-group row">

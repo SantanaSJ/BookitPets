@@ -32,7 +32,7 @@ public class UserRegistrationBindingModel {
     private String petName;
 
     @Positive(message = "Please provide valid kilograms!")
-    private String petKilograms;
+    private int petKilograms;
 
 
     @NotBlank(message = "Please provide a password!")
@@ -115,11 +115,11 @@ public class UserRegistrationBindingModel {
         return this;
     }
 
-    public String getPetKilograms() {
+    public int getPetKilograms() {
         return petKilograms;
     }
 
-    public UserRegistrationBindingModel setPetKilograms(String petKilograms) {
+    public UserRegistrationBindingModel setPetKilograms(int petKilograms) {
         this.petKilograms = petKilograms;
         return this;
     }
