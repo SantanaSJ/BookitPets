@@ -10,28 +10,28 @@ import javax.validation.constraints.Size;
 
 public class UserRegistrationBindingModel {
 
-    @NotBlank(message = "Please fill in first name!")
+    @NotBlank(message = "This field must not be empty!")
     @Size(min = 3, max = 20, message = "First name must be between 3 and 20 characters.")
     private String firstName;
 
-    @NotBlank(message = "Please fill in last name!")
+    @NotBlank(message = "This field must not be empty!")
     @Size(min = 3, max = 20, message = "Last name must be between 3 and 20 characters.")
     private String lastName;
 
-    @NotBlank(message = "Please enter phone number")
+    @NotBlank(message = "This field must not be empty!")
     @Pattern(regexp = "^0\\d{9}$", message = "Phone number should be in the format: 0884444333")
     private String phoneNumber;
 
-    @NotBlank(message = "Please enter an email!")
+    @NotBlank(message = "This field must not be empty!")
     @UniqueEmail
     @Pattern(regexp = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$", message = "Please enter a valid email!")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "This field must not be empty!")
     @Size(min = 3, max = 10, message = "Pet name must be between 3 and 10 characters.")
     private String petName;
 
-    @Positive
+    @Positive(message = "Please provide valid kilograms!")
     private String petKilograms;
 
 
