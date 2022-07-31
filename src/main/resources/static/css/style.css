@@ -267,9 +267,8 @@ section {
 
 .dog-photos .box {
     padding: 50px 30px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    transition: all ease-in-out 0.3s;
-    /* background-image: url("dog2.jpg"); */
+    /*box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);*/
+    /*transition: all ease-in-out 0.3s;*/
 }
 
 .dog-photos .center {
@@ -277,9 +276,9 @@ section {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 50% 50%;*/
 }
 
 
@@ -306,8 +305,8 @@ section {
 }
 
 .dog-photos .box:hover {
-    background: #5ca3b4;
-    padding: 30px 30px 70px 30px;
+    /*background: #5ca3b4;*/
+    /*padding: 30px 30px 70px 30px;*/
     box-shadow: 10px 15px 30px rgba(0, 0, 0, 0.18);
 }
 
