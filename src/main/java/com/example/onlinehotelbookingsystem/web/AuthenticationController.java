@@ -49,7 +49,7 @@ public class AuthenticationController {
 
         this.userService.registerAndLogin(serviceModel);
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
