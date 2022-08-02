@@ -1,7 +1,7 @@
 package com.example.onlinehotelbookingsystem.web;
 
-import com.example.onlinehotelbookingsystem.service.UserService;
 import com.example.onlinehotelbookingsystem.security.CustomUser;
+import com.example.onlinehotelbookingsystem.service.UserService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +21,7 @@ public class HomeController {
     }
 
 //    https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html
-    @GetMapping("/")
+    @GetMapping("/home")
     public String index(HttpSession session) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
