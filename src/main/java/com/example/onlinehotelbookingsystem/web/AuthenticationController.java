@@ -4,7 +4,6 @@ import com.example.onlinehotelbookingsystem.model.binding.UserRegistrationBindin
 import com.example.onlinehotelbookingsystem.model.service.UserRegistrationServiceModel;
 import com.example.onlinehotelbookingsystem.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,8 +57,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login-error")
-    public String failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-                                      String email, RedirectAttributes attributes) {
+    public String failedLogin(@ModelAttribute("email") String email, RedirectAttributes attributes) {
 
         attributes.addFlashAttribute("bad_credentials", true);
         attributes.addFlashAttribute("email", email);

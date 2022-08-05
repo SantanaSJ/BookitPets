@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -55,7 +54,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .formLogin()
                 .loginPage("/users/login")
                 .usernameParameter("email")
-                .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
+                .passwordParameter("password")
                 .defaultSuccessUrl("/home", true)
                 .failureForwardUrl("/users/login-error")
                 .and()
