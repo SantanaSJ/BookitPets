@@ -91,4 +91,16 @@ email: sisi@abv.bg
 </br>
 pass: a123456789A#
 
+## Payment
+<b>Test card </b>
+</br>
+•	4242 4242 4242 4242
+</br>
+•	Use a valid future date, such as 12/34
+</br>
+•	Use any three-digit CVC
+</br>
+•	Use any value you like for other form fields
+</br>
+•	ZIP – 10001
 
