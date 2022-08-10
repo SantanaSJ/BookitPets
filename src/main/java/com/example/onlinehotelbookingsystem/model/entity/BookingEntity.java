@@ -19,7 +19,8 @@ public class BookingEntity extends BaseEntity {
     @ManyToOne
     private AccommodationEntity property;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+//    new
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch =FetchType.EAGER)
     private List<BookedRoomsEntity> bookedRooms = new ArrayList<>();
 
     private String firstName;

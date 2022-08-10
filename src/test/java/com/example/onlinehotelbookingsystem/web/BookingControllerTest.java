@@ -4,15 +4,15 @@ import com.example.onlinehotelbookingsystem.model.entity.*;
 import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationTypeEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.PaymentStatusEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
+import com.example.onlinehotelbookingsystem.model.service.SummaryBookingServiceModel;
 import com.example.onlinehotelbookingsystem.repository.*;
+import com.example.onlinehotelbookingsystem.service.BookingService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -50,7 +50,7 @@ class BookingControllerTest {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    @MockBean
+    @Autowired
     private BookingRepository bookingRepository;
 
     @Autowired
@@ -64,6 +64,9 @@ class BookingControllerTest {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private BookingService bookingService;
 
     private UserEntity testUser;
     private AccommodationEntity testAccommodationEntity;
@@ -108,9 +111,8 @@ class BookingControllerTest {
 
 
     @Test
-
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @WithMockUser(username = TEST_USER_EMAIL, password = TEST_USER_PASSWORD, roles = "USER")
+//    @WithMockUser(username = TEST_USER_EMAIL, password = TEST_USER_PASSWORD, roles = "USER")
     void when_create_booking_is_opened_from_authorized_user_expect_status_200() throws Exception {
 
 
@@ -149,9 +151,11 @@ class BookingControllerTest {
     void when_booking_details_are_opened_by_authorized_user_expect_status_200() throws Exception {
         this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
+//        SummaryBookingServiceModel activeBookingById = this.bookingService.findActiveBookingById(this.testBookingEntity.getId());
 
-        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
-                .thenReturn(Optional.of(this.testBookingEntity));
+
+//        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
+//                .thenReturn(Optional.of(this.testBookingEntity));
 
         this.mockMvc
                 .perform(get("/bookings/details/" + this.testBookingEntity.getId()))
@@ -163,8 +167,8 @@ class BookingControllerTest {
     @WithMockUser(value = TEST_USER_NON_EXISTING_EMAIL)
     void when_booking_details_are_opened_by_unauthorized_user_expect_status_403() throws Exception {
         this.testBookingEntity = getBookingEntity();
-        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
-                .thenReturn(Optional.of(this.testBookingEntity));
+//        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
+//                .thenReturn(Optional.of(this.testBookingEntity));
         this.mockMvc
                 .perform(get("/bookings/details/" + this.testBookingEntity.getId()))
                 .andExpect(status().isForbidden());
@@ -173,21 +177,25 @@ class BookingControllerTest {
 
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    void when_update_booking_form_is_opened_by_authorized_user_show_update() throws Exception {
+    void when_update_booking_form_is_opened_by_authorized_user_expect_status_200() throws Exception {
         this.testBookingEntity = getBookingEntity();
-        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
-                    .thenReturn(Optional.of(this.testBookingEntity));
+//        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
+//                    .thenReturn(Optional.of(this.testBookingEntity));
         this.mockMvc
                 .perform(get("/bookings/update/" + this.testBookingEntity.getId()))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("update"));
     }
 
     @Test
     @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
     void when_invalid_params_entered_in_update_booking_form_redirect_with_errors() throws Exception {
-       this.testBookingEntity = getBookingEntity();
-       Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
-               .thenReturn(Optional.of(this.testBookingEntity));
+        this.testAccommodationEntity = getAccommodationEntity();
+        this.testBookingEntity = getBookingEntity();
+        SummaryBookingServiceModel activeBookingById = this.bookingService.findActiveBookingById(this.testBookingEntity.getId());
+
+//       Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
+//               .thenReturn(Optional.of(this.testBookingEntity));
 
         BindingResult bindingResult = (BindingResult) this.mockMvc
                 .perform(patch("/bookings/update/" + this.testBookingEntity.getId())
@@ -199,7 +207,7 @@ class BookingControllerTest {
                         .param("phoneNumber", TEST_USER_INVALID_PHONE)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(redirectedUrl("/bookings/update/" + this.testBookingEntity.getId()))
+                .andExpect(redirectedUrl("/bookings/update/" + activeBookingById.getBookingId()))
                 .andExpect(flash().attributeExists("org.springframework.validation.BindingResult.bookingUpdateBindingModel"))
                 .andReturn().getFlashMap().get("org.springframework.validation.BindingResult.bookingUpdateBindingModel");
 
@@ -214,9 +222,12 @@ class BookingControllerTest {
     @Test
     @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
     void when_valid_params_entered_in_update_booking_form_update_user_info() throws Exception {
+        this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
-        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
-                .thenReturn(Optional.of(this.testBookingEntity));
+//        BookingEntity saved = this.bookingRepository.save(this.testBookingEntity);
+        SummaryBookingServiceModel activeBookingById = this.bookingService.findActiveBookingById(this.testBookingEntity.getId());
+//        Mockito.when(this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId()))
+//                .thenReturn(Optional.of(this.testBookingEntity));
         this.mockMvc
                 .perform(patch("/bookings/update/" + this.testBookingEntity.getId())
                         .param("firstName", TEST_USER_FIRST_NAME)
@@ -228,7 +239,7 @@ class BookingControllerTest {
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/bookings/details/" + this.testBookingEntity.getId()));
+                .andExpect(redirectedUrl("/bookings/details/" + activeBookingById.getBookingId()));
 
         Optional<BookingEntity> newReservation = this.bookingRepository.findActiveBookingById(this.testBookingEntity.getId());
         assertTrue(newReservation.isPresent());
@@ -240,6 +251,56 @@ class BookingControllerTest {
         assertEquals(TEST_USER_PET_NAME, bookingEntity.getPetName());
         assertEquals(TEST_USER_PET_KG, bookingEntity.getPetKilograms());
     }
+
+    @Test
+    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
+    void delete_booking() throws Exception {
+        this.testBookingEntity = getBookingEntity();
+        assertEquals(1, this.bookingRepository.count());
+
+        this.mockMvc
+                .perform(delete("/delete/" + this.testBookingEntity.getId())
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isNoContent());
+
+        Optional<BookingEntity> passedBookingById = this.bookingRepository.findPassedBookingById(this.testBookingEntity.getId());
+
+        assertTrue(passedBookingById.get().isCancelled());
+    }
+
+//    @Test
+//    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+//    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
+//    void create_new_booking() throws Exception {
+//        List<String> values = Arrays.asList("1", "single", "135");
+//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+//        params.addAll("bookedRooms", values);
+//
+//        this.testAccommodationEntity = getAccommodationEntity();
+//        BookingEntity testBookingEntity = getBookingEntity();
+//        this.mockMvc
+//                .perform(post("/create-booking")
+//                        .param("firstName", testUser.getFirstName())
+//                        .param("lastName", testUser.getLastName())
+//                        .param("email", testUser.getEmail())
+//                        .param("phoneNumber", testUser.getPhoneNumber())
+//                        .param("petName", TEST_USER_PET_NAME)
+//                        .param("petKilograms", String.valueOf(TEST_USER_PET_KG))
+//                        .param("hotelId", String.valueOf(testAccommodationEntity.getId()))
+//                        .param("checkIn", "2022-12-01")
+//                        .param("checkOut", "2022-12-05")
+//                        .params(params)
+//                        .with(csrf())
+//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(redirectedUrl("/bookings/details/" + testBookingEntity.getId()));
+//
+//        assertEquals(1, this.bookingRepository.count());
+//        BookingEntity bookingEntity = this.bookingRepository.findById(testBookingEntity.getId()).orElse(null);
+//
+//        assertEquals(testBookingEntity.getFirstName(), bookingEntity.getFirstName());
+//    }
 
 
     private BookingEntity getBookingEntity() {
@@ -281,9 +342,9 @@ class BookingControllerTest {
                 .setBookingTime(LocalDateTime.now())
                 .setPayment(paymentEntity)
                 .setId(TEST_BOOKING_ID);
-        this.bookingRepository.save(this.testBookingEntity);
+        return this.bookingRepository.save(this.testBookingEntity);
 
-        return this.testBookingEntity;
+
     }
 
     private RoomEntity getRoomEntity() {
@@ -310,8 +371,8 @@ class BookingControllerTest {
                 .setPostalCode(TEST_HOTEL_PK)
                 .setImageUrl(TEST_HOTEL_IMAGE)
                 .setId(TEST_HOTEL_ID);
-        this.accommodationRepository.save(this.testAccommodationEntity);
-        return this.testAccommodationEntity;
+        AccommodationEntity saved = this.accommodationRepository.save(this.testAccommodationEntity);
+        return saved;
     }
 
     private UserEntity getTestUser() {

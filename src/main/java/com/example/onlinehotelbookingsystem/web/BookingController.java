@@ -49,19 +49,9 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-//    open booking form
+    //    open booking form
     @GetMapping("/booking-form/accommodation/{id}")
     public String bookingForm(Model model, @PathVariable Long id) {
-//        Cookie[] cookies = request.getCookies();
-//        long id = 0;
-//        for (Cookie cookie : cookies) {
-////            if null
-//            if (cookie.getName().equals("id")) {
-//                id = Long.parseLong(cookie.getValue());
-//                break;
-//            }
-//        }
-//        session.setAttribute("id", id);
         AccommodationServiceModel serviceModel = this.accommodationService.findById(id);
         AccommodationViewModel accommodationViewModel = this.mapper.map(serviceModel, AccommodationViewModel.class);
 
@@ -161,7 +151,7 @@ public class BookingController {
         BookingCreatedEvent event = new BookingCreatedEvent(this, bookingId);
         this.eventPublisher.publishEvent(event);
         sessionStatus.setComplete();
-            return "redirect:/bookings/details/" + bookingId;
+        return "redirect:/bookings/details/" + bookingId;
     }
 
     //    Booking Summary
@@ -217,7 +207,7 @@ public class BookingController {
         return "redirect:/bookings/details/" + id;
     }
 
-//    @PreAuthorize(value = "hasRole('ADMIN') or isBookingsOwner(#principal.username)")
+    //    @PreAuthorize(value = "hasRole('ADMIN') or isBookingsOwner(#principal.username)")
     @GetMapping("/view-all")
     public String viewAllBookings(@AuthenticationPrincipal CustomUser user) {
         System.out.println();

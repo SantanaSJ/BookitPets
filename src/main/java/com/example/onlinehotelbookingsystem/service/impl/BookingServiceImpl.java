@@ -74,7 +74,6 @@ public class BookingServiceImpl implements BookingService {
 //        rooms
         for (RoomServiceModel bookedRoom : serviceModel.getBookedRooms()) {
             if (bookedRoom.getNumberOfRooms() != 0) {
-
                 BookedRoomsEntity bookedRoomsEntity = getBookedRoomsEntity(bookingEntity, bookedRoom);
                 list.add(bookedRoomsEntity);
 
