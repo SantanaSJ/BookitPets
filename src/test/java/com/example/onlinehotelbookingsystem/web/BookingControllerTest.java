@@ -252,23 +252,6 @@ class BookingControllerTest {
         assertEquals(TEST_USER_PET_KG, bookingEntity.getPetKilograms());
     }
 
-    @Test
-    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
-    void delete_booking() throws Exception {
-        this.testBookingEntity = getBookingEntity();
-        assertEquals(1, this.bookingRepository.count());
-
-        this.mockMvc
-                .perform(delete("/delete/" + this.testBookingEntity.getId())
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isNoContent());
-
-        Optional<BookingEntity> passedBookingById = this.bookingRepository.findPassedBookingById(this.testBookingEntity.getId());
-
-        assertTrue(passedBookingById.get().isCancelled());
-    }
-
 //    @Test
 //    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
 //    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")

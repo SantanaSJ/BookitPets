@@ -5,15 +5,16 @@ import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationType
 import com.example.onlinehotelbookingsystem.model.entity.enums.PaymentStatusEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
 import com.example.onlinehotelbookingsystem.repository.*;
+import com.example.onlinehotelbookingsystem.service.BookingService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,10 +22,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.example.onlinehotelbookingsystem.constants.Constants.*;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,7 +51,7 @@ class BookingRestControllerTest {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    @MockBean
+    @Autowired
     private BookingRepository bookingRepository;
 
     @Autowired
@@ -58,6 +65,9 @@ class BookingRestControllerTest {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private BookingService bookingService;
 
     private BookingEntity testBookingEntity;
     private AccommodationEntity testAccommodationEntity;
@@ -77,15 +87,39 @@ class BookingRestControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    void when_all_bookings_is_accessed_by_authorized_user_return_status_200() throws Exception {
-        this.testAccommodationEntity = getAccommodationEntity();
+    void when_all_bookings_is_accessed_by_unauthenticated_user_return_login_form() throws Exception {
         this.testBookingEntity = getBookingEntity();
+//        this.bookingEntityList = List.of(this.testBookingEntity);
+//        Mockito.when(this.bookingRepository.findAllActiveBookingsBy(this.testBookingEntity.getId()))
+//                .thenReturn(this.bookingEntityList);
 
-        this.bookingEntityList = List.of(this.testBookingEntity);
+        this.mockMvc
+                .perform(get("/all-bookings"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/users/login"));
+    }
 
-        Mockito.when(this.bookingRepository.findAllActiveBookingsBy(this.testUser.getId()))
-                .thenReturn(this.bookingEntityList);
+    @Test
+    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void when_all_bookings_is_accessed_by_authorized_user_should_return_status_200() throws Exception {
+        this.mockMvc
+                .perform(get("/all-bookings"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void all_bookings_should_return_correct_content_type() throws Exception {
+        this.mockMvc
+                .perform(get("/all-bookings"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void all_bookings_should_return_correct_number_of_bookings() throws Exception {
+       this.testAccommodationEntity = getAccommodationEntity();
+        this.testBookingEntity = getBookingEntity();
 
         this.mockMvc
                 .perform(get("/all-bookings"))
@@ -94,20 +128,41 @@ class BookingRestControllerTest {
     }
 
     @Test
-    void when_all_bookings_is_accessed_by_unauthenticated_user_return_login_form() throws Exception {
+    @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void all_bookings_should_return_correct_entities() throws Exception {
+        this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
-
-        this.bookingEntityList = List.of(this.testBookingEntity);
-
-        Mockito.when(this.bookingRepository.findAllActiveBookingsBy(this.testBookingEntity.getId()))
-                .thenReturn(this.bookingEntityList);
+        long count = this.bookingRepository.count();
+        System.out.println();
 
         this.mockMvc
                 .perform(get("/all-bookings"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost/users/login"));
-
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].bookingId", is(this.testBookingEntity.getId().intValue())))
+                .andReturn().getResponse().getContentAsString();
     }
+
+    @Test
+    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
+    void delete_booking() throws Exception {
+        this.testBookingEntity = getBookingEntity();
+        assertEquals(1, this.bookingRepository.count());
+
+        this.mockMvc
+                .perform(delete("/delete/" + this.testBookingEntity.getId())
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isNoContent());
+
+        Optional<BookingEntity> passedBookingById = this.bookingRepository.findPassedBookingById(this.testBookingEntity.getId());
+
+        assertTrue(passedBookingById.get().isCancelled());
+    }
+
+
+
+
 
     private BookingEntity getBookingEntity() {
 
@@ -148,9 +203,8 @@ class BookingRestControllerTest {
                 .setBookingTime(LocalDateTime.now())
                 .setPayment(paymentEntity)
                 .setId(TEST_BOOKING_ID);
-        this.bookingRepository.save(this.testBookingEntity);
+        return this.bookingRepository.save(this.testBookingEntity);
 
-        return this.testBookingEntity;
     }
 
 
@@ -176,8 +230,8 @@ class BookingRestControllerTest {
     private AccommodationEntity getAccommodationEntity() {
 
         AccommodationTypeEntity accommodationTypeEntity = getAccommodationTypeEntity();
-        AccommodationEntity accommodationEntity = new AccommodationEntity();
-        accommodationEntity
+        this.testAccommodationEntity = new AccommodationEntity();
+        this.testAccommodationEntity
                 .setName(TEST_HOTEL_NAME)
                 .setType(accommodationTypeEntity)
                 .setCity(TEST_HOTEL_CITY)
@@ -185,8 +239,8 @@ class BookingRestControllerTest {
                 .setPostalCode(TEST_HOTEL_PK)
                 .setImageUrl(TEST_HOTEL_IMAGE)
                 .setId(TEST_HOTEL_ID);
-        this.accommodationRepository.save(accommodationEntity);
-        return accommodationEntity;
+        AccommodationEntity saved = this.accommodationRepository.save(this.testAccommodationEntity);
+        return saved;
     }
 
     private UserEntity getTestUser() {
