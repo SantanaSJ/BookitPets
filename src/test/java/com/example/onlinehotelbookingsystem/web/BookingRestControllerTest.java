@@ -101,7 +101,7 @@ class BookingRestControllerTest {
 
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    void when_all_bookings_is_accessed_by_authorized_user_should_return_status_200() throws Exception {
+    void when_all_bookings_is_accessed_by_authenticated_user_should_return_status_200() throws Exception {
         this.mockMvc
                 .perform(get("/all-bookings"))
                 .andExpect(status().isOk());
