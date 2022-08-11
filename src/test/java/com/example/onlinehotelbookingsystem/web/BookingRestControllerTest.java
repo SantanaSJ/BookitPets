@@ -132,9 +132,6 @@ class BookingRestControllerTest {
     void all_bookings_should_return_correct_entities() throws Exception {
         this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
-        long count = this.bookingRepository.count();
-        System.out.println();
-
         this.mockMvc
                 .perform(get("/all-bookings"))
                 .andExpect(status().isOk())
@@ -174,7 +171,6 @@ class BookingRestControllerTest {
 
         assertEquals(1, this.bookingRepository.count());
     }
-
 
     private BookingEntity getBookingEntity() {
 
@@ -218,14 +214,6 @@ class BookingRestControllerTest {
         return this.bookingRepository.save(this.testBookingEntity);
 
     }
-
-
-//    private PaymentEntity getPaymentEntity() {
-//        PaymentEntity paymentEntity = new PaymentEntity();
-//        paymentEntity.setStatusEnum(PaymentStatusEnum.UNPAID);
-//        this.paymentRepository.save(paymentEntity);
-//        return paymentEntity;
-//    }
 
     private RoomEntity getRoomEntity() {
         RoomEntity roomEntity = new RoomEntity();
