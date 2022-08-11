@@ -118,7 +118,7 @@ class BookingRestControllerTest {
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void all_bookings_should_return_correct_number_of_bookings() throws Exception {
-       this.testAccommodationEntity = getAccommodationEntity();
+        this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
 
         this.mockMvc
@@ -160,8 +160,20 @@ class BookingRestControllerTest {
         assertTrue(passedBookingById.get().isCancelled());
     }
 
+    @Test
+    @WithMockUser(value = "sisi@abv.bg", roles = "USER")
+    void when_delete_booking_is_accessed_by_unauthorized_user_return_status_403() throws Exception {
+        this.testBookingEntity = getBookingEntity();
+        assertEquals(1, this.bookingRepository.count());
 
+        this.mockMvc
+                .perform(delete("/delete/" + this.testBookingEntity.getId())
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isForbidden());
 
+        assertEquals(1, this.bookingRepository.count());
+    }
 
 
     private BookingEntity getBookingEntity() {
