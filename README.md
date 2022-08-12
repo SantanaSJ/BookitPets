@@ -66,7 +66,7 @@ In order to use the system, the user needs to be logged in.
 *	Unit Tests, Integration tests
 *	Junit, Mockito
 *	H2 in-memory DB
-*	Coverage 61%
+*	Coverage 66%
 
 ## UI Tests
 * Manual tests
