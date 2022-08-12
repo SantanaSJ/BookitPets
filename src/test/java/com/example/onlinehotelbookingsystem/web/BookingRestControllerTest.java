@@ -5,7 +5,6 @@ import com.example.onlinehotelbookingsystem.model.entity.enums.AccommodationType
 import com.example.onlinehotelbookingsystem.model.entity.enums.PaymentStatusEnum;
 import com.example.onlinehotelbookingsystem.model.entity.enums.UserRoleEnum;
 import com.example.onlinehotelbookingsystem.repository.*;
-import com.example.onlinehotelbookingsystem.service.BookingService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,14 +65,9 @@ class BookingRestControllerTest {
     @Autowired
     private RoomRepository roomRepository;
 
-    @Autowired
-    private BookingService bookingService;
-
     private BookingEntity testBookingEntity;
     private AccommodationEntity testAccommodationEntity;
     private UserEntity testUser;
-    private List<BookingEntity> bookingEntityList;
-
 
     @BeforeEach
     public void setUp() {
@@ -118,6 +112,7 @@ class BookingRestControllerTest {
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void all_bookings_should_return_correct_number_of_bookings() throws Exception {
+        this.accommodationRepository.deleteAll();
         this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
 
@@ -130,6 +125,9 @@ class BookingRestControllerTest {
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void all_bookings_should_return_correct_entities() throws Exception {
+        this.bookedRoomsRepository.deleteAll();
+        this.roomRepository.deleteAll();
+        this.accommodationRepository.deleteAll();
         this.testAccommodationEntity = getAccommodationEntity();
         this.testBookingEntity = getBookingEntity();
         this.mockMvc
@@ -170,6 +168,22 @@ class BookingRestControllerTest {
                 .andExpect(status().isForbidden());
 
         assertEquals(1, this.bookingRepository.count());
+    }
+
+    private AccommodationEntity getAccommodationEntity() {
+
+        AccommodationTypeEntity accommodationTypeEntity = getAccommodationTypeEntity();
+        this.testAccommodationEntity = new AccommodationEntity();
+        this.testAccommodationEntity
+                .setName(TEST_HOTEL_NAME)
+                .setType(accommodationTypeEntity)
+                .setCity(TEST_HOTEL_CITY)
+                .setAddress(TEST_HOTEL_ADDRESS)
+                .setPostalCode(TEST_HOTEL_PK)
+                .setImageUrl(TEST_HOTEL_IMAGE)
+                .setId(TEST_HOTEL_ID);
+        AccommodationEntity saved = this.accommodationRepository.save(this.testAccommodationEntity);
+        return saved;
     }
 
     private BookingEntity getBookingEntity() {
@@ -227,23 +241,7 @@ class BookingRestControllerTest {
         return roomEntity;
     }
 
-    private AccommodationEntity getAccommodationEntity() {
-
-        AccommodationTypeEntity accommodationTypeEntity = getAccommodationTypeEntity();
-        this.testAccommodationEntity = new AccommodationEntity();
-        this.testAccommodationEntity
-                .setName(TEST_HOTEL_NAME)
-                .setType(accommodationTypeEntity)
-                .setCity(TEST_HOTEL_CITY)
-                .setAddress(TEST_HOTEL_ADDRESS)
-                .setPostalCode(TEST_HOTEL_PK)
-                .setImageUrl(TEST_HOTEL_IMAGE)
-                .setId(TEST_HOTEL_ID);
-        AccommodationEntity saved = this.accommodationRepository.save(this.testAccommodationEntity);
-        return saved;
-    }
-
-    private UserEntity getTestUser() {
+       private UserEntity getTestUser() {
         UserRoleEntity userRoleEntity = getUserRoleEntity();
 
         UserEntity userEntity = new UserEntity();

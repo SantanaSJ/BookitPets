@@ -112,7 +112,6 @@ class BookingControllerTest {
 
     @Test
     @WithUserDetails(value = TEST_USER_EMAIL, setupBefore = TestExecutionEvent.TEST_EXECUTION)
-//    @WithMockUser(username = TEST_USER_EMAIL, password = TEST_USER_PASSWORD, roles = "USER")
     void when_create_booking_is_opened_from_authorized_user_expect_status_200() throws Exception {
 
 

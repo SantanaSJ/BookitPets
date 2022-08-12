@@ -46,9 +46,7 @@ class AuthenticationControllerTest {
     public void tearDown() {
         this.userRepository.deleteAll();
 //        this.userRoleRepository.deleteAll();;
-
     }
-
 
     @Test
     void when_register_form_is_opened_expect_status_200() throws Exception {
@@ -67,7 +65,6 @@ class AuthenticationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
-
 
     @Test
     void when_user_is_registered_create_new_user() throws Exception {
@@ -135,5 +132,4 @@ class AuthenticationControllerTest {
         assertTrue(bindingResult.hasFieldErrors("confirmPassword"));
 
     }
-
 }
