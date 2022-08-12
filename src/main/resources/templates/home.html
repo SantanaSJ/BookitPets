@@ -46,7 +46,6 @@
                                 document.getElementById('showAll').addEventListener('click', showAll);
 
                                 function showAll() {
-                                    // window.addEventListener('DOMContentLoaded', (event) => {
                                     //https://bookitpets.herokuapp.com/accommodations
                                     // http://localhost:8080/accommodations
                                     fetch('https://bookitpets.herokuapp.com/accommodations')
@@ -116,8 +115,6 @@
                                     console.log(this)
                                     // const hotelId = $(this).data('hotel-id')
                                     const hotelId = $(this).attr('data-hotel-id')
-                                    // $.cookie('id', hotelId);
-                                    // window.location.href = 'booking-form?id=' + hotelId;
                                     window.location.href = 'booking-form/accommodation/' + hotelId;
                                 })
                                 console.log("visible");
@@ -140,6 +137,7 @@
 
 <script src="/js/search.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4"></script>
+
 
 
 <script th:inline="javascript">
