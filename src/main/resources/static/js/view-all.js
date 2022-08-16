@@ -6,7 +6,7 @@ window.onload = (function () {
 function loadBookings() {
 
     let counter = 1;
-    //https://pacific-spire-77723.herokuapp.com/all-bookings
+    //https://bookitpets.herokuapp.com/all-bookings
     // "http://localhost:8080/all-bookings"
     fetch("https://bookitpets.herokuapp.com/all-bookings")
         .then(response => response.json())
@@ -55,7 +55,7 @@ function loadBookings() {
             let bookingId = $(this).data('booking-id');
             console.log("Booking id to delete is " + bookingId);
 
-            //https://pacific-spire-77723.herokuapp.com
+            //https://bookitpets.herokuapp.com/delete/
             fetch('https://bookitpets.herokuapp.com/delete/' + bookingId, {
                 method: 'DELETE'
             }).then(_ => loadBookings())

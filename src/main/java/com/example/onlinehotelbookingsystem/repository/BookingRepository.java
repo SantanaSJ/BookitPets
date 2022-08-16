@@ -15,12 +15,14 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 
-//    available rooms
+    //    available rooms
     @Query
             (value = "SELECT count(br.id)" +
                     "FROM bookings as b" +
                     "         JOIN booked_rooms br on b.id = br.booking_id " +
                     "WHERE b.property_id = :hotelId" +
+                    "  AND b.is_cancelled = FALSE" +
+                    "  AND b.is_completed = FALSE" +
                     "  AND br.room_id = :roomId" +
                     "  AND ((b.check_in >= :checkIn AND b.check_in <= :checkOut)" +
                     "    OR (b.check_out > :checkIn AND b.check_out < :checkOut)" +
@@ -122,7 +124,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 //    void moveCancelledBookingToHistory(Long id);
 
 
-
 //    CREATE procedure usp_set_first_night_free(IN booking_id_param bigint)
 //    BEGIN
 //    #     DECLARE @price_per_night INT;
@@ -136,8 +137,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 //    SET b.total_price = b.total_price - @price_per_night
 //    WHERE b.id = b2.booking_id;
 //    END;
-
-
 
 
 //    create trigger tr_cancelled_bookings
@@ -154,8 +153,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 //            OLD.pet_name, OLD.phone_number, OLD.total_nights, OLD.total_price, OLD.updated, OLD.guest_id,
 //            OLD.payment_id, OLD.property_id);
 //    END;
-
-
 
 
 //    CREATE PROCEDURE usp_move_cancelled_booking(IN booking_id_param bigint)

@@ -30,27 +30,16 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
-//                iframe options - DENY
-//                .headers()
-//                .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-//                .and()
-//                ??payment not working without csrf().disable
+//                for Stripe - 403 error
                 .csrf().disable()
-                .cors()
-                .and()
+//                .cors()
+//                .and()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/users/login", "/users/register", "/resources/**").permitAll()
                 .antMatchers("/statistics", "/admin/**").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers("/**").authenticated()
-
-
                 .and()
-//                .csrf()
-//                .ignoringAntMatchers("/users/login", "/users/logout")
-//                .and()
-
                 .formLogin()
                 .loginPage("/users/login")
                 .usernameParameter("email")
@@ -60,7 +49,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .and()
                 .logout()
                 .logoutUrl("/users/logout")
-//                .logoutSuccessUrl("/home")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
     }
