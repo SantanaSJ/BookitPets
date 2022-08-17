@@ -14,6 +14,7 @@ Basic Online Booking System
 * [Technologies](#technologies)
 * [Tests](#tests)
 * [Credentials](#credentials)
+* [Screenshots](#screenshots)
 
 
 ## General info
