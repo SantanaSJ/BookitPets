@@ -4,11 +4,11 @@ $('#delete').click(function () {
         console.log("Booking id to delete is " + bookingId);
         //https://bookitpets.herokuapp.com/delete/
         //http://localhost:8080/delete/
-        fetch('https://bookitpets.herokuapp.com/delete/' + bookingId, {
+        fetch('http://localhost:8080/delete/' + bookingId, {
             method: 'DELETE'
         //    https://bookitpets.herokuapp.com/view-all
         //    http://localhost:8080/view-all
-        }).then(() => window.location = 'https://bookitpets.herokuapp.com/view-all')
+        }).then(() => window.location = 'http://localhost:8080/view-all')
         console.log('deleted');
         // window.location = 'http://localhost:8080/view-all';
     }
