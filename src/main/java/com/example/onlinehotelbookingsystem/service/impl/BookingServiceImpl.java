@@ -144,6 +144,7 @@ public class BookingServiceImpl implements BookingService {
                 .setPetName(updateServiceModel.getPetName())
                 .setPetKilograms(updateServiceModel.getPetKilograms())
                 .setEmail(updateServiceModel.getEmail())
+                .setPhoneNumber(updateServiceModel.getPhoneNumber())
                 .setComments(updateServiceModel.getComments());
 
         this.bookingRepository.save(bookingEntity);
