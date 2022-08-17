@@ -14,6 +14,7 @@ Basic Online Booking System
 * [Technologies](#technologies)
 * [Tests](#tests)
 * [Credentials](#credentials)
+* [Screenshots](#screenshots)
 
 
 ## General info
@@ -103,4 +104,10 @@ pass: a123456789A#
 •	Use any value you like for other form fields
 </br>
 •	ZIP – 10001
+
+## Screenshots
+<img src="https://github.com/SantanaSJ/BookitPets/blob/master/login.png" alt="login" title="login">
+<img src="https://github.com/SantanaSJ/BookitPets/blob/master/home.png" alt="home" title="home">
+<img src="https://github.com/SantanaSJ/BookitPets/blob/master/hotels.png" alt="hotels" title="hotels">
+<img src="https://github.com/SantanaSJ/BookitPets/blob/master/no%20availability.png" alt="no availability" title="no availability">
 
