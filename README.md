@@ -110,4 +110,5 @@ pass: a123456789A#
 <img src="https://github.com/SantanaSJ/BookitPets/blob/master/no%20availability.png" alt="no availability" title="no availability">
 <img src="https://github.com/SantanaSJ/BookitPets/blob/master/availability1.png" alt="availability" title="availability">
 <img src="https://github.com/SantanaSJ/BookitPets/blob/master/SUMMARY.png" alt="summary" title="summary">
+<img src="https://github.com/SantanaSJ/BookitPets/blob/master/payment.png" alt="payment" title="payment">
 
