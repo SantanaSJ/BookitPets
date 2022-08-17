@@ -173,7 +173,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4"></script>
 
 <script th:inline="javascript">
-    // /*<![CDATA[*/
     function initMap() {
 
         const lat = /*[[${viewModel.lat}]]*/ 'default';
@@ -195,8 +194,6 @@
         const marker = new google.maps.Marker({position: coords, map: map});
 
     }
-    // /*]]>*/
-
     initMap();
 </script>
 

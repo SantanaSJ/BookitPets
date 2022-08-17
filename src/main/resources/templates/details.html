@@ -220,7 +220,6 @@
 
 
 <script th:inline="javascript">
-        // /*<![CDATA[*/
         function initMap() {
 
             const lat = /*[[${summaryBookingViewModel.lat}]]*/ 'default';
@@ -242,8 +241,6 @@
             const marker = new google.maps.Marker({position: coords, map: map});
 
         }
-        // /*]]>*/
-
         initMap();
 </script>
 

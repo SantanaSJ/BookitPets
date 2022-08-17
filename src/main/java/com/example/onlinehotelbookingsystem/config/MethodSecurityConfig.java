@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
-//    with constructor injection - forms a cycle
     @Autowired
     private AppMethodSecurityExpressionHandler appMethodSecurityExpressionHandler;
 
