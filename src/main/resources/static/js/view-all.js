@@ -1,6 +1,5 @@
 window.onload = (function () {
      loadBookings();
-
 })
 
 function loadBookings() {
