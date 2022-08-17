@@ -53,10 +53,11 @@
                                                class="form-control"
                                                name="first-name"
                                                id="first-name"
-                                               placeholder="ex. John ..."
-                                               required
-                                               minlength="3"
-                                               maxlength="20">
+                                               placeholder="ex. John ...">
+<!--                                               required-->
+<!--                                               minlength="3"-->
+<!--                                               maxlength="20"-->
+
                                         <div class="col-auto">
                                             <small th:if="${#fields.hasErrors('firstName')}"
                                                    th:errors="*{firstName}"
@@ -76,10 +77,11 @@
                                                 class="form-control"
                                                 name="name"
                                                 placeholder="ex. John ..."
-                                                id="lastName"
-                                                required
-                                                minlength="3"
-                                                maxlength="20"/>
+                                                id="lastName"/>
+<!--                                                required-->
+<!--                                                minlength="3"-->
+<!--                                                maxlength="20"-->
+
                                         <div class="col-auto">
                                             <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                                                    id="last-nameError"
@@ -99,10 +101,11 @@
                                                 class="form-control"
                                                 name="name"
                                                 placeholder="ex. Lassie ..."
-                                                id="petName"
-                                                required
-                                                minlength="3"
-                                                maxlength="10"/>
+                                                id="petName"/>
+<!--                                                required-->
+<!--                                                minlength="3"-->
+<!--                                                maxlength="10"-->
+
                                         <div class="col-auto">
                                             <small th:if="${#fields.hasErrors('petName')}" th:errors="*{petName}"
                                                    class="text-light form-text bg-danger rounded">xxx</small>
@@ -118,9 +121,10 @@
                                                 class="form-control"
                                                 name="name"
                                                 placeholder="ex. 45kg ..."
-                                                id="pet-kg"
-                                                required
-                                                min="1"/>
+                                                id="pet-kg"/>
+<!--                                                required-->
+<!--                                                min="1"-->
+
                                         <div class="col-auto">
                                             <small th:if="${#fields.hasErrors('petKilograms')}"
                                                    th:errors="*{petKilograms}"
@@ -138,8 +142,9 @@
                                                 th:field="*{email}"
                                                 class="form-control"
                                                 type="email"
-                                                id="email"
-                                                required/>
+                                                id="email"/>
+<!--                                                required-->
+
                                         <div class="col-auto">
                                             <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                                    id="email-Error"
@@ -155,8 +160,9 @@
                                             class="form-control"
                                             type="text"
                                             name="phoneNumber"
-                                            id="phoneNumber"
-                                            required/>
+                                            id="phoneNumber"/>
+<!--                                            required-->
+
                                     <div class="col-auto">
                                         <small
                                                 th:if="${#fields.hasErrors('phoneNumber')}"
