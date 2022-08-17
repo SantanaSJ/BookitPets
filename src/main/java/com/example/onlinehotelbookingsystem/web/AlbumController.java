@@ -84,7 +84,7 @@ public class AlbumController {
             rAtt
                     .addFlashAttribute("photosBindingModel", photosBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.photosBindingModel", br);
-            return "redirect:/album";
+            return "redirect:/upload";
         }
 
         AddToPhotosServiceModel toPhotosServiceModel = this.mapper.map(photosBindingModel, AddToPhotosServiceModel.class);
