@@ -108,4 +108,5 @@ pass: a123456789A#
 ## Screenshots
 <img src="https://github.com/SantanaSJ/BookitPets/blob/master/login.png" alt="login" title="login">
 <img src="https://github.com/SantanaSJ/BookitPets/blob/master/home.png" alt="home" title="home">
+<img src="https://github.com/SantanaSJ/BookitPets/blob/master/hotels.png" alt="hotels" title="hotels">
 
