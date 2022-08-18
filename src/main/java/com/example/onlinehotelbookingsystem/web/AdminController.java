@@ -47,7 +47,7 @@ public class AdminController {
     public ModelAndView statistics() {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("stats", statsService.getStats());
+        modelAndView.addObject("stats", this.statsService.getStats());
         modelAndView.setViewName("stats");
         return modelAndView;
     }

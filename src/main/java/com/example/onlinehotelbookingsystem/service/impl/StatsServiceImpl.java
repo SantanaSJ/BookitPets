@@ -17,11 +17,10 @@ public class StatsServiceImpl implements StatsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && (authentication.getPrincipal() instanceof UserDetails)) {
-            authRequests++;
+            this.authRequests++;
         } else {
-            anonymousRequests++;
+            this.anonymousRequests++;
         }
-
     }
 
     @Override

@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LogRegisteredUserInterceptor implements HandlerInterceptor {
     private final Logger LOGGER = LoggerFactory.getLogger(LogRegisteredUserInterceptor.class);
 
-//    https://www.learnbestcoding.com/post/23/spring-framework-handlerinterceptor
-
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

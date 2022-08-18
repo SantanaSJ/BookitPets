@@ -20,7 +20,6 @@ public class HomeController {
         this.userService = userService;
     }
 
-//    https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html
     @GetMapping("/home")
     public String index(HttpSession session) {
 
