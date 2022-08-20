@@ -14,6 +14,11 @@ const searchHotels = async searchText => {
         return hotel.name.match(regex);
     });
 
+    if (matches.length === 0) {
+        const msg = `<h4>No Matches Found!</h4>`;
+        output.innerHTML = msg;
+    }
+
     if (searchText.length === 0) {
         matches = [];
         output.innerHTML = '';
@@ -82,9 +87,6 @@ const outputHTML = matches => {
 
         document.getElementById('output').innerHTML = output
 
-    } else {
-        const msg = `<h4>No Matches Found!</h4>`;
-        output.innerHTML = msg;
     }
 }
 
