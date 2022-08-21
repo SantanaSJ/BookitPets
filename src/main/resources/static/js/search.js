@@ -74,8 +74,7 @@ const outputHTML = matches => {
 
                                            </div>
                                             <div class="col-lg-3 px-0" id="map" data-hotel-lat='${hotel.lat}' data-hotel-lng='${hotel.lng}'>
-<!--                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=InterContinental+Sofia,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>-->
-                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA89q7WonzhNiDIbOqwi5CbHwpHDBXp0u4&q=Best+Western+Premier+Sofia+Airport+Hotel,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>
+                                            <iframe class="mb-4 mb-lg-0 rounded" src="https://www.google.com/maps/embed/v1/place?key=API_KEY=Best+Western+Premier+Sofia+Airport+Hotel,Sofia+Bulgaria" frameborder="0" style="border:0; width: 90%; height: 200px;" allowfullscreen></iframe>
                                             </div>
                                         </div>
 <!--                                        Book Now button -->
