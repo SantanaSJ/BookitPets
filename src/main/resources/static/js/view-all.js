@@ -7,7 +7,7 @@ function loadBookings() {
     let counter = 1;
     //https://bookitpets.herokuapp.com/all-bookings
     // "http://localhost:8080/all-bookings"
-    fetch("http://localhost:8080/all-bookings")
+    fetch("https://bookitpets.herokuapp.com/all-bookings")
         .then(response => response.json())
         .then(json => {
             if (json.length > 0) {
@@ -55,7 +55,8 @@ function loadBookings() {
             console.log("Booking id to delete is " + bookingId);
 
             //https://bookitpets.herokuapp.com/delete/
-            fetch('http://localhost:8080/delete/' + bookingId, {
+            //http://localhost:8080/delete/
+            fetch('https://bookitpets.herokuapp.com/delete/' + bookingId, {
                 method: 'DELETE'
             }).then(_ => loadBookings())
             location.reload();
