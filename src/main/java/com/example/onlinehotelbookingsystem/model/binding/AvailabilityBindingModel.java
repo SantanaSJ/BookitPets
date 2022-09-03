@@ -1,8 +1,8 @@
 package com.example.onlinehotelbookingsystem.model.binding;
 
+import com.example.onlinehotelbookingsystem.model.binding.validator.ValidateRoomNumber;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -27,8 +27,8 @@ public class AvailabilityBindingModel {
     @NotNull(message = "Check out date is required!")
     private LocalDate checkOut;
 
-    @Valid
-    private List<RoomBindingModel> rooms = new ArrayList<>();
+    @ValidateRoomNumber
+    private List< RoomBindingModel> rooms = new ArrayList<>();
 
     private int category;
     private String city;

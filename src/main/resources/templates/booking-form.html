@@ -85,7 +85,8 @@
                 <!--------------------------------- AVAILABILITY----------------------------->
 
                 <div class="col booking">
-                    <form class="" novalidate th:action="@{/room-availability}" th:method="GET" th:object="${bindingModel}">
+                    <form class="" id="form" th:action="@{/room-availability}" th:method="GET"
+                          th:object="${bindingModel}">
                         <div class="card-header">
                             Check Availability
                         </div>
@@ -180,6 +181,7 @@
                                                         <option value="3">3</option>
                                                         <option value="4">4</option>
                                                     </select>
+                                                    <!--                                                    <p class="text-xs px-2 border shadow text-red-500 w-full font-semibold" id="error">This field is required!</p>-->
                                                     <label for="type"></label>
                                                     <input th:value="${accommodationViewModel.getRooms()[__${rowStat.index}__].getType()}"
                                                            name="type"
@@ -187,11 +189,16 @@
                                                            hidden="hidden"
                                                            type="text"/>
                                                     <div>
-                                                        <small class="col-auto"
-                                                               th:if="${#fields.hasErrors('*{rooms[__${rowStat.index}__].numberOfRooms}')}"
-                                                               th:errors="*{rooms[__${rowStat.index}__].numberOfRooms}"
+                                                        <small class="col-auto text-light form-text bg-danger rounded"
+                                                               th:if="${#fields.hasErrors('${bindingModel.rooms}')}"
+                                                               th:errors="${bindingModel.rooms}"
                                                                id="numberOfRoms-Error">
                                                         </small>
+                                                        <!--                                                                                                                    <small class="col-auto"-->
+                                                        <!--                                                               th:if="${#fields.hasErrors('*{rooms[__${rowStat.index}__].numberOfRooms}')}"-->
+                                                        <!--                                                               th:errors="*{rooms[__${rowStat.index}__].numberOfRooms}"-->
+                                                        <!--                                                               id="numberOfRoms-Error">-->
+                                                        <!--                                                        </small>-->
                                                     </div>
                                                 </td>
 
@@ -207,7 +214,7 @@
                                 <div th:unless="${successMessage}" class="ln_solid">
                                     <div class="form-group">
                                         <div class="p-4 text-center" id="check">
-                                            <button type='submit' class="btn btn-primary">Check</button>
+                                            <button type='submit' id="submit" class="btn btn-primary">Check</button>
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +243,7 @@
 <!-- End Footer -->
 
 <script src="/js/aos.js"></script>
-
+<script src="/js/validate.js"></script>
 </body>
 
 </html>

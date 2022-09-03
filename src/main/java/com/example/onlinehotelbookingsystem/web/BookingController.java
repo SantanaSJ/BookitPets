@@ -66,20 +66,18 @@ public class BookingController {
         return new AvailabilityBindingModel();
     }
 
-
     @GetMapping("/room-availability")
     public String checkAvailability(@Valid AvailabilityBindingModel bindingModel, BindingResult br,
                                     RedirectAttributes rAtt, Model model,
                                     @RequestParam(value = "type", required = false) List<String> type,
                                     @RequestParam(value = "price", required = false) List<BigDecimal> prices,
                                     @RequestParam(value = "roomId", required = false) List<Long> ids) {
-        if (br.hasErrors() || isRoomListEmpty(bindingModel)) {
+        if (br.hasErrors()) {
 //            System.out.println(br);
             rAtt
                     .addFlashAttribute("bindingModel", bindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.bindingModel", br);
             Long hotelId = bindingModel.getHotelId();
-
             return "redirect:/booking-form/accommodation/" + hotelId;
         }
 
@@ -101,8 +99,8 @@ public class BookingController {
         if (!roomMessages.getNoRoomsMessage().isEmpty()) {
 
             rAtt
-                    .addFlashAttribute("messages", roomMessages)
-                    .addFlashAttribute("bindingModel", bindingModel);
+                    .addFlashAttribute("messages", roomMessages);
+//                    .addFlashAttribute("bindingModel", bindingModel);
 
             return "redirect:/booking-form/accommodation/" + bindingModel.getHotelId();
         }
@@ -213,22 +211,5 @@ public class BookingController {
         System.out.println();
         return "view-all";
     }
-
-    private boolean isRoomListEmpty(AvailabilityBindingModel bindingModel) {
-//         will return true if the list contains a 0
-//        bindingModel.getRooms().stream().map(roomBindingModel -> roomBindingModel.getNumberOfRooms()).anyMatch(e -> e == 0);
-
-        boolean flag = false;
-        for (RoomBindingModel room : bindingModel.getRooms()) {
-            if (room.getNumberOfRooms() == 0) {
-                flag = true;
-            } else {
-                flag = false;
-                break;
-            }
-        }
-        return flag;
-    }
-
 
 }

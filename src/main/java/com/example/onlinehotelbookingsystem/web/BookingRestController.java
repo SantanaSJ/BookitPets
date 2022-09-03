@@ -1,5 +1,7 @@
 package com.example.onlinehotelbookingsystem.web;
 
+import com.example.onlinehotelbookingsystem.model.binding.AvailabilityBindingModel;
+import com.example.onlinehotelbookingsystem.model.binding.RoomBindingModel;
 import com.example.onlinehotelbookingsystem.model.service.TitleBookingServiceModel;
 import com.example.onlinehotelbookingsystem.model.view.TitleBookingViewModel;
 import com.example.onlinehotelbookingsystem.security.CustomUser;
@@ -49,5 +51,45 @@ public class BookingRestController {
 
 //        this.bookingService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+//    @GetMapping("/room-availability")
+//    public ResponseEntity<?> check(@Valid AvailabilityBindingModel bindingModel, BindingResult br) {
+//        if (br.hasErrors() || isRoomListEmpty(bindingModel)) {
+//            System.out.println();
+//            return ResponseEntity.badRequest().body(new Message("Message!"));
+//        }
+//        AvailabilityServiceModel serviceModel = this.mapper.map(bindingModel, AvailabilityServiceModel.class);
+//        RoomMessages roomMessages = this.bookingService.checkAvailability(serviceModel);
+//
+//        if (!roomMessages.getNoRoomsMessage().isEmpty()) {
+//
+//////            rAtt
+////                    .addFlashAttribute("messages", roomMessages)
+////                    .addFlashAttribute("bindingModel", bindingModel);
+////
+////            return "redirect:/booking-form/accommodation/" + bindingModel.getHotelId();
+//        }
+//
+//        rAtt
+//                .addFlashAttribute("successMessage", roomMessages)
+//                .addFlashAttribute("bindingModel", bindingModel);
+//        return ResponseEntity.ok(bindingModel);
+//    }
+
+    private boolean isRoomListEmpty(AvailabilityBindingModel bindingModel) {
+//         will return true if the list contains a 0
+//        bindingModel.getRooms().stream().map(roomBindingModel -> roomBindingModel.getNumberOfRooms()).anyMatch(e -> e == 0);
+
+        boolean flag = false;
+        for (RoomBindingModel room : bindingModel.getRooms()) {
+            if (room.getNumberOfRooms() == 0) {
+                flag = true;
+            } else {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 }
