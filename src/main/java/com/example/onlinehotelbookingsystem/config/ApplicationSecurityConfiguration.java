@@ -50,6 +50,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .rememberMe()
                 .rememberMeParameter("remember-me")
                 .key("remember Me Encryption Key")
+                .rememberMeParameter("remember-me")
                 .rememberMeCookieName("remember-me")
                 .tokenValiditySeconds(10000)
                 .and()
